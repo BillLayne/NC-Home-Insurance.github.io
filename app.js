@@ -1,354 +1,152 @@
-// Wait for DOM to be fully loaded
+// NC Insurance Claims Guide - Interactive Features
+
 document.addEventListener('DOMContentLoaded', function() {
     
-    // Mobile sticky CTA management
-    const mobileCTA = document.getElementById('mobileCTA');
-    const hero = document.querySelector('.hero');
+    // Mobile menu toggle functionality
+    const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+    const navbarMenu = document.querySelector('.navbar-menu');
     
-    function handleMobileCTA() {
-        if (window.innerWidth <= 768) {
-            const heroBottom = hero.offsetTop + hero.offsetHeight;
-            const scrollPosition = window.pageYOffset;
-            
-            if (scrollPosition > heroBottom) {
-                mobileCTA.style.display = 'block';
-                mobileCTA.style.transform = 'translateY(0)';
-            } else {
-                mobileCTA.style.transform = 'translateY(100%)';
-            }
-        } else {
-            mobileCTA.style.display = 'none';
-        }
-    }
-    
-    // FAQ Accordion functionality
-    const faqItems = document.querySelectorAll('.faq-item');
-    
-    faqItems.forEach(item => {
-        const question = item.querySelector('.faq-question');
-        const answer = item.querySelector('.faq-answer');
-        
-        question.addEventListener('click', function() {
-            const isActive = item.classList.contains('active');
-            
-            // Close all other FAQ items
-            faqItems.forEach(otherItem => {
-                if (otherItem !== item) {
-                    otherItem.classList.remove('active');
-                    otherItem.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
-                }
-            });
-            
-            // Toggle current item
-            if (isActive) {
-                item.classList.remove('active');
-                question.setAttribute('aria-expanded', 'false');
-            } else {
-                item.classList.add('active');
-                question.setAttribute('aria-expanded', 'true');
-            }
+    if (mobileMenuToggle && navbarMenu) {
+        mobileMenuToggle.addEventListener('click', function() {
+            navbarMenu.classList.toggle('active');
+            mobileMenuToggle.classList.toggle('active');
         });
-        
-        // Keyboard accessibility
-        question.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                question.click();
-            }
-        });
-    });
-    
-    // Modal functionality
-    const modal = document.getElementById('quoteModal');
-    const requestQuoteBtn = document.getElementById('requestQuote');
-    const modalClose = document.querySelector('.modal-close');
-    const quoteForm = document.getElementById('quoteForm');
-    
-    function openModal() {
-        modal.classList.add('active');
-        modal.setAttribute('aria-hidden', 'false');
-        document.body.style.overflow = 'hidden';
-        
-        // Focus on first form input
-        const firstInput = modal.querySelector('input[type="text"]');
-        if (firstInput) {
-            setTimeout(() => firstInput.focus(), 100);
-        }
     }
     
-    function closeModal() {
-        modal.classList.remove('active');
-        modal.setAttribute('aria-hidden', 'true');
-        document.body.style.overflow = '';
-        
-        // Return focus to trigger button
-        if (requestQuoteBtn) {
-            requestQuoteBtn.focus();
-        }
-    }
-    
-    // Open modal
-    if (requestQuoteBtn) {
-        requestQuoteBtn.addEventListener('click', openModal);
-    }
-    
-    // Close modal
-    if (modalClose) {
-        modalClose.addEventListener('click', closeModal);
-    }
-    
-    // Close modal on background click
-    modal.addEventListener('click', function(e) {
-        if (e.target === modal) {
-            closeModal();
-        }
-    });
-    
-    // Close modal on Escape key
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && modal.classList.contains('active')) {
-            closeModal();
-        }
-    });
-    
-    // Form validation and submission
-    if (quoteForm) {
-        quoteForm.addEventListener('submit', function(e) {
+    // Smooth scrolling for navigation links
+    const navLinks = document.querySelectorAll('a[href^="#"]');
+    navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
             e.preventDefault();
+            const targetId = this.getAttribute('href');
+            const targetSection = document.querySelector(targetId);
             
-            const formData = new FormData(quoteForm);
-            const data = {};
-            
-            // Collect form data
-            for (let [key, value] of formData.entries()) {
-                data[key] = value;
-            }
-            
-            // Basic validation
-            const requiredFields = ['fullName', 'phone', 'homeAddress'];
-            let isValid = true;
-            let firstErrorField = null;
-            
-            // Clear previous error styles
-            document.querySelectorAll('.form-control').forEach(input => {
-                input.style.borderColor = '';
-                input.setAttribute('aria-invalid', 'false');
-            });
-            
-            // Remove any existing error messages
-            const existingError = document.querySelector('.error-message');
-            if (existingError) {
-                existingError.remove();
-            }
-            
-            // Validate required fields
-            requiredFields.forEach(field => {
-                const input = document.getElementById(field);
-                const value = data[field];
-                
-                if (!value || value.trim() === '') {
-                    isValid = false;
-                    input.style.borderColor = '#ef4444';
-                    input.setAttribute('aria-invalid', 'true');
-                    if (!firstErrorField) {
-                        firstErrorField = input;
-                    }
-                }
-            });
-            
-            // Phone number validation
-            const phoneInput = document.getElementById('phone');
-            const phoneValue = data.phone ? data.phone.replace(/\D/g, '') : '';
-            if (data.phone && phoneValue.length < 10) {
-                isValid = false;
-                phoneInput.style.borderColor = '#ef4444';
-                phoneInput.setAttribute('aria-invalid', 'true');
-                if (!firstErrorField) {
-                    firstErrorField = phoneInput;
-                }
-            }
-            
-            // Email validation (if provided)
-            const emailInput = document.getElementById('email');
-            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (data.email && data.email.trim() !== '' && !emailPattern.test(data.email)) {
-                isValid = false;
-                emailInput.style.borderColor = '#ef4444';
-                emailInput.setAttribute('aria-invalid', 'true');
-                if (!firstErrorField) {
-                    firstErrorField = emailInput;
-                }
-            }
-            
-            if (!isValid) {
-                // Show error message
-                const errorDiv = document.createElement('div');
-                errorDiv.className = 'error-message';
-                errorDiv.style.cssText = `
-                    background: #fef2f2;
-                    border: 1px solid #fecaca;
-                    color: #dc2626;
-                    padding: 12px;
-                    border-radius: 6px;
-                    margin-bottom: 16px;
-                    font-size: 14px;
-                `;
-                errorDiv.textContent = 'Please fill in all required fields correctly.';
-                
-                quoteForm.insertBefore(errorDiv, quoteForm.firstElementChild);
-                
-                // Focus on first error field
-                if (firstErrorField) {
-                    firstErrorField.focus();
-                }
-                
-                return;
-            }
-            
-            // If validation passes, proceed with submission
-            const submitBtn = quoteForm.querySelector('button[type="submit"]');
-            const originalText = submitBtn.textContent;
-            
-            submitBtn.textContent = 'Submitting...';
-            submitBtn.disabled = true;
-            
-            // Simulate successful submission
-            setTimeout(() => {
-                // Mark form as submitted
-                quoteForm.dataset.submitted = 'true';
-                
-                // Create success message
-                const successDiv = document.createElement('div');
-                successDiv.style.cssText = `
-                    background: #f0fdf4;
-                    border: 1px solid #bbf7d0;
-                    color: #166534;
-                    padding: 20px;
-                    border-radius: 8px;
-                    text-align: center;
-                    margin-bottom: 16px;
-                `;
-                successDiv.innerHTML = `
-                    <h4 style="margin: 0 0 8px 0; color: #166534; font-size: 18px;">Quote Request Submitted Successfully!</h4>
-                    <p style="margin: 0; font-size: 14px;">Bill Layne will contact you within 24 hours at ${data.phone}</p>
-                `;
-                
-                // Replace form with success message
-                quoteForm.style.display = 'none';
-                quoteForm.parentNode.insertBefore(successDiv, quoteForm);
-                
-                // Auto-close modal after 3 seconds and reset
-                setTimeout(() => {
-                    closeModal();
-                    
-                    // Reset form for next use
-                    setTimeout(() => {
-                        quoteForm.reset();
-                        quoteForm.style.display = 'block';
-                        successDiv.remove();
-                        submitBtn.textContent = originalText;
-                        submitBtn.disabled = false;
-                        quoteForm.dataset.submitted = 'false';
-                    }, 500);
-                }, 3000);
-                
-                // Track successful submission
-                trackEvent('form_submit', 'lead_generation', 'quote_form_success');
-                
-            }, 1000); // Reduced timeout for better UX
-        });
-        
-        // Real-time validation feedback
-        const inputs = quoteForm.querySelectorAll('input, select');
-        inputs.forEach(input => {
-            input.addEventListener('blur', function() {
-                validateField(input);
-            });
-            
-            input.addEventListener('input', function() {
-                // Clear error styling on input
-                if (input.style.borderColor === 'rgb(239, 68, 68)') {
-                    input.style.borderColor = '';
-                    input.setAttribute('aria-invalid', 'false');
-                }
-                
-                // Remove error message if all fields are valid
-                const errorMessage = document.querySelector('.error-message');
-                if (errorMessage) {
-                    const allInputs = quoteForm.querySelectorAll('input[required], select[required]');
-                    const allValid = Array.from(allInputs).every(inp => {
-                        return inp.value.trim() !== '' && inp.getAttribute('aria-invalid') !== 'true';
-                    });
-                    
-                    if (allValid) {
-                        errorMessage.remove();
-                    }
-                }
-            });
-        });
-    }
-    
-    function validateField(input) {
-        const value = input.value.trim();
-        const isRequired = input.hasAttribute('required');
-        
-        if (isRequired && value === '') {
-            input.style.borderColor = '#ef4444';
-            input.setAttribute('aria-invalid', 'true');
-            return false;
-        }
-        
-        // Special validation for phone
-        if (input.type === 'tel') {
-            const phoneValue = value.replace(/\D/g, '');
-            if (value !== '' && phoneValue.length < 10) {
-                input.style.borderColor = '#ef4444';
-                input.setAttribute('aria-invalid', 'true');
-                return false;
-            }
-        }
-        
-        // Special validation for email
-        if (input.type === 'email' && value !== '') {
-            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailPattern.test(value)) {
-                input.style.borderColor = '#ef4444';
-                input.setAttribute('aria-invalid', 'true');
-                return false;
-            }
-        }
-        
-        input.style.borderColor = '';
-        input.setAttribute('aria-invalid', 'false');
-        return true;
-    }
-    
-    // Smooth scrolling for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-            const targetId = this.getAttribute('href').substring(1);
-            const targetElement = document.getElementById(targetId);
-            
-            if (targetElement) {
-                e.preventDefault();
-                const navHeight = document.querySelector('.nav-sticky').offsetHeight;
-                const targetPosition = targetElement.offsetTop - navHeight - 20;
-                
+            if (targetSection) {
+                const offsetTop = targetSection.offsetTop - 80; // Account for sticky navbar
                 window.scrollTo({
-                    top: targetPosition,
+                    top: offsetTop,
                     behavior: 'smooth'
                 });
+                
+                // Close mobile menu if open
+                if (navbarMenu && navbarMenu.classList.contains('active')) {
+                    navbarMenu.classList.remove('active');
+                    mobileMenuToggle.classList.remove('active');
+                }
             }
         });
     });
     
-    // Intersection Observer for animations
+    // Copy phone numbers to clipboard
+    const copyButtons = document.querySelectorAll('.copy-btn');
+    copyButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const phoneNumber = this.getAttribute('data-phone');
+            
+            if (phoneNumber) {
+                // Create a temporary input element to copy the phone number
+                const tempInput = document.createElement('input');
+                tempInput.value = phoneNumber;
+                document.body.appendChild(tempInput);
+                tempInput.select();
+                
+                try {
+                    document.execCommand('copy');
+                    showNotification(`Phone number ${formatPhoneNumber(phoneNumber)} copied to clipboard!`);
+                    
+                    // Update button text temporarily
+                    const originalText = this.textContent;
+                    this.textContent = 'Copied!';
+                    this.style.background = 'var(--color-success)';
+                    this.style.color = 'white';
+                    
+                    setTimeout(() => {
+                        this.textContent = originalText;
+                        this.style.background = '';
+                        this.style.color = '';
+                    }, 2000);
+                    
+                } catch (err) {
+                    showNotification('Failed to copy phone number. Please copy manually.', 'error');
+                }
+                
+                document.body.removeChild(tempInput);
+            }
+        });
+    });
+    
+    // Emergency call functionality
+    const emergencyCallButtons = document.querySelectorAll('.emergency-call-btn');
+    emergencyCallButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const phoneNumber = this.getAttribute('data-phone');
+            if (phoneNumber) {
+                window.location.href = `tel:${phoneNumber}`;
+            }
+        });
+    });
+    
+    // Format phone number for display
+    function formatPhoneNumber(phoneNumber) {
+        if (phoneNumber.length === 10) {
+            return `(${phoneNumber.slice(0, 3)}) ${phoneNumber.slice(3, 6)}-${phoneNumber.slice(6)}`;
+        } else if (phoneNumber.length === 3) {
+            return phoneNumber; // For 911
+        }
+        return phoneNumber;
+    }
+    
+    // Show notification function
+    function showNotification(message, type = 'success') {
+        const notification = document.getElementById('notification');
+        const notificationText = document.getElementById('notification-text');
+        
+        if (notification && notificationText) {
+            notificationText.textContent = message;
+            
+            // Set notification style based on type
+            if (type === 'error') {
+                notification.style.background = 'var(--color-error)';
+            } else {
+                notification.style.background = 'var(--color-success)';
+            }
+            
+            notification.classList.add('show');
+            
+            // Hide notification after 3 seconds
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+    }
+    
+    // Add click-to-call functionality for all phone numbers
+    const phoneNumbers = document.querySelectorAll('.phone-number span, .emergency-number span');
+    phoneNumbers.forEach(phoneSpan => {
+        const phoneText = phoneSpan.textContent.trim();
+        
+        // Extract phone number from text (remove emojis and formatting)
+        const phoneMatch = phoneText.match(/(\d{3}[-.\s]?\d{3}[-.\s]?\d{4}|\d{3})/);
+        
+        if (phoneMatch && phoneMatch[1]) {
+            const cleanPhone = phoneMatch[1].replace(/[-.\s]/g, '');
+            phoneSpan.style.cursor = 'pointer';
+            phoneSpan.style.textDecoration = 'underline';
+            phoneSpan.title = 'Click to call';
+            
+            phoneSpan.addEventListener('click', function() {
+                window.location.href = `tel:${cleanPhone}`;
+            });
+        }
+    });
+    
+    // Add animation to step cards on scroll
     const observerOptions = {
         threshold: 0.1,
         rootMargin: '0px 0px -50px 0px'
     };
     
-    const observer = new IntersectionObserver((entries) => {
+    const observer = new IntersectionObserver(function(entries) {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.style.opacity = '1';
@@ -357,53 +155,177 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }, observerOptions);
     
-    // Observe elements for fade-in animations
-    document.querySelectorAll('.coverage-card, .difference-card, .coverage-detail-card').forEach(el => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(20px)';
-        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-        observer.observe(el);
+    // Observe step cards for animation
+    const stepCards = document.querySelectorAll('.step-card');
+    stepCards.forEach((card, index) => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        card.style.transition = `opacity 0.6s ease ${index * 0.1}s, transform 0.6s ease ${index * 0.1}s`;
+        observer.observe(card);
     });
     
-    // Phone number formatting
-    const phoneInput = document.getElementById('phone');
-    if (phoneInput) {
-        phoneInput.addEventListener('input', function(e) {
-            let value = e.target.value.replace(/\D/g, '');
-            let formattedValue = '';
-            
-            if (value.length > 0) {
-                if (value.length <= 3) {
-                    formattedValue = `(${value}`;
-                } else if (value.length <= 6) {
-                    formattedValue = `(${value.slice(0, 3)}) ${value.slice(3)}`;
-                } else {
-                    formattedValue = `(${value.slice(0, 3)}) ${value.slice(3, 6)}-${value.slice(6, 10)}`;
-                }
-            }
-            
-            e.target.value = formattedValue;
+    // Add hover effects to company cards
+    const companyCards = document.querySelectorAll('.company-card');
+    companyCards.forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-4px) scale(1.02)';
         });
+        
+        card.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0) scale(1)';
+        });
+    });
+    
+    // Add keyboard navigation support
+    document.addEventListener('keydown', function(e) {
+        // Press 'Escape' to close mobile menu
+        if (e.key === 'Escape' && navbarMenu && navbarMenu.classList.contains('active')) {
+            navbarMenu.classList.remove('active');
+            mobileMenuToggle.classList.remove('active');
+        }
+        
+        // Press 'C' to copy first visible phone number
+        if (e.key === 'c' && e.ctrlKey && e.shiftKey) {
+            const firstCopyBtn = document.querySelector('.copy-btn[data-phone]');
+            if (firstCopyBtn) {
+                firstCopyBtn.click();
+            }
+        }
+    });
+    
+    // Add print functionality
+    function addPrintButton() {
+        const printButton = document.createElement('button');
+        printButton.textContent = '🖨️ Print Guide';
+        printButton.className = 'btn btn--outline';
+        printButton.style.position = 'fixed';
+        printButton.style.bottom = '20px';
+        printButton.style.right = '20px';
+        printButton.style.zIndex = '1000';
+        printButton.title = 'Print this guide';
+        
+        printButton.addEventListener('click', function() {
+            window.print();
+        });
+        
+        document.body.appendChild(printButton);
     }
     
-    // Progressive enhancement for better UX
+    // Add print button on larger screens
+    if (window.innerWidth > 768) {
+        addPrintButton();
+    }
+    
+    // Handle window resize
+    let resizeTimeout;
+    window.addEventListener('resize', function() {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(function() {
+            // Close mobile menu on resize to larger screen
+            if (window.innerWidth > 768 && navbarMenu && navbarMenu.classList.contains('active')) {
+                navbarMenu.classList.remove('active');
+                mobileMenuToggle.classList.remove('active');
+            }
+        }, 250);
+    });
+    
+    // FAQ Accordion functionality
+    const faqQuestions = document.querySelectorAll('.faq-question');
+    
+    faqQuestions.forEach(question => {
+        question.addEventListener('click', function() {
+            const isExpanded = this.getAttribute('aria-expanded') === 'true';
+            
+            // Close all other FAQs
+            faqQuestions.forEach(q => {
+                if (q !== this) {
+                    q.setAttribute('aria-expanded', 'false');
+                }
+            });
+            
+            // Toggle current FAQ
+            this.setAttribute('aria-expanded', !isExpanded);
+            
+            // Track interaction (only if function exists)
+            if (typeof trackInteraction === 'function') {
+                trackInteraction('faq-toggle', this.querySelector('span').textContent);
+            }
+        });
+        
+        // Allow keyboard navigation
+        question.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                this.click();
+            }
+        });
+    });
+    
+    // Add scroll-to-top functionality
+    let scrollToTopButton;
+    
+    function createScrollToTopButton() {
+        scrollToTopButton = document.createElement('button');
+        scrollToTopButton.innerHTML = '↑';
+        scrollToTopButton.className = 'scroll-to-top';
+        scrollToTopButton.style.cssText = `
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--color-primary);
+            color: white;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        `;
+        
+        scrollToTopButton.addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        document.body.appendChild(scrollToTopButton);
+    }
+    
+    createScrollToTopButton();
+    
+    // Show/hide scroll-to-top button based on scroll position
+    window.addEventListener('scroll', function() {
+        if (window.pageYOffset > 300) {
+            scrollToTopButton.style.opacity = '1';
+            scrollToTopButton.style.visibility = 'visible';
+        } else {
+            scrollToTopButton.style.opacity = '0';
+            scrollToTopButton.style.visibility = 'hidden';
+        }
+    });
+    
+    // Add enhanced accessibility features
     function enhanceAccessibility() {
         // Add skip link
         const skipLink = document.createElement('a');
-        skipLink.href = '#coverage';
+        skipLink.href = '#main-content';
         skipLink.textContent = 'Skip to main content';
         skipLink.className = 'sr-only';
         skipLink.style.cssText = `
             position: absolute;
             top: -40px;
             left: 6px;
-            background: #1e40af;
+            background: var(--color-primary);
             color: white;
             padding: 8px;
-            border-radius: 4px;
             text-decoration: none;
+            border-radius: 4px;
             z-index: 10000;
-            transition: top 0.3s;
         `;
         
         skipLink.addEventListener('focus', function() {
@@ -416,650 +338,381 @@ document.addEventListener('DOMContentLoaded', function() {
         
         document.body.insertBefore(skipLink, document.body.firstChild);
         
-        // Enhance form labels
-        document.querySelectorAll('.form-control').forEach(input => {
-            const label = document.querySelector(`label[for="${input.id}"]`);
-            if (label && input.hasAttribute('required')) {
-                input.setAttribute('aria-required', 'true');
+        // Add main content id
+        const mainSection = document.querySelector('.hero');
+        if (mainSection) {
+            mainSection.id = 'main-content';
+        }
+        
+        // Improve button accessibility
+        const buttons = document.querySelectorAll('button');
+        buttons.forEach(button => {
+            if (!button.getAttribute('aria-label') && !button.textContent.trim()) {
+                button.setAttribute('aria-label', 'Button');
+            }
+        });
+        
+        // Add role attributes where needed
+        const cards = document.querySelectorAll('.step-card, .company-card, .resource-card');
+        cards.forEach(card => {
+            card.setAttribute('role', 'article');
+        });
+    }
+    
+    enhanceAccessibility();
+    
+    // Add focus management for better keyboard navigation
+    const focusableElements = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+    
+    function trapFocus(element) {
+        const focusableContent = element.querySelectorAll(focusableElements);
+        const firstFocusableElement = focusableContent[0];
+        const lastFocusableElement = focusableContent[focusableContent.length - 1];
+        
+        element.addEventListener('keydown', function(e) {
+            if (e.key === 'Tab') {
+                if (e.shiftKey) {
+                    if (document.activeElement === firstFocusableElement) {
+                        lastFocusableElement.focus();
+                        e.preventDefault();
+                    }
+                } else {
+                    if (document.activeElement === lastFocusableElement) {
+                        firstFocusableElement.focus();
+                        e.preventDefault();
+                    }
+                }
             }
         });
     }
     
-    // Analytics tracking (placeholder)
-    function trackEvent(action, category, label) {
-        // Placeholder for analytics tracking
-        console.log('Event tracked:', { action, category, label });
-        
-        // Example: Google Analytics 4
-        // gtag('event', action, {
-        //     event_category: category,
-        //     event_label: label
-        // });
-    }
-    
-    // Make trackEvent available globally for form submission
-    window.trackEvent = trackEvent;
-    
-    // Track important interactions
-    document.querySelectorAll('a[href^="tel:"]').forEach(link => {
-        link.addEventListener('click', () => {
-            trackEvent('click', 'phone_call', 'cta_button');
-        });
-    });
-    
-    if (requestQuoteBtn) {
-        requestQuoteBtn.addEventListener('click', () => {
-            trackEvent('click', 'lead_generation', 'quote_request');
+    // Initialize focus trapping for mobile menu when open
+    if (navbarMenu) {
+        navbarMenu.addEventListener('keydown', function(e) {
+            if (this.classList.contains('active') && e.key === 'Tab') {
+                trapFocus(this);
+            }
         });
     }
     
-    // Performance optimization
-    function lazyLoadImages() {
-        const images = document.querySelectorAll('img[loading="lazy"]');
+    // Add performance optimization for scroll events
+    let ticking = false;
+    
+    function updateScrollElements() {
+        // Update any scroll-dependent elements here
+        ticking = false;
+    }
+    
+    function requestScrollUpdate() {
+        if (!ticking) {
+            requestAnimationFrame(updateScrollElements);
+            ticking = true;
+        }
+    }
+    
+    window.addEventListener('scroll', requestScrollUpdate);
+    
+    // Search functionality
+    const searchInput = document.getElementById('searchInput');
+    const searchBtn = document.querySelector('.search-btn');
+    const searchResults = document.getElementById('searchResults');
+    
+    // Search data - compile all searchable content
+    const searchData = [
+        // Insurance companies
+        { title: 'State Farm', desc: '📞 800-732-5246 - 24/7 Claims Support', type: 'company', phone: '8007325246' },
+        { title: 'GEICO', desc: '📞 800-861-8380 - 24/7 Claims Support', type: 'company', phone: '8008618380' },
+        { title: 'Allstate', desc: '📞 800-255-7828 - 24/7 Claims Support', type: 'company', phone: '8002557828' },
+        { title: 'Nationwide', desc: '📞 800-421-3535 - 24/7 Claims Support', type: 'company', phone: '8004213535' },
+        { title: 'Progressive', desc: '📞 800-776-4737 - 24/7 Claims Support', type: 'company', phone: '8007764737' },
+        { title: 'Travelers', desc: '📞 800-252-4633 - 24/7 Claims Support', type: 'company', phone: '8002524633' },
+        { title: 'USAA', desc: '📞 800-531-8722 - 24/7 Claims Support', type: 'company', phone: '8005318722' },
+        { title: 'Farmers', desc: '📞 800-435-7764 - 24/7 Claims Support', type: 'company', phone: '8004357764' },
+        { title: 'Erie Insurance', desc: '📞 800-367-3743 - 24/7 Claims Support', type: 'company', phone: '8003673743' },
+        { title: 'NC Farm Bureau', desc: 'Contact Local Agent - Business Hours', type: 'company' },
+        { title: 'Auto-Owners', desc: 'Contact Local Agent - Business Hours', type: 'company' },
+        // Topics
+        { title: 'Auto Claims Process', desc: 'Step-by-step guide for filing auto insurance claims', type: 'topic', section: '#auto-claims' },
+        { title: 'Home Claims Process', desc: 'Step-by-step guide for filing home insurance claims', type: 'topic', section: '#home-claims' },
+        { title: 'NC Minimum Coverage', desc: '50/100/50 - Bodily Injury and Property Damage requirements', type: 'topic', section: '#resources' },
+        { title: 'NC Insurance Points Calculator', desc: 'Calculate how violations affect your insurance rates', type: 'topic', section: '#points-system' },
+        { title: 'Car Value Finder', desc: 'Find your car\'s Kelley Blue Book value instantly', type: 'topic', section: '#car-value' },
+        { title: 'Emergency Contacts', desc: '911 Emergency Services, NC State Highway Patrol', type: 'topic', section: '#emergency' },
+        { title: 'Accident Reports', desc: 'NC State Highway Patrol online accident reports', type: 'topic', section: '#resources' },
+        { title: 'Tips and Preparation', desc: 'What to keep in your car and important documents', type: 'topic', section: '.tips-section' },
+        { title: 'FAQ', desc: 'Frequently asked questions about insurance claims', type: 'topic', section: '#faq' }
+    ];
+    
+    function performSearch(query) {
+        if (!query || query.length < 2) {
+            searchResults.classList.remove('active');
+            return;
+        }
         
-        if ('IntersectionObserver' in window) {
-            const imageObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const img = entry.target;
-                        img.src = img.dataset.src || img.src;
-                        img.classList.remove('lazy');
-                        imageObserver.unobserve(img);
+        const results = searchData.filter(item => {
+            const searchString = `${item.title} ${item.desc}`.toLowerCase();
+            return searchString.includes(query.toLowerCase());
+        });
+        
+        if (results.length > 0) {
+            displaySearchResults(results);
+        } else {
+            displayNoResults();
+        }
+    }
+    
+    function displaySearchResults(results) {
+        searchResults.innerHTML = '';
+        results.forEach(result => {
+            const resultItem = document.createElement('div');
+            resultItem.className = 'search-result-item';
+            resultItem.innerHTML = `
+                <div class="search-result-title">${result.title}</div>
+                <div class="search-result-desc">${result.desc}</div>
+            `;
+            
+            resultItem.addEventListener('click', () => {
+                if (result.type === 'company' && result.phone) {
+                    // Copy phone number
+                    const tempInput = document.createElement('input');
+                    tempInput.value = result.phone;
+                    document.body.appendChild(tempInput);
+                    tempInput.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(tempInput);
+                    showNotification(`${result.title} phone number copied!`);
+                    searchResults.classList.remove('active');
+                    searchInput.value = '';
+                } else if (result.type === 'topic' && result.section) {
+                    // Navigate to section
+                    const targetSection = document.querySelector(result.section);
+                    if (targetSection) {
+                        targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        searchResults.classList.remove('active');
+                        searchInput.value = '';
                     }
-                });
+                }
             });
             
-            images.forEach(img => imageObserver.observe(img));
-        }
+            searchResults.appendChild(resultItem);
+        });
+        searchResults.classList.add('active');
     }
     
-    // Initialize enhancements
-    enhanceAccessibility();
-    lazyLoadImages();
+    function displayNoResults() {
+        searchResults.innerHTML = `
+            <div class="search-result-item">
+                <div class="search-result-title">No results found</div>
+                <div class="search-result-desc">Try searching for insurance company names or topics like "auto claims"</div>
+            </div>
+        `;
+        searchResults.classList.add('active');
+    }
     
-    // Event listeners
-    window.addEventListener('scroll', handleMobileCTA);
-    window.addEventListener('resize', handleMobileCTA);
-    
-    // Initial call
-    handleMobileCTA();
-    
-    // Page visibility API for analytics
-    document.addEventListener('visibilitychange', function() {
-        if (document.visibilityState === 'hidden') {
-            trackEvent('page_exit', 'engagement', 'page_hidden');
-        }
-    });
-    
-    // Form abandonment tracking
-    let formStarted = false;
-    if (quoteForm) {
-        quoteForm.addEventListener('input', function() {
-            if (!formStarted) {
-                formStarted = true;
-                trackEvent('form_start', 'lead_generation', 'quote_form');
+    // Search event listeners
+    if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+            performSearch(e.target.value);
+        });
+        
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                performSearch(e.target.value);
             }
         });
         
-        window.addEventListener('beforeunload', function() {
-            if (formStarted && quoteForm.dataset.submitted !== 'true') {
-                trackEvent('form_abandon', 'lead_generation', 'quote_form');
+        // Close search results when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.search-wrapper')) {
+                searchResults.classList.remove('active');
             }
         });
     }
     
-    // Error handling
-    window.addEventListener('error', function(e) {
-        console.error('JavaScript error:', e.error);
-        trackEvent('javascript_error', 'technical', e.error.message);
-    });
+    if (searchBtn) {
+        searchBtn.addEventListener('click', () => {
+            performSearch(searchInput.value);
+        });
+    }
     
-    // Performance monitoring
-    window.addEventListener('load', function() {
+    // NC Insurance Points Calculator
+    // NC Insurance Points rate increase percentages
+    const rateIncreases = {
+        0: 0,
+        1: 30,
+        2: 45,
+        3: 60,
+        4: 80,
+        5: 110,
+        6: 135,
+        7: 165,
+        8: 195,
+        9: 225,
+        10: 260,
+        11: 295,
+        12: 340
+    };
+
+    // Points calculator form submission handler
+    const pointsCalcForm = document.getElementById('points-calculator-form');
+    if (pointsCalcForm) {
+        pointsCalcForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            calculatePointsImpact();
+        });
+    }
+
+    // Format currency for points calculator
+    function formatCurrency(amount) {
+        return new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        }).format(amount);
+    }
+
+    // Calculate impact function
+    function calculatePointsImpact() {
+        // Get input values
+        const currentPremium = parseFloat(document.getElementById('current-premium').value);
+        const violationType = document.getElementById('violation-type');
+        const selectedOption = violationType.options[violationType.selectedIndex];
+        
+        if (!currentPremium || !violationType.value) {
+            return;
+        }
+
+        // Extract points from violation value
+        const points = parseInt(violationType.value);
+        const violationText = selectedOption.text;
+        
+        // Get rate increase percentage
+        const increasePercentage = rateIncreases[points] || 0;
+        
+        // Calculate new premium and increase
+        const increaseAmount = (currentPremium * increasePercentage) / 100;
+        const newPremium = currentPremium + increaseAmount;
+        
+        // Update results
+        document.getElementById('violation-name').textContent = violationText;
+        document.getElementById('points-value').textContent = points;
+        document.getElementById('increase-percentage').textContent = increasePercentage + '%';
+        document.getElementById('annual-increase').textContent = formatCurrency(increaseAmount);
+        document.getElementById('new-premium').textContent = formatCurrency(newPremium);
+        
+        // Update impact bar
+        const impactFill = document.getElementById('impact-fill');
+        const impactPercentageDisplay = document.getElementById('impact-percentage');
+        const fillWidth = Math.min((increasePercentage / 340) * 100, 100);
+        
+        // Show results with animation
+        const resultsSection = document.getElementById('results');
+        resultsSection.classList.add('show');
+        
+        // Animate the bar after a short delay
         setTimeout(() => {
-            const perfData = performance.getEntriesByType('navigation')[0];
-            if (perfData) {
-                const loadTime = perfData.loadEventEnd - perfData.loadEventStart;
-                trackEvent('page_load_time', 'performance', Math.round(loadTime));
-            }
-        }, 0);
-    });
-    
-    // Console welcome message
-    console.log('%cBill Layne Insurance Agency', 'color: #1e40af; font-size: 20px; font-weight: bold;');
-    console.log('%cServing North Carolina since 2004', 'color: #f97316; font-size: 14px;');
-    console.log('For technical support, contact: Save@BillLayneInsurance.com');
-});
-
-// Utility functions
-function debounce(func, wait) {
-    let timeout;
-    return function executedFunction(...args) {
-        const later = () => {
-            clearTimeout(timeout);
-            func(...args);
-        };
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-    };
-}
-
-function throttle(func, limit) {
-    let inThrottle;
-    return function() {
-        const args = arguments;
-        const context = this;
-        if (!inThrottle) {
-            func.apply(context, args);
-            inThrottle = true;
-            setTimeout(() => inThrottle = false, limit);
-        }
-    };
-}
-
-// Insurance Calculator Functionality
-let currentCalculatorStep = 1;
-const totalCalculatorSteps = 4;
-
-function initializeCalculator() {
-    // Home value slider
-    const homeValueSlider = document.getElementById('homeValueSlider');
-    const homeValueDisplay = document.getElementById('homeValueDisplay');
-    
-    if (homeValueSlider && homeValueDisplay) {
-        homeValueDisplay.textContent = parseInt(homeValueSlider.value).toLocaleString();
+            impactFill.style.width = fillWidth + '%';
+            impactPercentageDisplay.textContent = increasePercentage + '%';
+        }, 100);
         
-        homeValueSlider.addEventListener('input', function() {
-            const value = parseInt(this.value);
-            homeValueDisplay.textContent = value.toLocaleString();
-            updatePremiumEstimate();
+        // Scroll to results
+        resultsSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    // Add input formatting for premium field
+    const premiumInput = document.getElementById('current-premium');
+    if (premiumInput) {
+        premiumInput.addEventListener('blur', function() {
+            if (this.value) {
+                const value = parseFloat(this.value);
+                if (!isNaN(value)) {
+                    this.value = value.toFixed(2);
+                }
+            }
         });
     }
 
-    // Form submission
-    const calculatorForm = document.getElementById('calculatorForm');
-    if (calculatorForm) {
-        calculatorForm.addEventListener('submit', handleCalculatorSubmission);
+    // Auto-calculate when violation is selected (if premium is already entered)
+    const violationSelect = document.getElementById('violation-type');
+    if (violationSelect) {
+        violationSelect.addEventListener('change', function() {
+            const premium = document.getElementById('current-premium').value;
+            if (premium && this.value) {
+                calculatePointsImpact();
+            }
+        });
     }
 
-    // Initialize progress
-    updateCalculatorProgress();
-}
-
-function nextCalculatorStep() {
-    if (validateCalculatorStep()) {
-        if (currentCalculatorStep < totalCalculatorSteps) {
-            document.getElementById(`step${currentCalculatorStep}`).classList.remove('active');
-            currentCalculatorStep++;
-            document.getElementById(`step${currentCalculatorStep}`).classList.add('active');
-            updateCalculatorProgress();
+    // Car Value Finder Functionality
+    const carValueForm = document.getElementById('carValueForm');
+    if (carValueForm) {
+        carValueForm.addEventListener('submit', function(e) {
+            e.preventDefault();
             
-            if (currentCalculatorStep === 4) {
-                setTimeout(() => {
-                    updatePremiumEstimate();
-                }, 300);
-            }
-        }
-    }
-}
-
-function prevCalculatorStep() {
-    if (currentCalculatorStep > 1) {
-        document.getElementById(`step${currentCalculatorStep}`).classList.remove('active');
-        currentCalculatorStep--;
-        document.getElementById(`step${currentCalculatorStep}`).classList.add('active');
-        updateCalculatorProgress();
-    }
-}
-
-function updateCalculatorProgress() {
-    const progressFill = document.getElementById('progressFill');
-    const currentStepDisplay = document.getElementById('currentStep');
-    
-    if (progressFill) {
-        const progressPercentage = (currentCalculatorStep / totalCalculatorSteps) * 100;
-        progressFill.style.width = `${progressPercentage}%`;
-    }
-    
-    if (currentStepDisplay) {
-        currentStepDisplay.textContent = currentCalculatorStep;
-    }
-}
-
-function validateCalculatorStep() {
-    const currentStepElement = document.getElementById(`step${currentCalculatorStep}`);
-    if (!currentStepElement) return true;
-    
-    const requiredFields = currentStepElement.querySelectorAll('select[required]');
-    
-    for (let field of requiredFields) {
-        if (!field.value || !field.value.trim()) {
-            field.focus();
-            showCalculatorNotification('Please fill in all required fields', 'error');
-            return false;
-        }
-    }
-    
-    // Special validation for step 2
-    if (currentCalculatorStep === 2) {
-        const yearBuilt = document.getElementById('yearBuilt');
-        if (!yearBuilt.value) {
-            yearBuilt.focus();
-            showCalculatorNotification('Please select when your home was built', 'error');
-            return false;
-        }
-    }
-    
-    return true;
-}
-
-function updatePremiumEstimate() {
-    const homeValueSlider = document.getElementById('homeValueSlider');
-    const yearBuiltSelect = document.getElementById('yearBuilt');
-    const locationSelect = document.getElementById('homeLocation');
-    const premiumDisplay = document.getElementById('estimatedPremium');
-    
-    if (!homeValueSlider || !premiumDisplay) return;
-    
-    const homeValue = parseInt(homeValueSlider.value || 250000);
-    const yearBuilt = yearBuiltSelect ? yearBuiltSelect.value : '';
-    const location = locationSelect ? locationSelect.value : 'elkin';
-    
-    // Basic premium calculation logic
-    let basePremium = homeValue * 0.0035; // 0.35% of home value
-    
-    // Adjust for year built
-    if (yearBuilt) {
-        const year = parseInt(yearBuilt);
-        if (year >= 2020) basePremium *= 0.85;
-        else if (year >= 2000) basePremium *= 0.95;
-        else if (year >= 1980) basePremium *= 1.1;
-        else basePremium *= 1.25;
-    }
-    
-    // Adjust for location (North Carolina specific)
-    const locationMultipliers = {
-        'elkin': 0.9,
-        'statesville': 0.95,
-        'winston-salem': 1.0,
-        'greensboro': 1.05,
-        'charlotte': 1.1,
-        'other-nc': 1.0,
-        'other': 1.15
-    };
-    basePremium *= locationMultipliers[location] || 1.0;
-    
-    // Add some variation for realism
-    basePremium += (Math.random() - 0.5) * 200;
-    
-    const estimatedPremium = Math.max(600, Math.round(basePremium));
-    
-    // Animate the number change
-    const currentValue = parseInt(premiumDisplay.textContent.replace(/,/g, '')) || 0;
-    animateNumber(premiumDisplay, currentValue, estimatedPremium);
-}
-
-function animateNumber(element, from, to) {
-    const duration = 1000;
-    const startTime = performance.now();
-    
-    function update(currentTime) {
-        const elapsed = currentTime - startTime;
-        const progress = Math.min(elapsed / duration, 1);
-        
-        const easeOutQuart = 1 - Math.pow(1 - progress, 4);
-        const current = Math.round(from + (to - from) * easeOutQuart);
-        
-        element.textContent = current.toLocaleString();
-        
-        if (progress < 1) {
-            requestAnimationFrame(update);
-        }
-    }
-    
-    requestAnimationFrame(update);
-}
-
-function handleCalculatorSubmission(e) {
-    e.preventDefault();
-    
-    const formData = {
-        homeValue: document.getElementById('homeValueSlider')?.value,
-        yearBuilt: document.getElementById('yearBuilt')?.value,
-        location: document.getElementById('homeLocation')?.value,
-        name: document.getElementById('customerName')?.value,
-        phone: document.getElementById('customerPhone')?.value,
-        email: document.getElementById('customerEmail')?.value
-    };
-    
-    // Validate required fields
-    if (!formData.name || !formData.phone || !formData.email) {
-        showCalculatorNotification('Please fill in all contact information', 'error');
-        return;
-    }
-    
-    // Validate email format
-    if (!isValidEmailCalculator(formData.email)) {
-        showCalculatorNotification('Please enter a valid email address', 'error');
-        document.getElementById('customerEmail').focus();
-        return;
-    }
-    
-    // Simulate form submission
-    showCalculatorNotification('Thank you! We\'ll contact you within 24 hours with your personalized quote.', 'success');
-    
-    // Log form data (in a real app, this would be sent to a server)
-    console.log('Calculator form submitted with data:', formData);
-    
-    // Reset form after delay
-    setTimeout(() => {
-        resetCalculatorForm();
-    }, 3000);
-}
-
-function resetCalculatorForm() {
-    currentCalculatorStep = 1;
-    document.querySelectorAll('.calculator-step').forEach(step => step.classList.remove('active'));
-    document.getElementById('step1').classList.add('active');
-    updateCalculatorProgress();
-    
-    document.getElementById('calculatorForm').reset();
-    document.getElementById('homeValueDisplay').textContent = '250,000';
-    document.getElementById('estimatedPremium').textContent = '0';
-}
-
-function showCalculatorNotification(message, type = 'info') {
-    // Remove existing notifications
-    const existingNotifications = document.querySelectorAll('.calculator-notification');
-    existingNotifications.forEach(n => n.remove());
-    
-    // Create notification element
-    const notification = document.createElement('div');
-    notification.className = `calculator-notification calculator-notification--${type}`;
-    notification.textContent = message;
-    
-    document.body.appendChild(notification);
-    
-    // Animate in
-    setTimeout(() => {
-        if (window.innerWidth <= 768) {
-            notification.classList.add('show');
-        } else {
-            notification.style.transform = 'translateX(0)';
-        }
-    }, 100);
-    
-    // Auto remove after 5 seconds
-    setTimeout(() => {
-        if (window.innerWidth <= 768) {
-            notification.classList.remove('show');
-        } else {
-            notification.style.transform = 'translateX(100%)';
-        }
-        setTimeout(() => {
-            if (notification.parentNode) {
-                notification.remove();
-            }
-        }, 300);
-    }, 5000);
-}
-
-function isValidEmailCalculator(email) {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-}
-
-// Reviews Carousel Functionality
-let currentReviewIndex = 0;
-let reviews = [];
-let totalReviews = 0;
-
-function showReview(index) {
-    if (reviews.length === 0) return;
-    
-    // Hide all reviews
-    reviews.forEach(review => review.style.display = 'none');
-    
-    // Show current review
-    if (reviews[index]) {
-        reviews[index].style.display = 'block';
-    }
-    
-    // Update dots
-    const dots = document.querySelectorAll('.dot');
-    dots.forEach((dot, i) => {
-        dot.classList.toggle('active', i === index);
-    });
-}
-
-function nextReview() {
-    if (reviews.length === 0) return;
-    currentReviewIndex = (currentReviewIndex + 1) % totalReviews;
-    showReview(currentReviewIndex);
-}
-
-function previousReview() {
-    if (reviews.length === 0) return;
-    currentReviewIndex = (currentReviewIndex - 1 + totalReviews) % totalReviews;
-    showReview(currentReviewIndex);
-}
-
-function currentReview(index) {
-    if (reviews.length === 0) return;
-    currentReviewIndex = index - 1;
-    showReview(currentReviewIndex);
-}
-
-// Auto-rotate reviews every 5 seconds
-function startReviewCarousel() {
-    if (reviews.length > 1) {
-        setInterval(nextReview, 5000);
-    }
-}
-
-// Social Proof Animation
-function updateRecentActivity() {
-    const activities = [
-        "James from Statesville just received a quote • 2 minutes ago",
-        "Sarah from Elkin just purchased a policy • 5 minutes ago", 
-        "Mike from Winston-Salem just filed a claim • 8 minutes ago",
-        "Lisa from Greensboro just got a quote • 12 minutes ago",
-        "David from Charlotte just renewed his policy • 15 minutes ago"
-    ];
-    
-    const activityElement = document.querySelector('.recent-activity span:last-child');
-    if (activityElement) {
-        let activityIndex = 0;
-        setInterval(() => {
-            activityElement.textContent = activities[activityIndex];
-            activityIndex = (activityIndex + 1) % activities.length;
-        }, 8000);
-    }
-}
-
-// Recent Saves Ticker
-function updateRecentSaves() {
-    const saves = [
-        "Sarah from Winston-Salem saved $312/year",
-        "Mike from Elkin saved $487/year",
-        "The Johnson family saved $623/year", 
-        "Lisa from Greensboro saved $259/year",
-        "David from Charlotte saved $405/year",
-        "The Smith family saved $531/year",
-        "John from Statesville saved $378/year"
-    ];
-    
-    const saveElement = document.querySelector('.recent-save-text');
-    if (saveElement) {
-        let saveIndex = 0;
-        setInterval(() => {
-            saveIndex = (saveIndex + 1) % saves.length;
-            saveElement.style.opacity = '0';
-            setTimeout(() => {
-                saveElement.textContent = saves[saveIndex];
-                saveElement.style.opacity = '1';
-            }, 500);
-        }, 10000);
-    }
-}
-
-// Initialize carousel and social proof when DOM loads
-document.addEventListener('DOMContentLoaded', function() {
-    // Initialize calculator
-    initializeCalculator();
-    
-    // Initialize reviews
-    reviews = document.querySelectorAll('.review-card');
-    totalReviews = reviews.length;
-    
-    // Show all reviews on desktop, use carousel on mobile
-    if (window.innerWidth > 768 && reviews.length > 0) {
-        // Show all reviews in grid on desktop
-        reviews.forEach(review => review.style.display = 'block');
-        // Hide carousel controls on desktop since we show all reviews
-        const carouselControls = document.querySelector('.carousel-controls');
-        if (carouselControls) {
-            carouselControls.style.display = 'none';
-        }
-    } else if (reviews.length > 0) {
-        // Show carousel on mobile
-        showReview(0);
-        startReviewCarousel();
-    }
-    
-    updateRecentActivity();
-    updateRecentSaves();
-});
-
-// Handle responsive behavior for reviews
-window.addEventListener('resize', function() {
-    const carouselControls = document.querySelector('.carousel-controls');
-    
-    if (window.innerWidth > 768) {
-        // Show all reviews in grid on desktop
-        reviews.forEach(review => review.style.display = 'block');
-        if (carouselControls) {
-            carouselControls.style.display = 'none';
-        }
-    } else if (reviews.length > 0) {
-        // Show carousel on mobile
-        showReview(currentReviewIndex);
-        if (carouselControls) {
-            carouselControls.style.display = 'flex';
-        }
-    }
-});
-
-// Smooth scroll enhancement for anchor links
-function smoothScrollTo(elementId) {
-    const element = document.getElementById(elementId);
-    if (element) {
-        element.scrollIntoView({ 
-            behavior: 'smooth',
-            block: 'start'
+            const year = document.getElementById('year').value;
+            const make = document.getElementById('make').value;
+            const modelInput = document.getElementById('model').value.trim();
+            
+            // Format the values for KBB URL
+            const makeFormatted = make.toLowerCase().replace(/ /g, '-');
+            const modelFormatted = modelInput.toLowerCase().replace(/ /g, '-');
+            
+            // Construct KBB URL
+            const kbbUrl = `https://www.kbb.com/${makeFormatted}/${modelFormatted}/${year}/`;
+            
+            // Open in new tab
+            window.open(kbbUrl, '_blank', 'noopener,noreferrer');
+            
+            // Show notification
+            showNotification('Opening Kelley Blue Book for your vehicle valuation...', 'success');
         });
     }
-}
-
-// Enhanced form submission tracking
-function trackFormSubmission(formType, data) {
-    // Log form submission for analytics
-    console.log(`Form submitted: ${formType}`, data);
     
-    // You could integrate with Google Analytics, Facebook Pixel, etc.
-    if (typeof gtag !== 'undefined') {
-        gtag('event', 'form_submit', {
-            'form_type': formType,
-            'value': 1
+    // Model input validation - allow only alphanumeric, spaces, and hyphens
+    const modelInput = document.getElementById('model');
+    if (modelInput) {
+        modelInput.addEventListener('input', function() {
+            this.value = this.value.replace(/[^a-zA-Z0-9\s-]/g, '');
         });
     }
-}
-
-// Enhanced notification system with better positioning
-function showEnhancedNotification(message, type = 'info', duration = 5000) {
-    // Remove existing notifications
-    const existingNotifications = document.querySelectorAll('.enhanced-notification');
-    existingNotifications.forEach(n => n.remove());
     
-    // Create notification element
-    const notification = document.createElement('div');
-    notification.className = `enhanced-notification enhanced-notification--${type}`;
-    notification.innerHTML = `
-        <div class="notification-content">
-            <span class="notification-icon">${getNotificationIcon(type)}</span>
-            <span class="notification-message">${message}</span>
-            <button class="notification-close" onclick="this.parentElement.parentElement.remove()">×</button>
-        </div>
-    `;
+    // ZIP code input validation
+    const zipInput = document.getElementById('zipcode');
+    if (zipInput) {
+        zipInput.addEventListener('input', function() {
+            this.value = this.value.replace(/\D/g, '');
+            if (this.value.length > 5) {
+                this.value = this.value.slice(0, 5);
+            }
+        });
+    }
     
-    // Style the notification
-    Object.assign(notification.style, {
-        position: 'fixed',
-        top: '20px',
-        right: '20px',
-        padding: '16px',
-        borderRadius: '12px',
-        color: 'white',
-        fontWeight: '500',
-        zIndex: '1000',
-        transform: 'translateX(100%)',
-        transition: 'transform 0.3s ease',
-        maxWidth: '350px',
-        minWidth: '300px',
-        boxShadow: '0 8px 24px rgba(0, 0, 0, 0.15)',
-        fontSize: '14px',
-        lineHeight: '1.4'
+    // Remove scroll animations - all content visible on load
+    
+    // Initialize page
+    console.log('NC Insurance Claims Guide loaded successfully');
+    
+    // Add analytics tracking for user interactions (placeholder)
+    function trackInteraction(action, element) {
+        // Placeholder for analytics tracking
+        console.log(`User interaction: ${action} on ${element}`);
+    }
+    
+    // Track button clicks
+    document.addEventListener('click', function(e) {
+        if (e.target.matches('button, .btn')) {
+            trackInteraction('click', e.target.textContent || e.target.className);
+        }
     });
     
-    // Set background color based on type
-    const colors = {
-        success: 'linear-gradient(135deg, #28a745, #20c997)',
-        error: 'linear-gradient(135deg, #dc3545, #e74c3c)',
-        warning: 'linear-gradient(135deg, #ffc107, #f39c12)',
-        info: 'linear-gradient(135deg, #17a2b8, #3498db)'
-    };
-    notification.style.background = colors[type] || colors.info;
-    
-    document.body.appendChild(notification);
-    
-    // Animate in
-    setTimeout(() => {
-        notification.style.transform = 'translateX(0)';
-    }, 100);
-    
-    // Auto remove
-    setTimeout(() => {
-        notification.style.transform = 'translateX(100%)';
-        setTimeout(() => {
-            if (notification.parentNode) {
-                notification.remove();
-            }
-        }, 300);
-    }, duration);
-}
+});
 
-function getNotificationIcon(type) {
-    const icons = {
-        success: '✅',
-        error: '❌',
-        warning: '⚠️',
-        info: 'ℹ️'
-    };
-    return icons[type] || icons.info;
-}
-
-// Make functions available globally for onclick handlers
-window.nextCalculatorStep = nextCalculatorStep;
-window.prevCalculatorStep = prevCalculatorStep;
-window.nextReview = nextReview;
-window.previousReview = previousReview;
-window.currentReview = currentReview;
-window.smoothScrollTo = smoothScrollTo;
-
-// Export for testing (if needed)
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = {
-        debounce,
-        throttle
-    };
+// Service Worker registration for offline functionality (basic)
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function() {
+        // Uncomment when service worker is implemented
+        // navigator.serviceWorker.register('/sw.js');
+    });
 }

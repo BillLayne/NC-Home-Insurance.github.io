@@ -123,116 +123,102 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Mobile Sticky CTA -->
-    <div class="mobile-cta-sticky" id="mobileCTA">
-        <a href="tel:336-835-1993" class="btn btn--primary btn--full-width">
-            📞 For Any Questions Call Now: 336-835-1993
-        </a>
-    </div>
+    <!-- Navigation Header -->
+    <header class="navbar">
+        <div class="container">
+            <div class="navbar-content flex items-center justify-between">
+                <div class="navbar-brand">
+                    <a href="https://billlayne.github.io/Bill-Layne-Insurance.gitbhub.io/" style="text-decoration: none;">
+                        <div style="display: flex; flex-direction: column;">
+                            <h2 style="font-size: var(--font-size-2xl); font-weight: var(--font-weight-bold); color: var(--color-primary); margin: 0;">Bill Layne Insurance</h2>
+                            <span style="font-size: var(--font-size-sm); color: var(--color-text-secondary); font-weight: var(--font-weight-medium);">Home Insurance Guide</span>
+                        </div>
+                    </a>
+                </div>
+                <nav class="navbar-menu">
+                    <a href="#coverage" class="nav-link">Coverage Types</a>
+                    <a href="#calculator" class="nav-link">Coverage Calculator</a>
+                    <a href="#deductible" class="nav-link">Deductible Analyzer</a>
+                    <a href="#discounts" class="nav-link">Discount Checker</a>
+                    <a href="#inventory" class="nav-link">Home Inventory</a>
+                </nav>
+                <div class="navbar-cta" style="display: flex; align-items: center; gap: var(--space-16);">
+                    <a href="tel:3368351993" class="phone-number" style="font-weight: var(--font-weight-bold); font-size: var(--font-size-lg); color: var(--color-primary); text-decoration: none;">(336) 835-1993</a>
+                    <a href="https://billlayne.github.io/Bill-Layne-Insurance.gitbhub.io/#contact" class="btn btn--primary">Get Home Insurance Quote</a>
+                </div>
+                <button class="mobile-menu-toggle" aria-label="Toggle mobile menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
 
     <!-- Hero Section -->
-    <section class="hero" role="banner">
-        <div class="hero__overlay"></div>
-        <div class="hero__content">
-            <div class="container">
-                <h1 class="hero__title">Understanding Home Insurance in North Carolina</h1>
-                <p class="hero__subtitle">Protect your most valuable investment with comprehensive coverage designed for North Carolina's unique risks. From hurricanes to winter storms, we've got you covered.</p>
-                <div class="hero__cta">
-                    <a href="tel:336-835-1993" class="btn btn--primary btn--lg">For Any Questions Call Now: 336-835-1993</a>
-                    <p class="hero__trust">Serving Elkin NC since 2004 • 20+ Years Experience</p>
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="gradient-text">Understanding Home Insurance in North Carolina</h1>
+                <p class="hero-subtitle">Protect your most valuable investment with comprehensive coverage designed for North Carolina's unique risks. From hurricanes to winter storms, we've got you covered.</p>
+                <div class="hero-buttons">
+                    <a href="#coverage" class="btn btn--primary btn--lg">🏠 Coverage Types</a>
+                    <a href="#calculator" class="btn btn--secondary btn--lg">📊 Coverage Calculator</a>
+                    <a href="#deductible" class="btn btn--primary btn--lg">💰 Deductible Analyzer</a>
+                    <a href="#discounts" class="btn btn--secondary btn--lg">🎯 Discount Checker</a>
                 </div>
+                <p style="margin-top: 30px; color: var(--color-text-secondary);">Serving Elkin NC since 2004 • 20+ Years Experience</p>
             </div>
         </div>
     </section>
 
-    <!-- Trust Signals Bar -->
-    <div class="trust-signals-bar">
+    <!-- Search Bar Section -->
+    <section class="search-section">
         <div class="container">
-            <div class="trust-signals">
-                <div class="trust-badge">
-                    <span class="badge-icon">🏆</span>
-                    <span>A+ BBB Rating</span>
-                </div>
-                <div class="trust-badge">
-                    <span class="badge-icon">⭐</span>
-                    <span>4.9★ Google Reviews (127)</span>
-                </div>
-                <div class="trust-badge">
-                    <span class="badge-icon">📅</span>
-                    <span>Serving NC Since 2004</span>
-                </div>
-                <div class="trust-badge">
-                    <span class="badge-icon">🛡️</span>
-                    <span>Licensed NC Agency #123456</span>
-                </div>
-                <div class="trust-badge recent-save">
-                    <span class="badge-icon">💰</span>
-                    <span class="recent-save-text">Sarah from Winston-Salem saved $312/year</span>
-                </div>
+            <div class="search-wrapper">
+                <input type="text" id="searchInput" class="search-input" placeholder="Search for coverage types, discounts, or insurance topics...">
+                <button class="search-btn" aria-label="Search">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                </button>
             </div>
+            <div id="searchResults" class="search-results"></div>
         </div>
-    </div>
+    </section>
 
-    <!-- Navigation -->
-    <nav class="nav-sticky" role="navigation" aria-label="Main navigation">
-        <div class="container">
-            <div class="nav-content">
-                <div class="nav-brand">
-                    <strong>Bill Layne Insurance</strong>
-                </div>
-                <div class="nav-contact">
-                    <a href="tel:336-835-1993" class="nav-phone">336-835-1993</a>
-                </div>
-            </div>
-            <!-- Breadcrumb Navigation -->
-            <nav aria-label="Breadcrumb" class="breadcrumb-nav">
-                <ol class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
-                    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-                        <a itemprop="item" href="/"><span itemprop="name">Home</span></a>
-                        <meta itemprop="position" content="1" />
-                    </li>
-                    <li class="separator">›</li>
-                    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-                        <a itemprop="item" href="/insurance"><span itemprop="name">Insurance</span></a>
-                        <meta itemprop="position" content="2" />
-                    </li>
-                    <li class="separator">›</li>
-                    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem" class="current">
-                        <span itemprop="name">Homeowners Insurance</span>
-                        <meta itemprop="position" content="3" />
-                    </li>
-                </ol>
-            </nav>
-        </div>
-    </nav>
+
 
     <!-- What Home Insurance Covers -->
-    <section class="section coverage-overview" id="coverage">
+    <section class="section coverage-section" id="coverage">
         <div class="container">
-            <h2 class="section__title">What Does Home Insurance Cover?</h2>
-            <p class="section__subtitle">Home insurance protects you from financial loss due to damage to your home and belongings. Here's what's typically covered:</p>
+            <div class="section-header">
+                <h2>🏠 What Does Home Insurance Cover?</h2>
+                <p>Home insurance protects you from financial loss due to damage to your home and belongings. Here's what's typically covered:</p>
+            </div>
             
-            <div class="coverage-grid">
-                <div class="coverage-card">
-                    <div class="coverage-card__icon">🏠</div>
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-icon">🏠</div>
                     <h3>Your Home Structure</h3>
                     <p>The walls, roof, floors, and built-in appliances are protected from covered perils like fire, wind, and hail damage.</p>
                 </div>
                 
-                <div class="coverage-card">
-                    <div class="coverage-card__icon">🛋️</div>
+                <div class="step-card">
+                    <div class="step-icon">🛋️</div>
                     <h3>Personal Belongings</h3>
                     <p>Furniture, clothing, electronics, and other personal items are covered both inside and outside your home.</p>
                 </div>
                 
-                <div class="coverage-card">
-                    <div class="coverage-card__icon">⚖️</div>
+                <div class="step-card">
+                    <div class="step-icon">⚖️</div>
                     <h3>Liability Protection</h3>
                     <p>If someone is injured on your property or you accidentally damage someone else's property, you're protected.</p>
                 </div>
                 
-                <div class="coverage-card">
-                    <div class="coverage-card__icon">🏨</div>
+                <div class="step-card">
+                    <div class="step-icon">🏨</div>
                     <h3>Living Expenses</h3>
                     <p>Hotel, restaurant, and other costs if your home becomes temporarily uninhabitable due to a covered loss.</p>
                 </div>
