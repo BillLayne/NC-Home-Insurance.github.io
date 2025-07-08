@@ -2459,3 +2459,23 @@ a:hover {
     page-break-inside: avoid;
   }
 }
+
+/* Desktop-specific styles to ensure navbar is visible */
+@media (min-width: 769px) {
+  .navbar-menu {
+    position: static !important;
+    max-height: none !important;
+    opacity: 1 !important;
+    overflow: visible !important;
+    display: flex !important;
+    flex-direction: row !important;
+    width: auto !important;
+    padding: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+  
+  .mobile-menu-toggle {
+    display: none !important;
+  }
+}

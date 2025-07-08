@@ -21,25 +21,28 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Smooth scrolling for navigation links
+    // Smooth scrolling for navigation links (only for anchor links on same page)
     const navLinks = document.querySelectorAll('a[href^="#"]');
     navLinks.forEach(link => {
         link.addEventListener('click', function(e) {
-            e.preventDefault();
             const targetId = this.getAttribute('href');
-            const targetSection = document.querySelector(targetId);
-            
-            if (targetSection) {
-                const offsetTop = targetSection.offsetTop - 80; // Account for sticky navbar
-                window.scrollTo({
-                    top: offsetTop,
-                    behavior: 'smooth'
-                });
+            // Only prevent default and smooth scroll if it's a valid anchor link with a corresponding element
+            if (targetId && targetId !== '#' && targetId.length > 1) {
+                const targetSection = document.querySelector(targetId);
                 
-                // Close mobile menu if open
-                if (navbarMenu && navbarMenu.classList.contains('active')) {
-                    navbarMenu.classList.remove('active');
-                    mobileMenuToggle.classList.remove('active');
+                if (targetSection) {
+                    e.preventDefault();
+                    const offsetTop = targetSection.offsetTop - 80; // Account for sticky navbar
+                    window.scrollTo({
+                        top: offsetTop,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    if (navbarMenu && navbarMenu.classList.contains('active')) {
+                        navbarMenu.classList.remove('active');
+                        mobileMenuToggle.classList.remove('active');
+                    }
                 }
             }
         });
