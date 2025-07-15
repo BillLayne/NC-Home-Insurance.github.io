@@ -519,4 +519,26 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     console.log('Home Insurance Search initialized successfully');
+    
+    // Email obfuscation handler
+    document.querySelectorAll('.email-link').forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const user = this.getAttribute('data-user');
+            const domain = this.getAttribute('data-domain');
+            const email = user + '@' + domain;
+            window.location.href = 'mailto:' + email;
+        });
+        
+        // Update text on hover to show email
+        link.addEventListener('mouseenter', function() {
+            const user = this.getAttribute('data-user');
+            const domain = this.getAttribute('data-domain');
+            this.textContent = user + '@' + domain;
+        });
+        
+        link.addEventListener('mouseleave', function() {
+            this.textContent = 'Contact Email';
+        });
+    });
 });
