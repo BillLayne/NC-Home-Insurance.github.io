@@ -423,10 +423,11 @@ document.addEventListener('DOMContentLoaded', function() {
     
     window.addEventListener('scroll', requestScrollUpdate);
     
-    // Search functionality
-    const searchInput = document.getElementById('searchInput');
-    const searchBtn = document.querySelector('.search-btn');
-    const searchResults = document.getElementById('searchResults');
+    // Search functionality - Skip if home-insurance-search.js is loaded
+    if (typeof homeInsuranceSearchData === 'undefined') {
+        const searchInput = document.getElementById('searchInput');
+        const searchBtn = document.querySelector('.search-btn');
+        const searchResults = document.getElementById('searchResults');
     
     // Search data - compile all searchable content
     const searchData = [
@@ -546,6 +547,7 @@ document.addEventListener('DOMContentLoaded', function() {
             performSearch(searchInput.value);
         });
     }
+    } // End of search functionality conditional
     
     // NC Insurance Points Calculator
     // NC Insurance Points rate increase percentages
