@@ -189,9 +189,9 @@
                 <p class="hero-subtitle">Protect your most valuable investment with comprehensive coverage designed for North Carolina's unique risks. From hurricanes to winter storms, we've got you covered.</p>
                 <div class="hero-buttons">
                     <a href="#coverage" class="btn btn--primary btn--lg">🏠 Coverage Types</a>
-                    <a href="coverage-calculator.html" class="btn btn--secondary btn--lg">📊 Coverage Calculator</a>
-                    <a href="deductible-analyzer.html" class="btn btn--primary btn--lg">💰 Deductible Analyzer</a>
-                    <a href="discount-checker.html" class="btn btn--secondary btn--lg">🎯 Discount Checker</a>
+                    <a href="#" class="btn btn--secondary btn--lg modal-trigger" data-tool="coverage-calculator" data-title="Coverage Calculator">📊 Coverage Calculator</a>
+                    <a href="#" class="btn btn--primary btn--lg modal-trigger" data-tool="deductible-analyzer" data-title="Deductible Analyzer">💰 Deductible Analyzer</a>
+                    <a href="#" class="btn btn--secondary btn--lg modal-trigger" data-tool="discount-checker" data-title="Discount Checker">🎯 Discount Checker</a>
                 </div>
                 <p style="margin-top: 30px; color: var(--color-text-secondary);">Serving Elkin NC since 2004 • 20+ Years Experience</p>
             </div>
@@ -881,22 +881,22 @@
             <div class="policy-tools-section">
                 <h2>🛠️ Policy Management Tools</h2>
                 <div class="tools-grid">
-                    <a href="home-inventory-worksheet.html" target="_blank" class="tool-card">
+                    <a href="#" class="tool-card modal-trigger" data-tool="home-inventory-worksheet" data-title="Home Inventory Worksheet">
                         <span class="tool-icon">📋</span>
                         <h4>Home Inventory Worksheet</h4>
                         <p>Document your belongings for accurate claims</p>
                     </a>
-                    <a href="coverage-calculator.html" target="_blank" class="tool-card">
+                    <a href="#" class="tool-card modal-trigger" data-tool="coverage-calculator" data-title="Coverage Calculator">
                         <span class="tool-icon">🧮</span>
                         <h4>Coverage Calculator</h4>
                         <p>Ensure adequate dwelling coverage</p>
                     </a>
-                    <a href="deductible-analyzer.html" target="_blank" class="tool-card">
+                    <a href="#" class="tool-card modal-trigger" data-tool="deductible-analyzer" data-title="Deductible Analyzer">
                         <span class="tool-icon">💰</span>
                         <h4>Deductible Analyzer</h4>
                         <p>Find your optimal deductible amount</p>
                     </a>
-                    <a href="discount-checker.html" target="_blank" class="tool-card">
+                    <a href="#" class="tool-card modal-trigger" data-tool="discount-checker" data-title="Discount Checker">
                         <span class="tool-icon">🏷️</span>
                         <h4>Discount Checker</h4>
                         <p>See what discounts you qualify for</p>
@@ -1175,6 +1175,19 @@
         </div>
     </div>
 
+    <!-- Tool Modal -->
+    <div class="tool-modal" id="toolModal" role="dialog" aria-labelledby="toolModalTitle" aria-hidden="true">
+        <div class="tool-modal-content">
+            <div class="tool-modal-header">
+                <h2 id="toolModalTitle">Tool Title</h2>
+                <button class="tool-modal-close" aria-label="Close modal">&times;</button>
+            </div>
+            <div class="tool-modal-body">
+                <iframe id="toolFrame" src="" frameborder="0"></iframe>
+            </div>
+        </div>
+    </div>
+
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
@@ -1202,5 +1215,6 @@
 
     <script src="app.js"></script>
     <script src="home-insurance-search.js"></script>
+    <script src="modal-tools.js"></script>
 </body>
 </html>
