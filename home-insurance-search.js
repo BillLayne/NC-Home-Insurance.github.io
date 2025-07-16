@@ -1,4 +1,8 @@
 // Home Insurance Search Data and Functionality
+
+// Make search data globally available to prevent conflicts
+window.homeInsuranceSearchData = true;
+
 document.addEventListener('DOMContentLoaded', function() {
     
     // Comprehensive search data for home insurance
@@ -192,8 +196,16 @@ document.addEventListener('DOMContentLoaded', function() {
     const searchBtn = document.querySelector('.search-btn');
     const searchResults = document.getElementById('searchResults');
     
+    console.log('Search elements found:', {
+        searchInput: !!searchInput,
+        searchBtn: !!searchBtn,
+        searchResults: !!searchResults
+    });
+    
     // Enhanced search function
     function performHomeInsuranceSearch(query) {
+        console.log('Search triggered with query:', query);
+        
         if (!query || query.length < 2) {
             searchResults.innerHTML = '';
             searchResults.classList.remove('active');
@@ -332,7 +344,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <div class="search-result-title">No results found</div>
                 <div class="search-result-desc">Try searching for: coverage types, discounts, hurricane insurance, or "get quote"</div>
             </div>
-            <div class="search-result-item" onclick="document.getElementById('searchInput').value='coverage'; performHomeInsuranceSearch('coverage')">
+            <div class="search-result-item" onclick="document.getElementById('searchInput').value='coverage'; document.getElementById('searchInput').dispatchEvent(new Event('input'));">
                 <div class="search-result-title">💡 Suggested: Coverage Types</div>
                 <div class="search-result-desc">Learn about dwelling, personal property, and liability coverage</div>
             </div>
@@ -398,6 +410,8 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Event listeners
     if (searchInput) {
+        console.log('Adding search event listeners...');
+        
         // Real-time search as user types
         searchInput.addEventListener('input', (e) => {
             performHomeInsuranceSearch(e.target.value);
@@ -418,6 +432,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 searchResults.classList.remove('active');
             }
         });
+    } else {
+        console.error('Search input element not found!');
     }
     
     if (searchBtn) {
