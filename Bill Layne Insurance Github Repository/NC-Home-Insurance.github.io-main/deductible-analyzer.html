@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deductible Analyzer - Bill Layne Insurance Agency</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        :root {
+            --color-background: rgba(252, 252, 249, 1);
+            --color-surface: rgba(255, 255, 253, 1);
+            --color-text: rgba(19, 52, 59, 1);
+            --color-text-secondary: rgba(98, 108, 113, 1);
+            --color-primary: rgba(33, 128, 141, 1);
+            --color-primary-hover: rgba(29, 116, 128, 1);
+            --color-primary-active: rgba(26, 104, 115, 1);
+            --color-secondary: rgba(94, 82, 64, 0.12);
+            --color-secondary-hover: rgba(94, 82, 64, 0.2);
+            --color-border: rgba(94, 82, 64, 0.2);
+            --color-btn-primary-text: rgba(252, 252, 249, 1);
+            --color-success: rgba(33, 128, 141, 1);
+            --color-warning: rgba(168, 75, 47, 1);
+            --color-error: rgba(192, 21, 47, 1);
+            --color-info: rgba(98, 108, 113, 1);
+            --color-focus-ring: rgba(33, 128, 141, 0.4);
+            
+            --font-family-base: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --font-size-xs: 11px;
+            --font-size-sm: 12px;
+            --font-size-base: 14px;
+            --font-size-lg: 16px;
+            --font-size-xl: 18px;
+            --font-size-2xl: 20px;
+            --font-size-3xl: 24px;
+            --font-size-4xl: 30px;
+            --font-weight-normal: 400;
+            --font-weight-medium: 500;
+            --font-weight-semibold: 550;
+            --font-weight-bold: 600;
+            
+            --space-4: 4px;
+            --space-8: 8px;
+            --space-12: 12px;
+            --space-16: 16px;
+            --space-20: 20px;
+            --space-24: 24px;
+            --space-32: 32px;
+            
+            --radius-sm: 6px;
+            --radius-base: 8px;
+            --radius-lg: 12px;
+            --radius-full: 9999px;
+            
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.04), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.04), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
+            
+            --duration-fast: 150ms;
+            --duration-normal: 250ms;
+            --ease-standard: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --color-background: rgba(31, 33, 33, 1);
+                --color-surface: rgba(38, 40, 40, 1);
+                --color-text: rgba(245, 245, 245, 1);
+                --color-text-secondary: rgba(167, 169, 169, 0.7);
+                --color-primary: rgba(50, 184, 198, 1);
+                --color-primary-hover: rgba(45, 166, 178, 1);
+                --color-primary-active: rgba(41, 150, 161, 1);
+                --color-secondary: rgba(119, 124, 124, 0.15);
+                --color-secondary-hover: rgba(119, 124, 124, 0.25);
+                --color-border: rgba(119, 124, 124, 0.3);
+                --color-success: rgba(50, 184, 198, 1);
+                --color-warning: rgba(230, 129, 97, 1);
+                --color-error: rgba(255, 84, 89, 1);
+                --color-focus-ring: rgba(50, 184, 198, 0.4);
+                --color-btn-primary-text: rgba(19, 52, 59, 1);
+            }
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: var(--font-family-base);
+            font-size: var(--font-size-base);
+            line-height: 1.6;
+            color: var(--color-text);
+            background-color: var(--color-background);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: var(--space-32) var(--space-16);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: var(--space-32);
+            padding: var(--space-32) 0;
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-hover) 100%);
+            color: white;
+        }
+
+        .header h1 {
+            color: white;
+            margin: 0 0 var(--space-12) 0;
+            font-size: var(--font-size-4xl);
+            font-weight: var(--font-weight-bold);
+        }
+
+        .header p {
+            font-size: var(--font-size-lg);
+            opacity: 0.9;
+            margin: 0;
+        }
+
+        .logo {
+            width: 150px;
+            height: auto;
+            margin-bottom: var(--space-16);
+        }
+
+        .analyzer-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-32);
+        }
+
+        @media (max-width: 968px) {
+            .analyzer-grid {
+                grid-template-columns: 1fr;
+                gap: var(--space-24);
+            }
+        }
+
+        .input-section {
+            background: var(--color-surface);
+            padding: var(--space-24);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+        }
+
+        .section-title {
+            font-size: var(--font-size-xl);
+            font-weight: var(--font-weight-bold);
+            color: var(--color-primary);
+            margin: 0 0 var(--space-20) 0;
+        }
+
+        .form-group {
+            margin-bottom: var(--space-16);
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: var(--space-8);
+            font-weight: var(--font-weight-medium);
+            font-size: var(--font-size-sm);
+            color: var(--color-text);
+        }
+
+        .form-control {
+            display: block;
+            width: 100%;
+            padding: var(--space-12);
+            font-size: var(--font-size-base);
+            line-height: 1.5;
+            color: var(--color-text);
+            background-color: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-base);
+            transition: border-color var(--duration-fast) var(--ease-standard);
+        }
+
+        .form-control:focus {
+            border-color: var(--color-primary);
+            outline: 2px solid var(--color-primary);
+            outline-offset: 2px;
+        }
+
+        select.form-control {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23134252' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right var(--space-12) center;
+            background-size: 16px;
+            padding-right: var(--space-32);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: var(--space-12) var(--space-24);
+            border-radius: var(--radius-base);
+            font-size: var(--font-size-base);
+            font-weight: var(--font-weight-medium);
+            line-height: 1.5;
+            cursor: pointer;
+            transition: all var(--duration-normal) var(--ease-standard);
+            border: none;
+            text-decoration: none;
+            min-height: 44px;
+        }
+
+        .btn--primary {
+            background: var(--color-primary);
+            color: var(--color-btn-primary-text);
+        }
+
+        .btn--primary:hover {
+            background: var(--color-primary-hover);
+        }
+
+        .btn--full-width {
+            width: 100%;
+        }
+
+        .deductible-slider {
+            margin: var(--space-20) 0;
+        }
+
+        .slider {
+            width: 100%;
+            height: 8px;
+            border-radius: var(--radius-full);
+            background: var(--color-secondary);
+            outline: none;
+            -webkit-appearance: none;
+            appearance: none;
+            margin: var(--space-16) 0;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--color-primary);
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .slider::-moz-range-thumb {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--color-primary);
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .slider-display {
+            text-align: center;
+            font-size: var(--font-size-2xl);
+            font-weight: var(--font-weight-bold);
+            margin-top: var(--space-8);
+            color: var(--color-primary);
+        }
+
+        .results-section {
+            grid-column: 1 / -1;
+            background: var(--color-surface);
+            padding: var(--space-32);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            border: 2px solid var(--color-primary);
+            margin-top: var(--space-24);
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: var(--space-20) 0;
+            font-size: var(--font-size-sm);
+        }
+
+        .comparison-table th {
+            background: var(--color-primary);
+            color: white;
+            padding: var(--space-12);
+            text-align: left;
+            font-weight: var(--font-weight-medium);
+        }
+
+        .comparison-table td {
+            padding: var(--space-12);
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: rgba(var(--color-primary), 0.05);
+        }
+
+        .recommended {
+            background: rgba(var(--color-success), 0.1) !important;
+            border-left: 4px solid var(--color-success);
+        }
+
+        .scenario-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--space-20);
+            margin: var(--space-24) 0;
+        }
+
+        .scenario-card {
+            background: var(--color-background);
+            padding: var(--space-20);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--color-border);
+        }
+
+        .scenario-title {
+            font-weight: var(--font-weight-bold);
+            color: var(--color-primary);
+            margin-bottom: var(--space-12);
+        }
+
+        .cost-comparison {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: var(--space-8);
+            font-size: var(--font-size-sm);
+        }
+
+        .total-cost {
+            font-weight: var(--font-weight-bold);
+            padding-top: var(--space-8);
+            border-top: 1px solid var(--color-border);
+        }
+
+        .recommendation-box {
+            background: linear-gradient(135deg, var(--color-success), var(--color-primary));
+            color: white;
+            padding: var(--space-24);
+            border-radius: var(--radius-lg);
+            text-align: center;
+            margin: var(--space-24) 0;
+        }
+
+        .recommendation-box h3 {
+            color: white;
+            margin: 0 0 var(--space-12) 0;
+        }
+
+        .recommendation-amount {
+            font-size: var(--font-size-3xl);
+            font-weight: var(--font-weight-bold);
+            margin: var(--space-12) 0;
+        }
+
+        .break-even-analysis {
+            background: rgba(var(--color-info), 0.1);
+            padding: var(--space-20);
+            border-radius: var(--radius-base);
+            margin: var(--space-20) 0;
+        }
+
+        .break-even-analysis h4 {
+            color: var(--color-info);
+            margin: 0 0 var(--space-12) 0;
+        }
+
+        .warning-box {
+            background: rgba(var(--color-warning), 0.1);
+            border: 1px solid var(--color-warning);
+            padding: var(--space-16);
+            border-radius: var(--radius-base);
+            margin-top: var(--space-16);
+        }
+
+        .warning-box h4 {
+            color: var(--color-warning);
+            margin: 0 0 var(--space-8) 0;
+            font-size: var(--font-size-base);
+        }
+
+        .info-box {
+            background: rgba(var(--color-info), 0.1);
+            border: 1px solid var(--color-info);
+            padding: var(--space-16);
+            border-radius: var(--radius-base);
+            margin-bottom: var(--space-20);
+        }
+
+        .info-box h4 {
+            color: var(--color-info);
+            margin: 0 0 var(--space-8) 0;
+            font-size: var(--font-size-base);
+        }
+
+        .footer-cta {
+            text-align: center;
+            margin-top: var(--space-32);
+            padding: var(--space-32);
+            background: linear-gradient(135deg, var(--color-primary), var(--color-primary-hover));
+            color: white;
+            border-radius: var(--radius-lg);
+        }
+
+        .footer-cta h3 {
+            color: white;
+            margin: 0 0 var(--space-16) 0;
+        }
+
+        .footer-cta p {
+            margin: 0 0 var(--space-20) 0;
+            opacity: 0.9;
+        }
+
+        .contact-info {
+            font-size: var(--font-size-sm);
+            margin-top: var(--space-16);
+            opacity: 0.8;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .small-text {
+            font-size: var(--font-size-xs);
+            color: var(--color-text-secondary);
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: var(--space-16) var(--space-8);
+            }
+
+            .input-section {
+                padding: var(--space-16);
+            }
+
+            .results-section {
+                padding: var(--space-20);
+            }
+
+            .comparison-table {
+                font-size: var(--font-size-xs);
+            }
+
+            .comparison-table th,
+            .comparison-table td {
+                padding: var(--space-8);
+            }
+
+            .scenario-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Header -->
+    <header class="navbar">
+        <div class="container">
+            <div class="navbar-content flex items-center justify-between">
+                <div class="navbar-brand">
+                    <a href="https://billlayneinsurance.com" style="text-decoration: none;">
+                        <div style="display: flex; flex-direction: column;">
+                            <h2 style="font-size: var(--font-size-2xl); font-weight: var(--font-weight-bold); color: var(--color-primary); margin: 0;">Bill Layne Insurance</h2>
+                            <span style="font-size: var(--font-size-sm); color: var(--color-text-secondary); font-weight: var(--font-weight-medium);">Home<br>Insurance Guide</span>
+                        </div>
+                    </a>
+                </div>
+                <nav class="navbar-menu">
+                    <a href="https://billlayneinsurance.com" class="nav-link">Home</a>
+                    <a href="index.html" class="nav-link">Home<br><span style="font-size: 0.9em;">Insurance</span></a>
+                    <a href="https://BillLayne.github.io/Auto-Insurance-Center/" class="nav-link">Auto<br><span style="font-size: 0.9em;">Insurance</span></a>
+                    <a href="https://BillLayne.github.io/NC-Insurance-Claims-Center.github.io/" class="nav-link">Claims<br><span style="font-size: 0.9em;">Center</span></a>
+                    <a href="https://billlayneinsurance.com/blog" class="nav-link">Blog</a>
+                </nav>
+                <div class="navbar-cta" style="display: flex; align-items: center; gap: var(--space-16);">
+                    <a href="tel:3368351993" class="phone-number" style="font-weight: var(--font-weight-bold); font-size: var(--font-size-lg); color: var(--color-primary); text-decoration: none;">(336) 835-1993</a>
+                    <a href="https://billlayneinsurance.com#contact" class="btn btn--primary">Get Quote</a>
+                </div>
+                <button class="mobile-menu-toggle" aria-label="Toggle mobile menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+    <div class="header">
+        <img src="https://i.imgur.com/cBAgeX8.png" alt="Bill Layne Insurance Agency" class="logo">
+        <h1>Deductible Analyzer</h1>
+        <p>Find your optimal deductible balance between premium savings and out-of-pocket costs</p>
+    </div>
+
+    <div class="container">
+        <div class="info-box">
+            <h4>💡 How This Tool Works</h4>
+            <p>Your deductible is the amount you pay out-of-pocket before insurance kicks in. Higher deductibles mean lower premiums but more risk if you need to file a claim. This analyzer helps you find the sweet spot for your financial situation.</p>
+        </div>
+
+        <form id="deductibleForm">
+            <div class="analyzer-grid">
+                <!-- Current Policy Section -->
+                <div class="input-section">
+                    <h2 class="section-title">📋 Current Policy Information</h2>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="currentPremium">Current Annual Premium</label>
+                        <input type="number" id="currentPremium" class="form-control" placeholder="e.g., 1200" required>
+                        <small class="small-text">Your current homeowners insurance premium</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="currentDeductible">Current Deductible</label>
+                        <select id="currentDeductible" class="form-control" required>
+                            <option value="">Select Current Deductible</option>
+                            <option value="250">$250</option>
+                            <option value="500">$500</option>
+                            <option value="1000">$1,000</option>
+                            <option value="2500">$2,500</option>
+                            <option value="5000">$5,000</option>
+                            <option value="10000">$10,000</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="homeValue">Home Value</label>
+                        <input type="number" id="homeValue" class="form-control" placeholder="e.g., 350000" required>
+                        <small class="small-text">Current market value of your home</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="homeAge">Home Age</label>
+                        <select id="homeAge" class="form-control" required>
+                            <option value="">Select Home Age</option>
+                            <option value="new">Less than 5 years</option>
+                            <option value="recent">5-15 years</option>
+                            <option value="established">15-30 years</option>
+                            <option value="mature">30-50 years</option>
+                            <option value="older">Over 50 years</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Financial Profile Section -->
+                <div class="input-section">
+                    <h2 class="section-title">💰 Financial Profile</h2>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="emergencyFund">Emergency Fund</label>
+                        <select id="emergencyFund" class="form-control" required>
+                            <option value="">Select Emergency Fund Size</option>
+                            <option value="1000">Less than $1,000</option>
+                            <option value="2500">$1,000 - $2,500</option>
+                            <option value="5000">$2,500 - $5,000</option>
+                            <option value="10000">$5,000 - $10,000</option>
+                            <option value="15000">$10,000 - $15,000</option>
+                            <option value="25000">$15,000 - $25,000</option>
+                            <option value="50000">Over $25,000</option>
+                        </select>
+                        <small class="small-text">Money readily available for unexpected expenses</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="monthlyIncome">Monthly Household Income</label>
+                        <select id="monthlyIncome" class="form-control" required>
+                            <option value="">Select Income Range</option>
+                            <option value="3000">Under $3,000</option>
+                            <option value="5000">$3,000 - $5,000</option>
+                            <option value="7500">$5,000 - $7,500</option>
+                            <option value="10000">$7,500 - $10,000</option>
+                            <option value="15000">$10,000 - $15,000</option>
+                            <option value="20000">Over $15,000</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="riskTolerance">Risk Tolerance</label>
+                        <select id="riskTolerance" class="form-control" required>
+                            <option value="">Select Risk Tolerance</option>
+                            <option value="conservative">Conservative - Prefer predictable costs</option>
+                            <option value="moderate">Moderate - Balance savings and risk</option>
+                            <option value="aggressive">Aggressive - Maximize premium savings</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="claimHistory">Claim History (Last 5 Years)</label>
+                        <select id="claimHistory" class="form-control" required>
+                            <option value="">Select Claim History</option>
+                            <option value="0">No claims</option>
+                            <option value="1">1 claim</option>
+                            <option value="2">2 claims</option>
+                            <option value="3">3+ claims</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn--primary btn--full-width">
+                        Analyze Deductible Options
+                    </button>
+                </div>
+            </div>
+
+            <!-- Results Section -->
+            <div id="resultsSection" class="results-section hidden">
+                <h2 style="text-align: center; color: var(--color-primary); margin: 0 0 var(--space-24) 0;">
+                    📊 Your Deductible Analysis
+                </h2>
+
+                <!-- Recommendation Box -->
+                <div class="recommendation-box">
+                    <h3>💡 Recommended Deductible</h3>
+                    <div class="recommendation-amount" id="recommendedDeductible">$0</div>
+                    <p id="recommendationReason">Based on your financial profile and risk tolerance</p>
+                </div>
+
+                <!-- Deductible Comparison Table -->
+                <h3>💵 Deductible Options Comparison</h3>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Deductible</th>
+                            <th>Annual Premium</th>
+                            <th>Annual Savings</th>
+                            <th>Break-Even Point</th>
+                            <th>Recommendation</th>
+                        </tr>
+                    </thead>
+                    <tbody id="comparisonTableBody">
+                        <!-- Populated by JavaScript -->
+                    </tbody>
+                </table>
+
+                <!-- Break-Even Analysis -->
+                <div class="break-even-analysis">
+                    <h4>⏱️ Break-Even Analysis</h4>
+                    <p id="breakEvenText">Analysis will appear here...</p>
+                </div>
+
+                <!-- Claim Scenarios -->
+                <h3>🏠 Common Claim Scenarios</h3>
+                <p style="margin-bottom: var(--space-16); font-size: var(--font-size-sm); color: var(--color-text-secondary);">
+                    See how different deductibles affect your out-of-pocket costs for typical homeowner claims:
+                </p>
+                
+                <div class="scenario-grid" id="scenarioGrid">
+                    <!-- Populated by JavaScript -->
+                </div>
+
+                <!-- Emergency Fund Assessment -->
+                <div id="emergencyFundAssessment">
+                    <!-- Populated by JavaScript -->
+                </div>
+
+                <!-- Tips and Considerations -->
+                <div style="margin-top: var(--space-32);">
+                    <h3>💭 Important Considerations</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--space-16);">
+                        <div style="background: rgba(var(--color-info), 0.1); padding: var(--space-16); border-radius: var(--radius-base);">
+                            <h4 style="color: var(--color-info); margin: 0 0 var(--space-8) 0;">✅ Benefits of Higher Deductibles</h4>
+                            <ul style="margin: 0; font-size: var(--font-size-sm);">
+                                <li>Lower monthly/annual premiums</li>
+                                <li>Encourages preventive maintenance</li>
+                                <li>Reduces small nuisance claims</li>
+                                <li>May improve claims experience</li>
+                            </ul>
+                        </div>
+                        <div style="background: rgba(var(--color-warning), 0.1); padding: var(--space-16); border-radius: var(--radius-base);">
+                            <h4 style="color: var(--color-warning); margin: 0 0 var(--space-8) 0;">⚠️ Risks of Higher Deductibles</h4>
+                            <ul style="margin: 0; font-size: var(--font-size-sm);">
+                                <li>Higher out-of-pocket costs per claim</li>
+                                <li>May delay necessary repairs</li>
+                                <li>Requires larger emergency fund</li>
+                                <li>Financial strain during multiple claims</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="warning-box">
+                    <h4>📋 Important Disclaimer</h4>
+                    <p style="margin: 0; font-size: var(--font-size-sm);">This analysis is for educational purposes only. Actual premium savings may vary based on your insurance company, location, and specific policy details. Consult with Bill Layne Insurance Agency for personalized recommendations and accurate quotes.</p>
+                </div>
+            </div>
+        </form>
+
+        <div class="footer-cta">
+            <h3>Ready to Optimize Your Deductible?</h3>
+            <p>Contact Bill Layne Insurance Agency to review your policy and potentially save money with the right deductible choice.</p>
+            <a href="tel:336-835-1993" class="btn" style="background: rgba(255,255,255,0.2); color: white; border: 2px solid rgba(255,255,255,0.3);">
+                Call (336) 835-1993
+            </a>
+            <div class="contact-info">
+                1283 N Bridge St, Elkin NC 28621 | Save@BillLayneInsurance.com
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('deductibleForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            analyzeDeductibles();
+        });
+
+        function analyzeDeductibles() {
+            // Get form values
+            const currentPremium = parseInt(document.getElementById('currentPremium').value) || 0;
+            const currentDeductible = parseInt(document.getElementById('currentDeductible').value) || 1000;
+            const homeValue = parseInt(document.getElementById('homeValue').value) || 0;
+            const homeAge = document.getElementById('homeAge').value;
+            const emergencyFund = parseInt(document.getElementById('emergencyFund').value) || 1000;
+            const monthlyIncome = parseInt(document.getElementById('monthlyIncome').value) || 5000;
+            const riskTolerance = document.getElementById('riskTolerance').value;
+            const claimHistory = parseInt(document.getElementById('claimHistory').value) || 0;
+
+            // Calculate deductible options and premiums
+            const deductibleOptions = [250, 500, 1000, 2500, 5000, 10000];
+            const basePremium = calculateBasePremium(currentPremium, currentDeductible);
+            
+            const deductibleData = deductibleOptions.map(deductible => {
+                const premium = calculatePremiumForDeductible(basePremium, deductible);
+                const savings = currentPremium - premium;
+                const breakEven = deductible > currentDeductible ? 
+                    Math.ceil((deductible - currentDeductible) / Math.max(savings, 1)) : 0;
+                
+                return {
+                    deductible,
+                    premium,
+                    savings,
+                    breakEven
+                };
+            });
+
+            // Determine recommended deductible
+            const recommendation = getRecommendation(emergencyFund, monthlyIncome, riskTolerance, claimHistory, deductibleData);
+            
+            // Update displays
+            updateRecommendation(recommendation);
+            updateComparisonTable(deductibleData, recommendation.deductible);
+            updateBreakEvenAnalysis(recommendation, currentDeductible);
+            updateScenarios(deductibleOptions);
+            updateEmergencyFundAssessment(emergencyFund, recommendation.deductible);
+
+            // Show results
+            document.getElementById('resultsSection').classList.remove('hidden');
+            document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function calculateBasePremium(currentPremium, currentDeductible) {
+            // Calculate what the premium would be at $1000 deductible (baseline)
+            const deductibleFactors = {
+                250: 1.25,
+                500: 1.15,
+                1000: 1.0,
+                2500: 0.85,
+                5000: 0.75,
+                10000: 0.65
+            };
+            
+            const currentFactor = deductibleFactors[currentDeductible] || 1.0;
+            return currentPremium / currentFactor;
+        }
+
+        function calculatePremiumForDeductible(basePremium, deductible) {
+            const deductibleFactors = {
+                250: 1.25,
+                500: 1.15,
+                1000: 1.0,
+                2500: 0.85,
+                5000: 0.75,
+                10000: 0.65
+            };
+            
+            return Math.round(basePremium * (deductibleFactors[deductible] || 1.0));
+        }
+
+        function getRecommendation(emergencyFund, monthlyIncome, riskTolerance, claimHistory, deductibleData) {
+            let recommendedDeductible = 1000;
+            let reason = "Standard recommendation";
+
+            // Factor in emergency fund
+            if (emergencyFund >= 10000) {
+                recommendedDeductible = Math.max(recommendedDeductible, 2500);
+                reason = "You have a strong emergency fund";
+            } else if (emergencyFund >= 5000) {
+                recommendedDeductible = Math.max(recommendedDeductible, 1000);
+                reason = "You have a moderate emergency fund";
+            } else {
+                recommendedDeductible = Math.min(recommendedDeductible, 500);
+                reason = "Consider building your emergency fund first";
+            }
+
+            // Factor in risk tolerance
+            if (riskTolerance === 'aggressive' && emergencyFund >= 5000) {
+                recommendedDeductible = Math.max(recommendedDeductible, 5000);
+                reason = "Maximizing premium savings with your risk tolerance";
+            } else if (riskTolerance === 'conservative') {
+                recommendedDeductible = Math.min(recommendedDeductible, 1000);
+                reason = "Conservative approach for predictable costs";
+            }
+
+            // Factor in claim history
+            if (claimHistory >= 2) {
+                recommendedDeductible = Math.min(recommendedDeductible, 1000);
+                reason = "Lower deductible recommended due to claim history";
+            }
+
+            // Factor in income
+            const maxRecommended = Math.floor(monthlyIncome * 0.5); // Max 50% of monthly income
+            recommendedDeductible = Math.min(recommendedDeductible, maxRecommended);
+
+            return {
+                deductible: recommendedDeductible,
+                reason: reason,
+                data: deductibleData.find(d => d.deductible === recommendedDeductible)
+            };
+        }
+
+        function updateRecommendation(recommendation) {
+            document.getElementById('recommendedDeductible').textContent = formatCurrency(recommendation.deductible);
+            document.getElementById('recommendationReason').textContent = recommendation.reason;
+        }
+
+        function updateComparisonTable(deductibleData, recommendedDeductible) {
+            const tbody = document.getElementById('comparisonTableBody');
+            tbody.innerHTML = '';
+
+            deductibleData.forEach(data => {
+                const row = tbody.insertRow();
+                const isRecommended = data.deductible === recommendedDeductible;
+                
+                if (isRecommended) {
+                    row.classList.add('recommended');
+                }
+
+                row.innerHTML = `
+                    <td><strong>${formatCurrency(data.deductible)}</strong></td>
+                    <td>${formatCurrency(data.premium)}</td>
+                    <td>${data.savings >= 0 ? '+' : ''}${formatCurrency(data.savings)}</td>
+                    <td>${data.breakEven > 0 ? data.breakEven + ' years' : 'N/A'}</td>
+                    <td>${isRecommended ? '<strong style="color: var(--color-success);">RECOMMENDED</strong>' : 
+                        data.deductible < recommendedDeductible ? 'More expensive' : 'Higher risk'}</td>
+                `;
+            });
+        }
+
+        function updateBreakEvenAnalysis(recommendation, currentDeductible) {
+            const breakEvenElement = document.getElementById('breakEvenText');
+            
+            if (recommendation.deductible > currentDeductible) {
+                const timePeriod = recommendation.data.breakEven;
+                const additionalRisk = recommendation.deductible - currentDeductible;
+                
+                breakEvenElement.innerHTML = `
+                    If you increase your deductible to <strong>${formatCurrency(recommendation.deductible)}</strong>, 
+                    you'll save <strong>${formatCurrency(recommendation.data.savings)}</strong> annually. 
+                    You'll break even after <strong>${timePeriod} ${timePeriod === 1 ? 'year' : 'years'}</strong> 
+                    if you don't file any claims. However, you'll pay an additional 
+                    <strong>${formatCurrency(additionalRisk)}</strong> out-of-pocket for each claim.
+                `;
+            } else if (recommendation.deductible < currentDeductible) {
+                const additionalCost = recommendation.data.premium - deductibleData.find(d => d.deductible === currentDeductible).premium;
+                breakEvenElement.innerHTML = `
+                    Lowering your deductible to <strong>${formatCurrency(recommendation.deductible)}</strong> 
+                    will cost an additional <strong>${formatCurrency(Math.abs(additionalCost))}</strong> annually, 
+                    but you'll save <strong>${formatCurrency(currentDeductible - recommendation.deductible)}</strong> 
+                    on each claim you file.
+                `;
+            } else {
+                breakEvenElement.innerHTML = `
+                    Your current deductible of <strong>${formatCurrency(currentDeductible)}</strong> 
+                    appears to be optimal for your situation.
+                `;
+            }
+        }
+
+        function updateScenarios(deductibleOptions) {
+            const scenarios = [
+                { name: "Roof Damage (Storm)", cost: 8500, frequency: "Common in NC" },
+                { name: "Water Damage (Pipe)", cost: 4200, frequency: "Moderate risk" },
+                { name: "Theft/Burglary", cost: 2800, frequency: "Location dependent" },
+                { name: "Fire Damage (Kitchen)", cost: 12000, frequency: "Low risk" }
+            ];
+
+            const scenarioGrid = document.getElementById('scenarioGrid');
+            scenarioGrid.innerHTML = '';
+
+            scenarios.forEach(scenario => {
+                const card = document.createElement('div');
+                card.className = 'scenario-card';
+                
+                let comparisons = '';
+                deductibleOptions.slice(0, 4).forEach(deductible => {
+                    const outOfPocket = Math.min(deductible, scenario.cost);
+                    const insurancePays = scenario.cost - outOfPocket;
+                    
+                    comparisons += `
+                        <div class="cost-comparison">
+                            <span>$${deductible.toLocaleString()} deductible:</span>
+                            <span>You pay ${formatCurrency(outOfPocket)}</span>
+                        </div>
+                    `;
+                });
+
+                card.innerHTML = `
+                    <div class="scenario-title">${scenario.name}</div>
+                    <div style="margin-bottom: var(--space-12); font-size: var(--font-size-sm); color: var(--color-text-secondary);">
+                        Total damage: ${formatCurrency(scenario.cost)} • ${scenario.frequency}
+                    </div>
+                    ${comparisons}
+                `;
+                
+                scenarioGrid.appendChild(card);
+            });
+        }
+
+        function updateEmergencyFundAssessment(emergencyFund, recommendedDeductible) {
+            const assessmentDiv = document.getElementById('emergencyFundAssessment');
+            
+            let assessmentContent = '';
+            let assessmentClass = '';
+            
+            if (emergencyFund >= recommendedDeductible * 2) {
+                assessmentContent = `
+                    <h4 style="color: var(--color-success);">✅ Emergency Fund Assessment: Excellent</h4>
+                    <p>Your emergency fund of ${formatCurrency(emergencyFund)} easily covers your recommended deductible of ${formatCurrency(recommendedDeductible)} with room to spare. You're well-positioned for a higher deductible to maximize savings.</p>
+                `;
+                assessmentClass = 'success';
+            } else if (emergencyFund >= recommendedDeductible) {
+                assessmentContent = `
+                    <h4 style="color: var(--color-info);">✅ Emergency Fund Assessment: Adequate</h4>
+                    <p>Your emergency fund of ${formatCurrency(emergencyFund)} covers your recommended deductible of ${formatCurrency(recommendedDeductible)}. Consider building additional savings before increasing your deductible further.</p>
+                `;
+                assessmentClass = 'info';
+            } else {
+                assessmentContent = `
+                    <h4 style="color: var(--color-warning);">⚠️ Emergency Fund Assessment: Needs Attention</h4>
+                    <p>Your emergency fund of ${formatCurrency(emergencyFund)} is less than your recommended deductible of ${formatCurrency(recommendedDeductible)}. Consider building your emergency fund before choosing a higher deductible. A lower deductible might be more appropriate for now.</p>
+                `;
+                assessmentClass = 'warning';
+            }
+
+            assessmentDiv.innerHTML = `
+                <div style="background: rgba(var(--color-${assessmentClass}), 0.1); border: 1px solid var(--color-${assessmentClass}); padding: var(--space-16); border-radius: var(--radius-base); margin: var(--space-20) 0;">
+                    ${assessmentContent}
+                </div>
+            `;
+        }
+
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'USD',
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0
+            }).format(amount);
+        }
+
+        // Form validation
+        const form = document.getElementById('deductibleForm');
+        const inputs = form.querySelectorAll('input[required], select[required]');
+        
+        inputs.forEach(input => {
+            input.addEventListener('blur', function() {
+                if (this.value.trim() === '') {
+                    this.style.borderColor = 'var(--color-error)';
+                } else {
+                    this.style.borderColor = 'var(--color-border)';
+                }
+            });
+
+            input.addEventListener('input', function() {
+                if (this.style.borderColor === 'rgb(192, 21, 47)') {
+                    this.style.borderColor = 'var(--color-border)';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

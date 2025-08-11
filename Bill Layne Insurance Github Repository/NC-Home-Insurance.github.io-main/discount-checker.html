@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discount Checker - Bill Layne Insurance Agency</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        :root {
+            --color-background: rgba(252, 252, 249, 1);
+            --color-surface: rgba(255, 255, 253, 1);
+            --color-text: rgba(19, 52, 59, 1);
+            --color-text-secondary: rgba(98, 108, 113, 1);
+            --color-primary: rgba(33, 128, 141, 1);
+            --color-primary-hover: rgba(29, 116, 128, 1);
+            --color-primary-active: rgba(26, 104, 115, 1);
+            --color-secondary: rgba(94, 82, 64, 0.12);
+            --color-secondary-hover: rgba(94, 82, 64, 0.2);
+            --color-border: rgba(94, 82, 64, 0.2);
+            --color-btn-primary-text: rgba(252, 252, 249, 1);
+            --color-success: rgba(33, 128, 141, 1);
+            --color-warning: rgba(168, 75, 47, 1);
+            --color-error: rgba(192, 21, 47, 1);
+            --color-info: rgba(98, 108, 113, 1);
+            --color-focus-ring: rgba(33, 128, 141, 0.4);
+            
+            --font-family-base: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --font-size-xs: 11px;
+            --font-size-sm: 12px;
+            --font-size-base: 14px;
+            --font-size-lg: 16px;
+            --font-size-xl: 18px;
+            --font-size-2xl: 20px;
+            --font-size-3xl: 24px;
+            --font-size-4xl: 30px;
+            --font-weight-normal: 400;
+            --font-weight-medium: 500;
+            --font-weight-semibold: 550;
+            --font-weight-bold: 600;
+            
+            --space-4: 4px;
+            --space-8: 8px;
+            --space-12: 12px;
+            --space-16: 16px;
+            --space-20: 20px;
+            --space-24: 24px;
+            --space-32: 32px;
+            
+            --radius-sm: 6px;
+            --radius-base: 8px;
+            --radius-lg: 12px;
+            --radius-full: 9999px;
+            
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.04), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.04), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
+            
+            --duration-fast: 150ms;
+            --duration-normal: 250ms;
+            --ease-standard: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --color-background: rgba(31, 33, 33, 1);
+                --color-surface: rgba(38, 40, 40, 1);
+                --color-text: rgba(245, 245, 245, 1);
+                --color-text-secondary: rgba(167, 169, 169, 0.7);
+                --color-primary: rgba(50, 184, 198, 1);
+                --color-primary-hover: rgba(45, 166, 178, 1);
+                --color-primary-active: rgba(41, 150, 161, 1);
+                --color-secondary: rgba(119, 124, 124, 0.15);
+                --color-secondary-hover: rgba(119, 124, 124, 0.25);
+                --color-border: rgba(119, 124, 124, 0.3);
+                --color-success: rgba(50, 184, 198, 1);
+                --color-warning: rgba(230, 129, 97, 1);
+                --color-error: rgba(255, 84, 89, 1);
+                --color-focus-ring: rgba(50, 184, 198, 0.4);
+                --color-btn-primary-text: rgba(19, 52, 59, 1);
+            }
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: var(--font-family-base);
+            font-size: var(--font-size-base);
+            line-height: 1.6;
+            color: var(--color-text);
+            background-color: var(--color-background);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: var(--space-32) var(--space-16);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: var(--space-32);
+            padding: var(--space-32) 0;
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-hover) 100%);
+            color: white;
+        }
+
+        .header h1 {
+            color: white;
+            margin: 0 0 var(--space-12) 0;
+            font-size: var(--font-size-4xl);
+            font-weight: var(--font-weight-bold);
+        }
+
+        .header p {
+            font-size: var(--font-size-lg);
+            opacity: 0.9;
+            margin: 0;
+        }
+
+        .logo {
+            width: 150px;
+            height: auto;
+            margin-bottom: var(--space-16);
+        }
+
+        .checker-layout {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: var(--space-32);
+        }
+
+        @media (max-width: 968px) {
+            .checker-layout {
+                grid-template-columns: 1fr;
+                gap: var(--space-24);
+            }
+        }
+
+        .discounts-section {
+            background: var(--color-surface);
+            padding: var(--space-24);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+        }
+
+        .savings-sidebar {
+            background: var(--color-surface);
+            padding: var(--space-24);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            height: fit-content;
+            position: sticky;
+            top: var(--space-20);
+        }
+
+        .section-title {
+            font-size: var(--font-size-xl);
+            font-weight: var(--font-weight-bold);
+            color: var(--color-primary);
+            margin: 0 0 var(--space-20) 0;
+            display: flex;
+            align-items: center;
+            gap: var(--space-8);
+        }
+
+        .discount-category {
+            margin-bottom: var(--space-32);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+        }
+
+        .category-header {
+            background: linear-gradient(135deg, var(--color-primary), var(--color-primary-hover));
+            color: white;
+            padding: var(--space-16) var(--space-20);
+            font-weight: var(--font-weight-bold);
+            font-size: var(--font-size-lg);
+        }
+
+        .category-content {
+            padding: var(--space-20);
+        }
+
+        .discount-item {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--space-12);
+            padding: var(--space-16);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-base);
+            margin-bottom: var(--space-12);
+            transition: all var(--duration-normal) var(--ease-standard);
+            cursor: pointer;
+        }
+
+        .discount-item:hover {
+            background: rgba(var(--color-primary), 0.05);
+            border-color: var(--color-primary);
+        }
+
+        .discount-item.selected {
+            background: rgba(var(--color-success), 0.1);
+            border-color: var(--color-success);
+            box-shadow: 0 0 0 1px var(--color-success);
+        }
+
+        .discount-checkbox {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--color-border);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-top: 2px;
+            transition: all var(--duration-fast) var(--ease-standard);
+        }
+
+        .discount-item.selected .discount-checkbox {
+            background: var(--color-success);
+            border-color: var(--color-success);
+            color: white;
+        }
+
+        .discount-details {
+            flex: 1;
+        }
+
+        .discount-name {
+            font-weight: var(--font-weight-bold);
+            color: var(--color-text);
+            margin-bottom: var(--space-4);
+        }
+
+        .discount-description {
+            font-size: var(--font-size-sm);
+            color: var(--color-text-secondary);
+            margin-bottom: var(--space-8);
+        }
+
+        .discount-savings {
+            font-size: var(--font-size-sm);
+            font-weight: var(--font-weight-bold);
+            color: var(--color-success);
+        }
+
+        .discount-documentation {
+            font-size: var(--font-size-xs);
+            color: var(--color-info);
+            margin-top: var(--space-4);
+            font-style: italic;
+        }
+
+        .savings-summary {
+            background: linear-gradient(135deg, var(--color-success), var(--color-primary));
+            color: white;
+            padding: var(--space-24);
+            border-radius: var(--radius-lg);
+            text-align: center;
+            margin-bottom: var(--space-24);
+        }
+
+        .total-savings {
+            font-size: var(--font-size-3xl);
+            font-weight: var(--font-weight-bold);
+            margin-bottom: var(--space-8);
+        }
+
+        .savings-subtitle {
+            opacity: 0.9;
+            margin: 0;
+        }
+
+        .qualified-discounts {
+            margin-bottom: var(--space-24);
+        }
+
+        .qualified-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .qualified-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--space-8) 0;
+            border-bottom: 1px solid var(--color-border);
+            font-size: var(--font-size-sm);
+        }
+
+        .qualified-item:last-child {
+            border-bottom: none;
+        }
+
+        .discount-amount {
+            font-weight: var(--font-weight-bold);
+            color: var(--color-success);
+        }
+
+        .action-plan {
+            background: rgba(var(--color-info), 0.1);
+            border: 1px solid var(--color-info);
+            padding: var(--space-16);
+            border-radius: var(--radius-base);
+            margin-top: var(--space-24);
+        }
+
+        .action-plan h4 {
+            color: var(--color-info);
+            margin: 0 0 var(--space-12) 0;
+        }
+
+        .action-steps {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .action-step {
+            padding: var(--space-8) 0;
+            font-size: var(--font-size-sm);
+        }
+
+        .step-number {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            background: var(--color-info);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            font-size: var(--font-size-xs);
+            line-height: 20px;
+            margin-right: var(--space-8);
+            font-weight: var(--font-weight-bold);
+        }
+
+        .premium-comparison {
+            background: var(--color-background);
+            padding: var(--space-16);
+            border-radius: var(--radius-base);
+            margin-top: var(--space-16);
+        }
+
+        .comparison-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: var(--space-8);
+            font-size: var(--font-size-sm);
+        }
+
+        .comparison-row.total {
+            border-top: 1px solid var(--color-border);
+            padding-top: var(--space-8);
+            font-weight: var(--font-weight-bold);
+        }
+
+        .info-box {
+            background: rgba(var(--color-info), 0.1);
+            border: 1px solid var(--color-info);
+            padding: var(--space-16);
+            border-radius: var(--radius-base);
+            margin-bottom: var(--space-24);
+        }
+
+        .info-box h4 {
+            color: var(--color-info);
+            margin: 0 0 var(--space-8) 0;
+            font-size: var(--font-size-base);
+        }
+
+        .footer-cta {
+            text-align: center;
+            margin-top: var(--space-32);
+            padding: var(--space-32);
+            background: linear-gradient(135deg, var(--color-primary), var(--color-primary-hover));
+            color: white;
+            border-radius: var(--radius-lg);
+        }
+
+        .footer-cta h3 {
+            color: white;
+            margin: 0 0 var(--space-16) 0;
+        }
+
+        .footer-cta p {
+            margin: 0 0 var(--space-20) 0;
+            opacity: 0.9;
+        }
+
+        .contact-info {
+            font-size: var(--font-size-sm);
+            margin-top: var(--space-16);
+            opacity: 0.8;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: var(--space-12) var(--space-24);
+            border-radius: var(--radius-base);
+            font-size: var(--font-size-base);
+            font-weight: var(--font-weight-medium);
+            line-height: 1.5;
+            cursor: pointer;
+            transition: all var(--duration-normal) var(--ease-standard);
+            border: none;
+            text-decoration: none;
+            min-height: 44px;
+        }
+
+        .progress-indicator {
+            background: var(--color-secondary);
+            height: 8px;
+            border-radius: var(--radius-full);
+            margin: var(--space-16) 0;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            background: var(--color-success);
+            height: 100%;
+            border-radius: var(--radius-full);
+            transition: width var(--duration-normal) var(--ease-standard);
+            width: 0%;
+        }
+
+        .reset-button {
+            background: var(--color-secondary);
+            color: var(--color-text);
+            border: 1px solid var(--color-border);
+            padding: var(--space-8) var(--space-16);
+            border-radius: var(--radius-base);
+            font-size: var(--font-size-sm);
+            cursor: pointer;
+            transition: all var(--duration-fast) var(--ease-standard);
+        }
+
+        .reset-button:hover {
+            background: var(--color-secondary-hover);
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: var(--space-16) var(--space-8);
+            }
+
+            .discounts-section,
+            .savings-sidebar {
+                padding: var(--space-16);
+            }
+
+            .discount-item {
+                padding: var(--space-12);
+            }
+
+            .total-savings {
+                font-size: var(--font-size-2xl);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Header -->
+    <header class="navbar">
+        <div class="container">
+            <div class="navbar-content flex items-center justify-between">
+                <div class="navbar-brand">
+                    <a href="https://billlayneinsurance.com" style="text-decoration: none;">
+                        <div style="display: flex; flex-direction: column;">
+                            <h2 style="font-size: var(--font-size-2xl); font-weight: var(--font-weight-bold); color: var(--color-primary); margin: 0;">Bill Layne Insurance</h2>
+                            <span style="font-size: var(--font-size-sm); color: var(--color-text-secondary); font-weight: var(--font-weight-medium);">Home<br>Insurance Guide</span>
+                        </div>
+                    </a>
+                </div>
+                <nav class="navbar-menu">
+                    <a href="https://billlayneinsurance.com" class="nav-link">Home</a>
+                    <a href="index.html" class="nav-link">Home<br><span style="font-size: 0.9em;">Insurance</span></a>
+                    <a href="https://BillLayne.github.io/Auto-Insurance-Center/" class="nav-link">Auto<br><span style="font-size: 0.9em;">Insurance</span></a>
+                    <a href="https://BillLayne.github.io/NC-Insurance-Claims-Center.github.io/" class="nav-link">Claims<br><span style="font-size: 0.9em;">Center</span></a>
+                    <a href="https://billlayneinsurance.com/blog" class="nav-link">Blog</a>
+                </nav>
+                <div class="navbar-cta" style="display: flex; align-items: center; gap: var(--space-16);">
+                    <a href="tel:3368351993" class="phone-number" style="font-weight: var(--font-weight-bold); font-size: var(--font-size-lg); color: var(--color-primary); text-decoration: none;">(336) 835-1993</a>
+                    <a href="https://billlayneinsurance.com#contact" class="btn btn--primary">Get Quote</a>
+                </div>
+                <button class="mobile-menu-toggle" aria-label="Toggle mobile menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+    <div class="header">
+        <img src="https://i.imgur.com/cBAgeX8.png" alt="Bill Layne Insurance Agency" class="logo">
+        <h1>Discount Checker</h1>
+        <p>Discover all the home insurance discounts you may qualify for and maximize your savings</p>
+    </div>
+
+    <div class="container">
+        <div class="info-box">
+            <h4>💡 How to Use This Tool</h4>
+            <p>Check all the discounts that apply to your situation. We'll calculate your potential savings and provide an action plan to claim each discount. Many homeowners miss out on hundreds of dollars in savings by not knowing about all available discounts!</p>
+        </div>
+
+        <div class="checker-layout">
+            <!-- Discounts Section -->
+            <div class="discounts-section">
+                <h2 class="section-title">
+                    🏷️ Available Discounts
+                    <button class="reset-button" onclick="resetAll()">Reset All</button>
+                </h2>
+
+                <!-- Home Security & Safety -->
+                <div class="discount-category">
+                    <div class="category-header">🛡️ Home Security & Safety</div>
+                    <div class="category-content">
+                        <div class="discount-item" data-savings="150" data-category="security">
+                            <div class="discount-checkbox">✓</div>
+                            <div class="discount-details">
+                                <div class="discount-name">Security System</div>
+                                <div class="discount-description">Professionally monitored burglar alarm system</div>
+                                <div class="discount-savings">Save up to $150/year</div>
+                                <div class="discount-documentation">Documentation: Monitoring contract or certificate</div>
+                            </div>
+                        </div>
+
+                        <div class="discount-item" data-savings="75" data-category="security">
+                            <div class="discount-checkbox">✓</div>
+                            <div class="discount-details">
+                                <div class="discount-name">Smoke Detectors</div>
+                                <div class="discount-description">Hard-wired smoke detectors throughout the home</div>
+                                <div class="discount-savings">Save up to $75/year</div>
+                                <div class="discount-documentation">Documentation: Inspection certificate or home inspection report</div>
+                            </div>
+                        </div>
+
+                        <div class="discount-item" data-savings="50" data-category="security">
+                            <div class="discount-checkbox">✓</div>
+                            <div class="discount-details">
+                                <div class="discount-name">Fire Extinguisher</div>
+                                <div class="discount-description">Accessible fire extinguisher in home</div>
+                                <div class="discount-savings">Save up to $50/year</div>
+                                <div class="discount-documentation">Documentation: Photo of extinguisher with current inspection tag</div>
+                            </div>
+                        </div>
+
+                        <div class="discount-item" data-savings="100" data-category="security">
+                            <div class="discount-checkbox">✓</div>
+                            <div class="discount-details">
+                                <div class="discount-name">Deadbolt Locks</div>
+                                <div class="discount-description">Deadbolt locks on all exterior doors</div>
+                                <div class="discount-savings">Save up to $100/year</div>
+                                <div class="discount-documentation">Documentation: Photo verification or locksmith receipt</div>
+                            </div>
+                        </div>
+
+                        <div class="discount-item" data-savings="200" data-category="security">
+                            <div class="discount-checkbox">✓</div>
+                            <div class="discount-details">
+                                <div class="discount-name">Impact-Resistant Roof</div>
+                                <div class="discount-description">Class 4 impact-resistant roofing materials</div>
+                                <div class="discount-savings">Save up to $200/year</div>
+                                <div class="discount-documentation">Documentation: Manufacturer warranty or building permit</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Policy & Bundling -->
+                <div class="discount-category">
+                    <div class="category-header">📋 Policy & Bundling</div>
+                    <div class="category-content">
+                        <div class="discount-item" data-savings="300" data-category="policy">
+                            <div class="discount-checkbox">✓</div>
+                            <div class="discount-details">
+                                <div class="discount-name">Multi-Policy Discount</div>
+                                <div class="discount-description">Bundle home and auto insurance with same company</div>
+                                <div class="discount-savings">Save up to $300/year</div>
+                                <div class="discount-documentation">Documentation: Current auto insurance policy</div>
+                            </div>
+                        </div>
+
+                        <div class="discount-item" data-savings="200" data-category="policy">
+                            <div class="discount-checkbox">✓</div>
+                            <div class="discount-details">
+                                <div class="discount-name">Claims-Free Discount</div>
+                                <div class="discount-description">No claims filed in the past 3-5 years</div>
+                                <div class="discount-savings">Save up to $200/year</div>
+                                <div class="discount-documentation">Documentation: Claims history report</div>
+                            </div>
+                        </div>
+
+                        <div class="discount-item" data-savings="150" data-category="policy">
+                            <div class="discount-checkbox">✓</div>
+                            <div class="discount-details">
+                                <div class="discount-name">Loyalty Discount</div>
+                                <div class="discount-description">Customer for 3+ years with same insurer</div>
+                                <div class="discount-savings">Save up to $150/year</div>
+                                <div class="discount-documentation">Documentation: Previous policy declarations pages</div>
+                            </div>
+                        </div>
+
+                        <div class="discount-item" data-savings="100" data-category="policy">
+                            <div class="discount-checkbox">✓</div>
+                            <div class="discount-details">
+                                <div class="discount-name">New Customer Discount</div>
+                                <div class="discount-description">First-time customer with the insurance company</div>
+                                <div class="discount-savings">Save up to $100/year</div>
+                                <div class="discount-documentation">Documentation: No prior policy with this insurer</div>
+                            </div>
+                        </div>
+
+                        <div class="discount-item" data-savings="50" data-category="policy">
+                            <div class="discount-checkbox">✓</div>
+                            <div class="discount-details">
+                                <div class="discount-name">Automatic Payment</div>
+                                <div class="discount-description">Set up automatic premium payments</div>
+                                <div class="discount-savings">Save up to $50/year</div>
+                                <div class="discount-documentation">Documentation: Bank account or credit card for auto-pay</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Home Features -->
+                <div class="discount-category">
+                    <div class="category-header">🏠 Home Features</div>
+                    <div class="category-content">
+                        <div class="discount-item" data-savings="250" data-category="home">
+                            <div class="discount-checkbox">✓</div>
+                            <div class="discount-details">
+                                <div class="discount-name">New Home Discount</div>
+                                <div class="discount-description">Home built within the last 10 years</div>
+                                <div class="discount-savings">Save up to $250/year</div>
+                                <div class="discount-documentation">Documentation: Certificate of occupancy or deed</div>
+                            </div>
+                        </div>
+
+                        <div class="discount-item" data-savings="175" data-category="home">
+                            <div class="discount-checkbox">✓</div>
+                            <div class="discount-details">
+                                <div class="discount-name">Recent Updates</div>
+                                <div class="discount-description">Major updates to plumbing, electrical, or HVAC in last 10 years</div>
+                                <div class="discount-savings">Save up to $175/year</div>
+                                <div class="discount-documentation">Documentation: Permits and contractor receipts</div>
+                            </div>
+                        </div>
+
+                        <div class="discount-item" data-savings="125" data-category="home">
+                            <div class="discount-checkbox">✓</div>
+                            <div class="discount-details">
+                                <div class="discount-name">Gated Community</div>
+                                <div class="discount-description">Home located in a gated or secured community</div>
+                                <div class="discount-savings">Save up to $125/year</div>
+                                <div class="discount-documentation">Documentation: HOA documentation or community map</div>
+                            </div>
+                        </div>
+
+                        <div class="discount-item" data-savings="100" data-category="home">
+                            <div class="discount-checkbox">✓</div>
+                            <div class="discount-details">
+                                <div class="discount-name">Fire-Resistant Materials</div>
+                                <div class="discount-description">Fire-resistant roofing, siding, or construction materials</div>
+                                <div class="discount-savings">Save up to $100/year</div>
+                                <div class="discount-documentation">Documentation: Building materials specifications</div>
+                            </div>
+                        </div>
+
+                        <div class="discount-item" data-savings="75" data-category="home">
+                            <div class="discount-checkbox">✓</div>
+                            <div class="discount-details">
+                                <div class="discount-name">Energy Efficient Features</div>
+                                <div class="discount-description">Energy Star appliances, efficient HVAC, or green building certification</div>
+                                <div class="discount-savings">Save up to $75/year</div>
+                                <div class="discount-documentation">Documentation: Energy Star certificates or green building rating</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Personal & Professional -->
+                <div class="discount-category">
+                    <div class="category-header">👤 Personal & Professional</div>
+                    <div class="category-content">
+                        <div class="discount-item" data-savings="200" data-category="personal">
+                            <div class="discount-checkbox">✓</div>
+                            <div class="discount-details">
+                                <div class="discount-name">Senior Citizen Discount</div>
+                                <div class="discount-description">Age 55+ or retired status</div>
+                                <div class="discount-savings">Save up to $200/year</div>
+                                <div class="discount-documentation">Documentation: Driver's license or retirement letter</div>
+                            </div>
+                        </div>
+
+                        <div class="discount-item" data-savings="150" data-category="personal">
+                            <div class="discount-checkbox">✓</div>
+                            <div class="discount-details">
+                                <div class="discount-name">Military/Veteran Discount</div>
+                                <div class="discount-description">Active duty, reserve, or veteran military service</div>
+                                <div class="discount-savings">Save up to $150/year</div>
+                                <div class="discount-documentation">Documentation: Military ID or DD-214</div>
+                            </div>
+                        </div>
+
+                        <div class="discount-item" data-savings="125" data-category="personal">
+                            <div class="discount-checkbox">✓</div>
+                            <div class="discount-details">
+                                <div class="discount-name">Professional Group</div>
+                                <div class="discount-description">Member of teachers, engineers, or other professional associations</div>
+                                <div class="discount-savings">Save up to $125/year</div>
+                                <div class="discount-documentation">Documentation: Professional association membership card</div>
+                            </div>
+                        </div>
+
+                        <div class="discount-item" data-savings="100" data-category="personal">
+                            <div class="discount-checkbox">✓</div>
+                            <div class="discount-details">
+                                <div class="discount-name">Alumni Discount</div>
+                                <div class="discount-description">Graduate of select colleges or universities</div>
+                                <div class="discount-savings">Save up to $100/year</div>
+                                <div class="discount-documentation">Documentation: Diploma or alumni association membership</div>
+                            </div>
+                        </div>
+
+                        <div class="discount-item" data-savings="175" data-category="personal">
+                            <div class="discount-checkbox">✓</div>
+                            <div class="discount-details">
+                                <div class="discount-name">Good Credit Score</div>
+                                <div class="discount-description">Credit score of 700+ (varies by state)</div>
+                                <div class="discount-savings">Save up to $175/year</div>
+                                <div class="discount-documentation">Documentation: Credit report (we can check with permission)</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- North Carolina Specific -->
+                <div class="discount-category">
+                    <div class="category-header">🌪️ North Carolina Specific</div>
+                    <div class="category-content">
+                        <div class="discount-item" data-savings="300" data-category="nc">
+                            <div class="discount-checkbox">✓</div>
+                            <div class="discount-details">
+                                <div class="discount-name">Hurricane Preparedness</div>
+                                <div class="discount-description">Storm shutters, safe room, or hurricane straps</div>
+                                <div class="discount-savings">Save up to $300/year</div>
+                                <div class="discount-documentation">Documentation: Installation receipts or engineering certification</div>
+                            </div>
+                        </div>
+
+                        <div class="discount-item" data-savings="150" data-category="nc">
+                            <div class="discount-checkbox">✓</div>
+                            <div class="discount-details">
+                                <div class="discount-name">Wind Mitigation</div>
+                                <div class="discount-description">Wind-resistant features or building code compliance</div>
+                                <div class="discount-savings">Save up to $150/year</div>
+                                <div class="discount-documentation">Documentation: Wind mitigation inspection report</div>
+                            </div>
+                        </div>
+
+                        <div class="discount-item" data-savings="100" data-category="nc">
+                            <div class="discount-checkbox">✓</div>
+                            <div class="discount-details">
+                                <div class="discount-name">Building Code Compliance</div>
+                                <div class="discount-description">Built to or exceeds current NC building codes</div>
+                                <div class="discount-savings">Save up to $100/year</div>
+                                <div class="discount-documentation">Documentation: Building permits and inspection certificates</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Savings Sidebar -->
+            <div class="savings-sidebar">
+                <div class="savings-summary">
+                    <div class="total-savings" id="totalSavings">$0</div>
+                    <p class="savings-subtitle">Potential Annual Savings</p>
+                </div>
+
+                <div class="progress-indicator">
+                    <div class="progress-bar" id="progressBar"></div>
+                </div>
+                <p style="text-align: center; font-size: var(--font-size-sm); color: var(--color-text-secondary); margin: var(--space-8) 0 var(--space-16) 0;">
+                    <span id="checkedCount">0</span> of <span id="totalCount">20</span> discounts checked
+                </p>
+
+                <div class="qualified-discounts">
+                    <h4 style="margin: 0 0 var(--space-12) 0; color: var(--color-primary);">💰 Qualified Discounts</h4>
+                    <ul class="qualified-list" id="qualifiedList">
+                        <li style="text-align: center; color: var(--color-text-secondary); font-style: italic; padding: var(--space-16) 0;">
+                            Select discounts to see your savings
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="premium-comparison">
+                    <h4 style="margin: 0 0 var(--space-12) 0; color: var(--color-primary); font-size: var(--font-size-base);">📊 Premium Comparison</h4>
+                    <div class="comparison-row">
+                        <span>Current estimated premium:</span>
+                        <span id="currentPremium">$1,200</span>
+                    </div>
+                    <div class="comparison-row">
+                        <span>With selected discounts:</span>
+                        <span id="newPremium">$1,200</span>
+                    </div>
+                    <div class="comparison-row total">
+                        <span>Your annual savings:</span>
+                        <span id="annualSavings" style="color: var(--color-success);">$0</span>
+                    </div>
+                </div>
+
+                <div class="action-plan" id="actionPlan" style="display: none;">
+                    <h4>📋 Next Steps</h4>
+                    <ol class="action-steps">
+                        <li class="action-step">
+                            <span class="step-number">1</span>
+                            Gather required documentation for selected discounts
+                        </li>
+                        <li class="action-step">
+                            <span class="step-number">2</span>
+                            Contact Bill Layne Insurance Agency at (336) 850-6906
+                        </li>
+                        <li class="action-step">
+                            <span class="step-number">3</span>
+                            Review and update your policy to claim discounts
+                        </li>
+                        <li class="action-step">
+                            <span class="step-number">4</span>
+                            Enjoy your reduced premiums!
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-cta">
+            <h3>Ready to Claim Your Discounts?</h3>
+            <p>Contact Bill Layne Insurance Agency to review your policy and start saving money with these available discounts.</p>
+            <a href="tel:336-835-1993" class="btn" style="background: rgba(255,255,255,0.2); color: white; border: 2px solid rgba(255,255,255,0.3);">
+                Call (336) 835-1993
+            </a>
+            <div class="contact-info">
+                1283 N Bridge St, Elkin NC 28621 | Save@BillLayneInsurance.com
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let selectedDiscounts = new Set();
+        let totalPossibleSavings = 0;
+        const basePremium = 1200; // Estimated base premium
+
+        // Initialize the checker
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeChecker();
+            attachEventListeners();
+        });
+
+        function initializeChecker() {
+            const discountItems = document.querySelectorAll('.discount-item');
+            let totalSavings = 0;
+            
+            discountItems.forEach(item => {
+                const savings = parseInt(item.dataset.savings) || 0;
+                totalSavings += savings;
+            });
+            
+            totalPossibleSavings = totalSavings;
+            document.getElementById('totalCount').textContent = discountItems.length;
+            updateDisplay();
+        }
+
+        function attachEventListeners() {
+            const discountItems = document.querySelectorAll('.discount-item');
+            
+            discountItems.forEach((item, index) => {
+                item.addEventListener('click', function() {
+                    toggleDiscount(this, index);
+                });
+                
+                // Add keyboard accessibility
+                item.setAttribute('tabindex', '0');
+                item.setAttribute('role', 'checkbox');
+                item.setAttribute('aria-checked', 'false');
+                
+                item.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        toggleDiscount(this, index);
+                    }
+                });
+            });
+        }
+
+        function toggleDiscount(element, index) {
+            const isSelected = element.classList.contains('selected');
+            const savings = parseInt(element.dataset.savings) || 0;
+            const discountName = element.querySelector('.discount-name').textContent;
+            
+            if (isSelected) {
+                // Deselect
+                element.classList.remove('selected');
+                element.setAttribute('aria-checked', 'false');
+                selectedDiscounts.delete(index);
+            } else {
+                // Select
+                element.classList.add('selected');
+                element.setAttribute('aria-checked', 'true');
+                selectedDiscounts.add(index);
+            }
+            
+            updateDisplay();
+        }
+
+        function updateDisplay() {
+            let totalSavings = 0;
+            const qualifiedList = document.getElementById('qualifiedList');
+            const discountItems = document.querySelectorAll('.discount-item');
+            
+            // Calculate total savings and build qualified list
+            qualifiedList.innerHTML = '';
+            
+            if (selectedDiscounts.size === 0) {
+                qualifiedList.innerHTML = '<li style="text-align: center; color: var(--color-text-secondary); font-style: italic; padding: var(--space-16) 0;">Select discounts to see your savings</li>';
+            } else {
+                selectedDiscounts.forEach(index => {
+                    const item = discountItems[index];
+                    const savings = parseInt(item.dataset.savings) || 0;
+                    const discountName = item.querySelector('.discount-name').textContent;
+                    
+                    totalSavings += savings;
+                    
+                    const li = document.createElement('li');
+                    li.className = 'qualified-item';
+                    li.innerHTML = `
+                        <span>${discountName}</span>
+                        <span class="discount-amount">$${savings}</span>
+                    `;
+                    qualifiedList.appendChild(li);
+                });
+            }
+            
+            // Update savings display
+            document.getElementById('totalSavings').textContent = `$${totalSavings.toLocaleString()}`;
+            document.getElementById('checkedCount').textContent = selectedDiscounts.size;
+            
+            // Update premium comparison
+            const newPremium = Math.max(0, basePremium - totalSavings);
+            document.getElementById('currentPremium').textContent = `$${basePremium.toLocaleString()}`;
+            document.getElementById('newPremium').textContent = `$${newPremium.toLocaleString()}`;
+            document.getElementById('annualSavings').textContent = `$${totalSavings.toLocaleString()}`;
+            
+            // Update progress bar
+            const progressPercentage = (selectedDiscounts.size / document.querySelectorAll('.discount-item').length) * 100;
+            document.getElementById('progressBar').style.width = `${progressPercentage}%`;
+            
+            // Show/hide action plan
+            const actionPlan = document.getElementById('actionPlan');
+            if (selectedDiscounts.size > 0) {
+                actionPlan.style.display = 'block';
+            } else {
+                actionPlan.style.display = 'none';
+            }
+        }
+
+        function resetAll() {
+            const discountItems = document.querySelectorAll('.discount-item');
+            
+            discountItems.forEach(item => {
+                item.classList.remove('selected');
+                item.setAttribute('aria-checked', 'false');
+            });
+            
+            selectedDiscounts.clear();
+            updateDisplay();
+        }
+
+        // Add some interactive features
+        function generateReport() {
+            if (selectedDiscounts.size === 0) {
+                alert('Please select some discounts first!');
+                return;
+            }
+            
+            let report = 'Your Discount Report:\n\n';
+            let totalSavings = 0;
+            
+            selectedDiscounts.forEach(index => {
+                const item = document.querySelectorAll('.discount-item')[index];
+                const savings = parseInt(item.dataset.savings) || 0;
+                const discountName = item.querySelector('.discount-name').textContent;
+                const documentation = item.querySelector('.discount-documentation').textContent;
+                
+                totalSavings += savings;
+                report += `• ${discountName}: $${savings}/year\n`;
+                report += `  ${documentation}\n\n`;
+            });
+            
+            report += `Total Annual Savings: $${totalSavings}\n`;
+            report += `Contact Bill Layne Insurance at (336) 850-6906 to claim these discounts!`;
+            
+            // In a real implementation, this could generate a PDF or email
+            alert(report);
+        }
+
+        // Add animation for newly selected items
+        function animateSelection(element) {
+            element.style.transform = 'scale(1.02)';
+            setTimeout(() => {
+                element.style.transform = 'scale(1)';
+            }, 200);
+        }
+
+        // Category progress tracking
+        function updateCategoryProgress() {
+            const categories = ['security', 'policy', 'home', 'personal', 'nc'];
+            
+            categories.forEach(category => {
+                const categoryItems = document.querySelectorAll(`[data-category="${category}"]`);
+                const selectedInCategory = Array.from(categoryItems).filter(item => 
+                    item.classList.contains('selected')).length;
+                
+                // Update category header with progress
+                const header = document.querySelector(`[data-category-header="${category}"]`);
+                if (header) {
+                    header.textContent = `${header.textContent.split('(')[0]} (${selectedInCategory}/${categoryItems.length})`;
+                }
+            });
+        }
+    </script>
+</body>
+</html>

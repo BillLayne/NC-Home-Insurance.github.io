@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coverage Calculator - Bill Layne Insurance Agency</title>
+    <style>
+        :root {
+            --color-background: rgba(252, 252, 249, 1);
+            --color-surface: rgba(255, 255, 253, 1);
+            --color-text: rgba(19, 52, 59, 1);
+            --color-text-secondary: rgba(98, 108, 113, 1);
+            --color-primary: rgba(33, 128, 141, 1);
+            --color-primary-hover: rgba(29, 116, 128, 1);
+            --color-primary-active: rgba(26, 104, 115, 1);
+            --color-secondary: rgba(94, 82, 64, 0.12);
+            --color-secondary-hover: rgba(94, 82, 64, 0.2);
+            --color-border: rgba(94, 82, 64, 0.2);
+            --color-btn-primary-text: rgba(252, 252, 249, 1);
+            --color-success: rgba(33, 128, 141, 1);
+            --color-warning: rgba(168, 75, 47, 1);
+            --color-error: rgba(192, 21, 47, 1);
+            --color-focus-ring: rgba(33, 128, 141, 0.4);
+            
+            --font-family-base: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --font-size-sm: 12px;
+            --font-size-base: 14px;
+            --font-size-lg: 16px;
+            --font-size-xl: 18px;
+            --font-size-2xl: 20px;
+            --font-size-3xl: 24px;
+            --font-size-4xl: 30px;
+            --font-weight-normal: 400;
+            --font-weight-medium: 500;
+            --font-weight-semibold: 550;
+            --font-weight-bold: 600;
+            
+            --space-4: 4px;
+            --space-8: 8px;
+            --space-12: 12px;
+            --space-16: 16px;
+            --space-20: 20px;
+            --space-24: 24px;
+            --space-32: 32px;
+            
+            --radius-sm: 6px;
+            --radius-base: 8px;
+            --radius-lg: 12px;
+            --radius-full: 9999px;
+            
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.04), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.04), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
+            
+            --duration-fast: 150ms;
+            --duration-normal: 250ms;
+            --ease-standard: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --color-background: rgba(31, 33, 33, 1);
+                --color-surface: rgba(38, 40, 40, 1);
+                --color-text: rgba(245, 245, 245, 1);
+                --color-text-secondary: rgba(167, 169, 169, 0.7);
+                --color-primary: rgba(50, 184, 198, 1);
+                --color-primary-hover: rgba(45, 166, 178, 1);
+                --color-primary-active: rgba(41, 150, 161, 1);
+                --color-secondary: rgba(119, 124, 124, 0.15);
+                --color-secondary-hover: rgba(119, 124, 124, 0.25);
+                --color-border: rgba(119, 124, 124, 0.3);
+                --color-success: rgba(50, 184, 198, 1);
+                --color-warning: rgba(230, 129, 97, 1);
+                --color-error: rgba(255, 84, 89, 1);
+                --color-focus-ring: rgba(50, 184, 198, 0.4);
+                --color-btn-primary-text: rgba(19, 52, 59, 1);
+            }
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: var(--font-family-base);
+            font-size: var(--font-size-base);
+            line-height: 1.6;
+            color: var(--color-text);
+            background-color: var(--color-background);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: var(--space-32) var(--space-16);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: var(--space-32);
+            padding: var(--space-32) 0;
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-hover) 100%);
+            color: white;
+        }
+
+        .header h1 {
+            color: white;
+            margin: 0 0 var(--space-12) 0;
+            font-size: var(--font-size-4xl);
+            font-weight: var(--font-weight-bold);
+        }
+
+        .header p {
+            font-size: var(--font-size-lg);
+            opacity: 0.9;
+            margin: 0;
+        }
+
+        .logo {
+            width: 150px;
+            height: auto;
+            margin-bottom: var(--space-16);
+        }
+
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-32);
+        }
+
+        @media (max-width: 768px) {
+            .calculator-grid {
+                grid-template-columns: 1fr;
+                gap: var(--space-24);
+            }
+        }
+
+        .calculator-section {
+            background: var(--color-surface);
+            padding: var(--space-24);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+        }
+
+        .section-title {
+            font-size: var(--font-size-xl);
+            font-weight: var(--font-weight-bold);
+            color: var(--color-primary);
+            margin: 0 0 var(--space-20) 0;
+        }
+
+        .form-group {
+            margin-bottom: var(--space-16);
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: var(--space-8);
+            font-weight: var(--font-weight-medium);
+            font-size: var(--font-size-sm);
+            color: var(--color-text);
+        }
+
+        .form-control {
+            display: block;
+            width: 100%;
+            padding: var(--space-12);
+            font-size: var(--font-size-base);
+            line-height: 1.5;
+            color: var(--color-text);
+            background-color: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-base);
+            transition: border-color var(--duration-fast) var(--ease-standard);
+        }
+
+        .form-control:focus {
+            border-color: var(--color-primary);
+            outline: 2px solid var(--color-primary);
+            outline-offset: 2px;
+        }
+
+        select.form-control {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23134252' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right var(--space-12) center;
+            background-size: 16px;
+            padding-right: var(--space-32);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: var(--space-12) var(--space-24);
+            border-radius: var(--radius-base);
+            font-size: var(--font-size-base);
+            font-weight: var(--font-weight-medium);
+            line-height: 1.5;
+            cursor: pointer;
+            transition: all var(--duration-normal) var(--ease-standard);
+            border: none;
+            text-decoration: none;
+            min-height: 44px;
+        }
+
+        .btn--primary {
+            background: var(--color-primary);
+            color: var(--color-btn-primary-text);
+        }
+
+        .btn--primary:hover {
+            background: var(--color-primary-hover);
+        }
+
+        .btn--full-width {
+            width: 100%;
+        }
+
+        .results-section {
+            grid-column: 1 / -1;
+            background: var(--color-surface);
+            padding: var(--space-32);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            border: 2px solid var(--color-primary);
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--space-24);
+            margin-top: var(--space-24);
+        }
+
+        .coverage-result {
+            background: linear-gradient(135deg, var(--color-success) 0%, var(--color-primary) 100%);
+            color: white;
+            padding: var(--space-24);
+            border-radius: var(--radius-lg);
+            text-align: center;
+        }
+
+        .coverage-type {
+            font-size: var(--font-size-sm);
+            opacity: 0.9;
+            margin-bottom: var(--space-8);
+        }
+
+        .coverage-amount {
+            font-size: var(--font-size-3xl);
+            font-weight: var(--font-weight-bold);
+            margin-bottom: var(--space-8);
+        }
+
+        .coverage-note {
+            font-size: var(--font-size-sm);
+            opacity: 0.8;
+            margin: 0;
+        }
+
+        .recommendations {
+            margin-top: var(--space-24);
+            padding: var(--space-20);
+            background: rgba(var(--color-primary), 0.1);
+            border-radius: var(--radius-base);
+        }
+
+        .recommendations h4 {
+            color: var(--color-primary);
+            margin: 0 0 var(--space-12) 0;
+        }
+
+        .recommendations ul {
+            margin: 0;
+            padding-left: var(--space-20);
+        }
+
+        .recommendations li {
+            margin-bottom: var(--space-8);
+            font-size: var(--font-size-sm);
+        }
+
+        .warning-box {
+            background: rgba(var(--color-warning), 0.1);
+            border: 1px solid var(--color-warning);
+            padding: var(--space-16);
+            border-radius: var(--radius-base);
+            margin-top: var(--space-16);
+        }
+
+        .warning-box h4 {
+            color: var(--color-warning);
+            margin: 0 0 var(--space-8) 0;
+            font-size: var(--font-size-base);
+        }
+
+        .warning-box p {
+            margin: 0;
+            font-size: var(--font-size-sm);
+        }
+
+        .info-section {
+            background: var(--color-surface);
+            padding: var(--space-24);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            margin-bottom: var(--space-24);
+        }
+
+        .info-section h3 {
+            color: var(--color-primary);
+            margin: 0 0 var(--space-16) 0;
+        }
+
+        .cost-breakdown {
+            margin-top: var(--space-16);
+            font-size: var(--font-size-sm);
+        }
+
+        .cost-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: var(--space-8);
+            padding: var(--space-8);
+            background: rgba(var(--color-primary), 0.05);
+            border-radius: var(--radius-sm);
+        }
+
+        .cost-label {
+            font-weight: var(--font-weight-medium);
+        }
+
+        .cost-value {
+            font-weight: var(--font-weight-bold);
+            color: var(--color-primary);
+        }
+
+        .footer-cta {
+            text-align: center;
+            margin-top: var(--space-32);
+            padding: var(--space-32);
+            background: linear-gradient(135deg, var(--color-primary), var(--color-primary-hover));
+            color: white;
+            border-radius: var(--radius-lg);
+        }
+
+        .footer-cta h3 {
+            color: white;
+            margin: 0 0 var(--space-16) 0;
+        }
+
+        .footer-cta p {
+            margin: 0 0 var(--space-20) 0;
+            opacity: 0.9;
+        }
+
+        .contact-info {
+            font-size: var(--font-size-sm);
+            margin-top: var(--space-16);
+            opacity: 0.8;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: var(--space-16) var(--space-8);
+            }
+
+            .calculator-section {
+                padding: var(--space-16);
+            }
+
+            .results-section {
+                padding: var(--space-20);
+            }
+
+            .coverage-amount {
+                font-size: var(--font-size-2xl);
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navigation Header -->
+    <header class="navbar">
+        <div class="container">
+            <div class="navbar-content flex items-center justify-between">
+                <div class="navbar-brand">
+                    <a href="https://billlayneinsurance.com" style="text-decoration: none;">
+                        <div style="display: flex; flex-direction: column;">
+                            <h2 style="font-size: var(--font-size-2xl); font-weight: var(--font-weight-bold); color: var(--color-primary); margin: 0;">Bill Layne Insurance</h2>
+                            <span style="font-size: var(--font-size-sm); color: var(--color-text-secondary); font-weight: var(--font-weight-medium);">Home<br>Insurance Guide</span>
+                        </div>
+                    </a>
+                </div>
+                <nav class="navbar-menu">
+                    <a href="https://billlayneinsurance.com" class="nav-link">Home</a>
+                    <a href="index.html" class="nav-link">Home<br><span style="font-size: 0.9em;">Insurance</span></a>
+                    <a href="https://BillLayne.github.io/Auto-Insurance-Center/" class="nav-link">Auto<br><span style="font-size: 0.9em;">Insurance</span></a>
+                    <a href="https://BillLayne.github.io/NC-Insurance-Claims-Center.github.io/" class="nav-link">Claims<br><span style="font-size: 0.9em;">Center</span></a>
+                    <a href="https://billlayneinsurance.com/blog" class="nav-link">Blog</a>
+                </nav>
+                <div class="navbar-cta" style="display: flex; align-items: center; gap: var(--space-16);">
+                    <a href="tel:3368351993" class="phone-number" style="font-weight: var(--font-weight-bold); font-size: var(--font-size-lg); color: var(--color-primary); text-decoration: none;">(336) 835-1993</a>
+                    <a href="https://billlayneinsurance.com#contact" class="btn btn--primary">Get Quote</a>
+                </div>
+                <button class="mobile-menu-toggle" aria-label="Toggle mobile menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="header">
+        <img src="https://i.imgur.com/cBAgeX8.png" alt="Bill Layne Insurance Agency" class="logo">
+        <h1>Coverage Calculator</h1>
+        <p>Determine the right amount of insurance coverage for your home</p>
+    </div>
+
+    <div class="container">
+        <div class="info-section">
+            <h3>🏠 How Much Coverage Do You Need?</h3>
+            <p>This calculator helps you determine adequate dwelling coverage to rebuild your home and personal property coverage to replace your belongings. The recommendations are estimates - your actual needs may vary based on specific circumstances.</p>
+        </div>
+
+        <form id="coverageForm">
+            <div class="calculator-grid">
+                <!-- Home Details Section -->
+                <div class="calculator-section">
+                    <h2 class="section-title">🏡 Home Details</h2>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="homeValue">Current Home Value</label>
+                        <input type="number" id="homeValue" class="form-control" placeholder="e.g., 350000" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="squareFootage">Square Footage</label>
+                        <input type="number" id="squareFootage" class="form-control" placeholder="e.g., 2400" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="yearBuilt">Year Built</label>
+                        <select id="yearBuilt" class="form-control" required>
+                            <option value="">Select Year Range</option>
+                            <option value="2020">2020 or newer</option>
+                            <option value="2010">2010-2019</option>
+                            <option value="2000">2000-2009</option>
+                            <option value="1990">1990-1999</option>
+                            <option value="1980">1980-1989</option>
+                            <option value="1970">1970-1979</option>
+                            <option value="1960">Before 1970</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="constructionType">Construction Type</label>
+                        <select id="constructionType" class="form-control" required>
+                            <option value="">Select Construction Type</option>
+                            <option value="frame">Wood Frame</option>
+                            <option value="brick">Brick Veneer</option>
+                            <option value="stone">Stone/Masonry</option>
+                            <option value="steel">Steel Frame</option>
+                            <option value="concrete">Concrete Block</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="foundation">Foundation Type</label>
+                        <select id="foundation" class="form-control" required>
+                            <option value="">Select Foundation</option>
+                            <option value="slab">Concrete Slab</option>
+                            <option value="crawl">Crawl Space</option>
+                            <option value="basement">Full Basement</option>
+                            <option value="partial">Partial Basement</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Property Features Section -->
+                <div class="calculator-section">
+                    <h2 class="section-title">🏗️ Property Features</h2>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="stories">Number of Stories</label>
+                        <select id="stories" class="form-control" required>
+                            <option value="">Select Stories</option>
+                            <option value="1">1 Story</option>
+                            <option value="1.5">1.5 Stories</option>
+                            <option value="2">2 Stories</option>
+                            <option value="2.5">2.5 Stories</option>
+                            <option value="3">3+ Stories</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="garage">Garage</label>
+                        <select id="garage" class="form-control" required>
+                            <option value="">Select Garage Type</option>
+                            <option value="none">No Garage</option>
+                            <option value="carport">Carport</option>
+                            <option value="attached1">1-Car Attached</option>
+                            <option value="attached2">2-Car Attached</option>
+                            <option value="attached3">3+ Car Attached</option>
+                            <option value="detached1">1-Car Detached</option>
+                            <option value="detached2">2-Car Detached</option>
+                            <option value="detached3">3+ Car Detached</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="roofType">Roof Type</label>
+                        <select id="roofType" class="form-control" required>
+                            <option value="">Select Roof Type</option>
+                            <option value="asphalt">Asphalt Shingles</option>
+                            <option value="metal">Metal</option>
+                            <option value="tile">Tile</option>
+                            <option value="slate">Slate</option>
+                            <option value="wood">Wood Shakes</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="heating">Heating System</label>
+                        <select id="heating" class="form-control" required>
+                            <option value="">Select Heating System</option>
+                            <option value="gas">Natural Gas</option>
+                            <option value="electric">Electric</option>
+                            <option value="oil">Oil</option>
+                            <option value="propane">Propane</option>
+                            <option value="heat_pump">Heat Pump</option>
+                            <option value="wood">Wood/Fireplace</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="location">Location</label>
+                        <select id="location" class="form-control" required>
+                            <option value="">Select Location</option>
+                            <option value="elkin">Elkin, NC</option>
+                            <option value="statesville">Statesville, NC</option>
+                            <option value="winston-salem">Winston-Salem, NC</option>
+                            <option value="greensboro">Greensboro, NC</option>
+                            <option value="charlotte">Charlotte, NC</option>
+                            <option value="other-nc">Other North Carolina</option>
+                            <option value="other">Other State</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Personal Property Section -->
+                <div class="calculator-section">
+                    <h2 class="section-title">📦 Personal Property</h2>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="personalPropertyValue">Estimated Personal Property Value</label>
+                        <select id="personalPropertyValue" class="form-control" required>
+                            <option value="">Select Value Range</option>
+                            <option value="25000">Under $25,000</option>
+                            <option value="50000">$25,000 - $50,000</option>
+                            <option value="75000">$50,000 - $75,000</option>
+                            <option value="100000">$75,000 - $100,000</option>
+                            <option value="150000">$100,000 - $150,000</option>
+                            <option value="200000">$150,000 - $200,000</option>
+                            <option value="250000">Over $200,000</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="valuableItems">High-Value Items</label>
+                        <select id="valuableItems" class="form-control" required>
+                            <option value="">Select Category</option>
+                            <option value="none">None ($0)</option>
+                            <option value="minimal">Minimal ($1,000 - $5,000)</option>
+                            <option value="moderate">Moderate ($5,000 - $15,000)</option>
+                            <option value="substantial">Substantial ($15,000 - $50,000)</option>
+                            <option value="extensive">Extensive (Over $50,000)</option>
+                        </select>
+                        <small style="color: var(--color-text-secondary); font-size: var(--font-size-sm);">
+                            Jewelry, art, collectibles, electronics, etc.
+                        </small>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="businessProperty">Home Business Equipment</label>
+                        <select id="businessProperty" class="form-control" required>
+                            <option value="">Select Value</option>
+                            <option value="0">None</option>
+                            <option value="2500">Under $2,500</option>
+                            <option value="7500">$2,500 - $7,500</option>
+                            <option value="15000">$7,500 - $15,000</option>
+                            <option value="25000">Over $15,000</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Liability & Living Expenses -->
+                <div class="calculator-section">
+                    <h2 class="section-title">⚖️ Liability & Expenses</h2>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="liabilityNeeds">Liability Coverage Needs</label>
+                        <select id="liabilityNeeds" class="form-control" required>
+                            <option value="">Select Coverage Level</option>
+                            <option value="100000">Basic ($100,000)</option>
+                            <option value="300000">Standard ($300,000)</option>
+                            <option value="500000">Enhanced ($500,000)</option>
+                            <option value="1000000">Premium ($1,000,000)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="familySize">Family Size</label>
+                        <select id="familySize" class="form-control" required>
+                            <option value="">Select Family Size</option>
+                            <option value="1">1 Person</option>
+                            <option value="2">2 People</option>
+                            <option value="3">3 People</option>
+                            <option value="4">4 People</option>
+                            <option value="5">5+ People</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="monthlyExpenses">Monthly Living Expenses</label>
+                        <select id="monthlyExpenses" class="form-control" required>
+                            <option value="">Select Monthly Expenses</option>
+                            <option value="2000">Under $2,000</option>
+                            <option value="3500">$2,000 - $3,500</option>
+                            <option value="5000">$3,500 - $5,000</option>
+                            <option value="7500">$5,000 - $7,500</option>
+                            <option value="10000">Over $7,500</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn--primary btn--full-width">
+                        Calculate Coverage Recommendations
+                    </button>
+                </div>
+            </div>
+
+            <!-- Results Section -->
+            <div id="resultsSection" class="results-section hidden">
+                <h2 style="text-align: center; color: var(--color-primary); margin: 0 0 var(--space-16) 0;">
+                    📊 Your Coverage Recommendations
+                </h2>
+                
+                <div class="results-grid">
+                    <div class="coverage-result">
+                        <div class="coverage-type">Coverage A - Dwelling</div>
+                        <div class="coverage-amount" id="dwellingAmount">$0</div>
+                        <p class="coverage-note">Recommended dwelling coverage</p>
+                    </div>
+
+                    <div class="coverage-result">
+                        <div class="coverage-type">Coverage B - Other Structures</div>
+                        <div class="coverage-amount" id="otherStructuresAmount">$0</div>
+                        <p class="coverage-note">10% of dwelling coverage</p>
+                    </div>
+
+                    <div class="coverage-result">
+                        <div class="coverage-type">Coverage C - Personal Property</div>
+                        <div class="coverage-amount" id="personalPropertyAmount">$0</div>
+                        <p class="coverage-note">Based on your belongings</p>
+                    </div>
+
+                    <div class="coverage-result">
+                        <div class="coverage-type">Coverage D - Loss of Use</div>
+                        <div class="coverage-amount" id="lossOfUseAmount">$0</div>
+                        <p class="coverage-note">12 months of expenses</p>
+                    </div>
+
+                    <div class="coverage-result">
+                        <div class="coverage-type">Coverage E - Liability</div>
+                        <div class="coverage-amount" id="liabilityAmount">$0</div>
+                        <p class="coverage-note">Personal liability protection</p>
+                    </div>
+
+                    <div class="coverage-result">
+                        <div class="coverage-type">Coverage F - Medical Payments</div>
+                        <div class="coverage-amount" id="medicalAmount">$5,000</div>
+                        <p class="coverage-note">Standard medical coverage</p>
+                    </div>
+                </div>
+
+                <div class="cost-breakdown">
+                    <h4 style="color: var(--color-primary);">💰 Estimated Annual Premium Breakdown</h4>
+                    <div class="cost-row">
+                        <span class="cost-label">Base Premium:</span>
+                        <span class="cost-value" id="basePremium">$0</span>
+                    </div>
+                    <div class="cost-row">
+                        <span class="cost-label">Dwelling Coverage:</span>
+                        <span class="cost-value" id="dwellingPremium">$0</span>
+                    </div>
+                    <div class="cost-row">
+                        <span class="cost-label">Personal Property:</span>
+                        <span class="cost-value" id="propertyPremium">$0</span>
+                    </div>
+                    <div class="cost-row">
+                        <span class="cost-label">Liability Coverage:</span>
+                        <span class="cost-value" id="liabilityPremium">$0</span>
+                    </div>
+                    <div class="cost-row" style="border-top: 2px solid var(--color-primary); font-weight: var(--font-weight-bold);">
+                        <span class="cost-label">Total Estimated Premium:</span>
+                        <span class="cost-value" id="totalPremium">$0</span>
+                    </div>
+                </div>
+
+                <div class="recommendations">
+                    <h4>💡 Recommendations</h4>
+                    <ul id="recommendationsList">
+                        <!-- Recommendations will be populated by JavaScript -->
+                    </ul>
+                </div>
+
+                <div class="warning-box">
+                    <h4>⚠️ Important Note</h4>
+                    <p>These are estimates only. Your actual coverage needs and premiums may vary based on additional factors, local building codes, and insurance company underwriting guidelines. Contact Bill Layne Insurance Agency for a personalized quote and professional guidance.</p>
+                </div>
+            </div>
+        </form>
+
+        <div class="footer-cta">
+            <h3>Ready to Get Your Official Quote?</h3>
+            <p>Contact Bill Layne Insurance Agency for personalized coverage recommendations and competitive rates.</p>
+            <a href="tel:336-850-6906" class="btn" style="background: rgba(255,255,255,0.2); color: white; border: 2px solid rgba(255,255,255,0.3);">
+                Call (336) 850-6906
+            </a>
+            <div class="contact-info">
+                1283 N Bridge St, Elkin NC 28621 | Save@BillLayneInsurance.com
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('coverageForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            calculateCoverage();
+        });
+
+        function calculateCoverage() {
+            // Get form values
+            const homeValue = parseInt(document.getElementById('homeValue').value) || 0;
+            const squareFootage = parseInt(document.getElementById('squareFootage').value) || 0;
+            const yearBuilt = parseInt(document.getElementById('yearBuilt').value) || 2000;
+            const constructionType = document.getElementById('constructionType').value;
+            const foundation = document.getElementById('foundation').value;
+            const stories = parseFloat(document.getElementById('stories').value) || 1;
+            const garage = document.getElementById('garage').value;
+            const roofType = document.getElementById('roofType').value;
+            const heating = document.getElementById('heating').value;
+            const location = document.getElementById('location').value;
+            const personalPropertyValue = parseInt(document.getElementById('personalPropertyValue').value) || 50000;
+            const valuableItems = document.getElementById('valuableItems').value;
+            const businessProperty = parseInt(document.getElementById('businessProperty').value) || 0;
+            const liabilityNeeds = parseInt(document.getElementById('liabilityNeeds').value) || 300000;
+            const familySize = parseInt(document.getElementById('familySize').value) || 2;
+            const monthlyExpenses = parseInt(document.getElementById('monthlyExpenses').value) || 3500;
+
+            // Calculate dwelling coverage (replacement cost)
+            let costPerSqFt = 120; // Base cost per square foot in North Carolina
+
+            // Adjust for construction type
+            const constructionMultipliers = {
+                'frame': 1.0,
+                'brick': 1.1,
+                'stone': 1.25,
+                'steel': 1.15,
+                'concrete': 1.2
+            };
+            costPerSqFt *= constructionMultipliers[constructionType] || 1.0;
+
+            // Adjust for age
+            if (yearBuilt >= 2020) costPerSqFt *= 1.15;
+            else if (yearBuilt >= 2010) costPerSqFt *= 1.1;
+            else if (yearBuilt >= 2000) costPerSqFt *= 1.05;
+            else if (yearBuilt >= 1990) costPerSqFt *= 1.0;
+            else if (yearBuilt >= 1980) costPerSqFt *= 1.1;
+            else costPerSqFt *= 1.2;
+
+            // Adjust for stories
+            if (stories > 1) costPerSqFt *= 1.05;
+
+            // Adjust for foundation
+            const foundationAdjustments = {
+                'slab': 0,
+                'crawl': 5000,
+                'basement': 15000,
+                'partial': 8000
+            };
+            const foundationCost = foundationAdjustments[foundation] || 0;
+
+            // Adjust for garage
+            const garageCosts = {
+                'none': 0,
+                'carport': 3000,
+                'attached1': 8000,
+                'attached2': 16000,
+                'attached3': 24000,
+                'detached1': 12000,
+                'detached2': 24000,
+                'detached3': 36000
+            };
+            const garageCost = garageCosts[garage] || 0;
+
+            // Adjust for roof type
+            const roofMultipliers = {
+                'asphalt': 1.0,
+                'metal': 1.15,
+                'tile': 1.25,
+                'slate': 1.4,
+                'wood': 1.1
+            };
+            costPerSqFt *= roofMultipliers[roofType] || 1.0;
+
+            // Calculate base dwelling coverage
+            let dwellingCoverage = (squareFootage * costPerSqFt) + foundationCost + garageCost;
+            
+            // Ensure minimum 125% of current home value for replacement cost
+            dwellingCoverage = Math.max(dwellingCoverage, homeValue * 1.25);
+
+            // Round to nearest $1,000
+            dwellingCoverage = Math.round(dwellingCoverage / 1000) * 1000;
+
+            // Calculate other coverages
+            const otherStructures = Math.round(dwellingCoverage * 0.10);
+            
+            // Personal property (higher of calculated or selected value)
+            let personalProperty = Math.max(personalPropertyValue, dwellingCoverage * 0.50);
+            
+            // Add valuable items
+            const valuableItemsValues = {
+                'none': 0,
+                'minimal': 3000,
+                'moderate': 10000,
+                'substantial': 30000,
+                'extensive': 75000
+            };
+            personalProperty += valuableItemsValues[valuableItems] || 0;
+            personalProperty += businessProperty;
+            personalProperty = Math.round(personalProperty / 1000) * 1000;
+
+            // Loss of use (12 months of additional living expenses)
+            const lossOfUse = monthlyExpenses * 12;
+
+            // Medical payments - standard $5,000
+            const medicalPayments = 5000;
+
+            // Calculate estimated premiums
+            const dwellingRate = 0.0035; // Base rate per $1000 of coverage
+            let basePremium = dwellingCoverage * dwellingRate;
+
+            // Location adjustments
+            const locationMultipliers = {
+                'elkin': 0.9,
+                'statesville': 0.95,
+                'winston-salem': 1.0,
+                'greensboro': 1.05,
+                'charlotte': 1.1,
+                'other-nc': 1.0,
+                'other': 1.15
+            };
+            basePremium *= locationMultipliers[location] || 1.0;
+
+            // Calculate component premiums
+            const dwellingPremium = Math.round(basePremium * 0.6);
+            const propertyPremium = Math.round(personalProperty * 0.002);
+            const liabilityPremium = Math.round(liabilityNeeds * 0.0002);
+            const totalPremium = dwellingPremium + propertyPremium + liabilityPremium;
+
+            // Update display
+            document.getElementById('dwellingAmount').textContent = formatCurrency(dwellingCoverage);
+            document.getElementById('otherStructuresAmount').textContent = formatCurrency(otherStructures);
+            document.getElementById('personalPropertyAmount').textContent = formatCurrency(personalProperty);
+            document.getElementById('lossOfUseAmount').textContent = formatCurrency(lossOfUse);
+            document.getElementById('liabilityAmount').textContent = formatCurrency(liabilityNeeds);
+            document.getElementById('medicalAmount').textContent = formatCurrency(medicalPayments);
+
+            // Update premium breakdown
+            document.getElementById('basePremium').textContent = formatCurrency(Math.round(basePremium));
+            document.getElementById('dwellingPremium').textContent = formatCurrency(dwellingPremium);
+            document.getElementById('propertyPremium').textContent = formatCurrency(propertyPremium);
+            document.getElementById('liabilityPremium').textContent = formatCurrency(liabilityPremium);
+            document.getElementById('totalPremium').textContent = formatCurrency(totalPremium);
+
+            // Generate recommendations
+            generateRecommendations(dwellingCoverage, homeValue, personalProperty, liabilityNeeds, yearBuilt);
+
+            // Show results
+            document.getElementById('resultsSection').classList.remove('hidden');
+            document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'USD',
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0
+            }).format(amount);
+        }
+
+        function generateRecommendations(dwellingCoverage, homeValue, personalProperty, liability, yearBuilt) {
+            const recommendations = [];
+            
+            // Dwelling coverage recommendations
+            if (dwellingCoverage > homeValue * 1.3) {
+                recommendations.push("Consider Extended Replacement Cost coverage for maximum protection against building cost increases.");
+            }
+            
+            if (yearBuilt < 1980) {
+                recommendations.push("Older homes may benefit from Ordinance and Law coverage for updated building code compliance.");
+            }
+
+            // Personal property recommendations
+            if (personalProperty > 100000) {
+                recommendations.push("Consider scheduling high-value items like jewelry, art, or collectibles for full replacement cost coverage.");
+            }
+
+            // Liability recommendations
+            if (liability < 500000) {
+                recommendations.push("Consider increasing liability coverage to $500,000 or $1,000,000 for better asset protection.");
+            }
+
+            // General recommendations
+            recommendations.push("Consider adding Identity Theft protection and Water Backup coverage.");
+            recommendations.push("Bundle with auto insurance for potential multi-policy discounts.");
+            recommendations.push("Install security systems and smoke detectors for additional savings.");
+            recommendations.push("Review and update your coverage annually or after major life changes.");
+
+            // Update recommendations list
+            const list = document.getElementById('recommendationsList');
+            list.innerHTML = '';
+            recommendations.forEach(rec => {
+                const li = document.createElement('li');
+                li.textContent = rec;
+                list.appendChild(li);
+            });
+        }
+
+        // Form validation
+        const form = document.getElementById('coverageForm');
+        const inputs = form.querySelectorAll('input[required], select[required]');
+        
+        inputs.forEach(input => {
+            input.addEventListener('blur', function() {
+                if (this.value.trim() === '') {
+                    this.style.borderColor = 'var(--color-error)';
+                } else {
+                    this.style.borderColor = 'var(--color-border)';
+                }
+            });
+
+            input.addEventListener('input', function() {
+                if (this.style.borderColor === 'rgb(192, 21, 47)') {
+                    this.style.borderColor = 'var(--color-border)';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
