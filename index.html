@@ -6,28 +6,31 @@
     <title>NC Home Insurance Center - Bill Layne Insurance Agency</title>
     <meta name="description" content="Get instant home insurance quotes in NC. Save up to 30% with local expertise since 2004. Free quotes from top carriers. Call 336-835-1993.">
     
-    <!-- Preconnect to Google Fonts -->
+    <!-- SEO Meta Tags -->
+    <link rel="canonical" href="https://billlayne.github.io/NC-Home-Insurance.github.io/">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="NC Home Insurance Center - Bill Layne Insurance Agency">
+    <meta property="og:description" content="Compare home insurance quotes from multiple carriers. Protect your home with comprehensive coverage. Licensed NC agency serving Elkin, Mount Airy & Surry County.">
+    <meta property="og:url" content="https://billlayne.github.io/NC-Home-Insurance.github.io/">
+    
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     
-    <!-- Google Fonts - Inter -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
-    <!-- Tailwind CSS CDN -->
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Tailwind Configuration -->
     <script>
         tailwind.config = {
+            important: true,
             theme: {
                 extend: {
                     fontFamily: {
-                        'inter': ['Inter', 'sans-serif'],
-                    },
-                    colors: {
-                        'primary': '#2563EB',
-                        'primary-dark': '#1d4ed8',
-                        'success': '#22c55e',
+                        'sans': ['Inter', 'system-ui', 'sans-serif'],
                     }
                 }
             }
@@ -35,160 +38,263 @@
     </script>
     
     <style>
-        /* Custom styles for specific elements */
-        .hero-bg {
-            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3');
-            background-size: cover;
-            background-position: center;
+        /* F-Pattern Optimized Styles */
+        :root {
+            --primary-blue: #2563eb;
+            --primary-blue-dark: #1d4ed8;
+            --accent-green: #10b981;
+            --text-gray: #374151;
+            --text-light: #6b7280;
+            --bg-light: #f8fafc;
         }
         
-        /* Mobile sticky call button */
-        .mobile-call-button {
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            color: var(--text-gray);
+        }
+        
+        /* F-Pattern Header - Top horizontal bar */
+        .f-header {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
             position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: #22c55e;
-            color: white;
-            padding: 12px 24px;
-            border-radius: 50px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            z-index: 40;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 50;
             transition: all 0.3s ease;
-            display: none;
         }
         
-        .mobile-call-button.show {
-            display: flex;
-            align-items: center;
-            gap: 8px;
+        .f-header.scrolled {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
         }
         
-        @media (max-width: 768px) {
-            .mobile-call-button {
-                display: flex;
+        /* F-Pattern Hero with Home Insurance Theme */
+        .f-hero {
+            background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 50%, #3b82f6 100%);
+            position: relative;
+            overflow: hidden;
+            padding-top: 180px;
+        }
+        
+        @media (min-width: 768px) {
+            .f-hero {
+                padding-top: 120px;
             }
         }
         
-        /* Simple header styles - matches your working home insurance page */
-
-        /* Header scroll effect */
-        .header-scrolled {
-            background-color: rgba(255, 255, 255, 0.95) !important;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(5px);
+        .f-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23ffffff" fill-opacity="0.03"%3E%3Cpath d="M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4z"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');
         }
-
-        /* Default header background */
-        #main-header {
-            background-color: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        
+        /* Service Icons Styles */
+        .service-icons {
+            display: flex;
+            justify-content: center;
+            gap: 1.25rem;
+            margin: 0.75rem 0 0.5rem 0;
+            padding: 0;
         }
-
-        /* Smooth scroll behavior */
-        html {
-            scroll-behavior: smooth;
-        }
-
-        /* Dropdown menu styles */
-        .dropdown-menu {
+        
+        .service-icon {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.3rem;
             opacity: 0;
-            visibility: hidden;
-            transform: translateY(-10px);
+            animation: fadeInUp 0.6s ease forwards;
+            cursor: pointer;
+            text-decoration: none !important;
+        }
+        
+        a.service-icon {
+            color: inherit;
+        }
+        
+        .service-icon:nth-child(1) { animation-delay: 0.1s; }
+        .service-icon:nth-child(2) { animation-delay: 0.2s; }
+        .service-icon:nth-child(3) { animation-delay: 0.3s; }
+        
+        .service-icon-circle {
+            font-size: 1.75rem;
+            color: #60a5fa;
+            background: rgba(255, 255, 255, 0.1);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid rgba(255, 255, 255, 0.2);
             transition: all 0.3s ease;
         }
-
-        .group:hover .dropdown-menu {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
+        
+        .service-icon:hover .service-icon-circle {
+            transform: scale(1.15);
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.4);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
         }
-
-        /* ===== UNIFIED MOBILE MENU STYLES ===== */
-        .mobile-menu-toggle {
-            display: flex !important;
-            background: none;
+        
+        .service-icon span {
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #cbd5e1;
+            white-space: nowrap;
+            text-align: center;
+            line-height: 0.9;
+        }
+        
+        @media (min-width: 768px) {
+            .service-icons {
+                gap: 3.75rem;
+                margin: 1.5rem 0 1.25rem 0;
+            }
+            
+            .service-icon-circle {
+                width: 90px;
+                height: 90px;
+                font-size: 2.75rem;
+            }
+            
+            .service-icon span {
+                font-size: 1rem;
+            }
+        }
+        
+        /* F-Pattern Left Sidebar */
+        .f-sidebar {
+            position: sticky;
+            top: 100px;
+            height: fit-content;
+        }
+        
+        /* Modern Gradient Buttons */
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-blue-dark) 100%);
+            color: white;
+            padding: 16px 32px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
             border: none;
             cursor: pointer;
-            padding: 10px;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 1001;
-            -webkit-tap-highlight-color: transparent;
         }
-
-        .mobile-menu-toggle span {
-            display: block;
-            width: 25px;
-            height: 3px;
-            background-color: #333333;
-            margin: 3px 0;
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.4);
+            background: linear-gradient(135deg, var(--primary-blue-dark) 0%, #1e40af 100%);
+        }
+        
+        .btn-secondary {
+            background: white;
+            color: var(--primary-blue);
+            border: 2px solid var(--primary-blue);
+            padding: 14px 28px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
             transition: all 0.3s ease;
-            border-radius: 2px;
+            text-align: center;
         }
-
-        /* Hamburger Animation */
-        .mobile-menu-toggle.active span:nth-child(1) {
-            transform: rotate(-45deg) translate(-5px, 6px);
-            background-color: #0066ff;
+        
+        .btn-secondary:hover {
+            background: var(--primary-blue);
+            color: white;
+            transform: translateY(-1px);
         }
-
-        .mobile-menu-toggle.active span:nth-child(2) {
-            opacity: 0;
+        
+        /* Trust Badge */
+        .trust-badge {
+            background: white;
+            border-radius: 12px;
+            padding: 16px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
         }
-
-        .mobile-menu-toggle.active span:nth-child(3) {
-            transform: rotate(45deg) translate(-5px, -6px);
-            background-color: #0066ff;
+        
+        .trust-badge:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
         }
-
-        /* Enhanced Button Styles */
-        .btn-primary-enhanced {
-            background: linear-gradient(135deg, #2563eb, #1d4ed8) !important;
-            color: #ffffff !important;
-            padding: 14px 28px !important;
-            border: none !important;
-            border-radius: 12px !important;
-            font-size: 16px !important;
-            font-weight: 600 !important;
-            cursor: pointer !important;
-            transition: all 0.3s ease !important;
-            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3) !important;
-            text-decoration: none !important;
-            display: inline-block !important;
+        
+        /* Service Cards */
+        .service-card {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 0, 0, 0.05);
         }
-
-        .btn-primary-enhanced:hover {
-            background: linear-gradient(135deg, #1d4ed8, #1e40af) !important;
-            transform: translateY(-2px) !important;
-            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4) !important;
+        
+        .service-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
         }
-
-        /* Mobile Menu Container */
-        .navbar-menu {
+        
+        /* Coverage Card */
+        .coverage-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+        
+        .coverage-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+        }
+        
+        /* Universal Menu */
+        .navigation-menu {
             position: fixed;
             top: 0;
             right: -100%;
-            width: 320px;
+            width: 100%;
+            max-width: 350px;
             height: 100vh;
-            background: #ffffff !important;
-            background-color: #ffffff !important;
-            box-shadow: -4px 0 30px rgba(0, 0, 0, 0.15);
+            background: white;
+            box-shadow: -4px 0 20px rgba(0, 0, 0, 0.1);
             transition: right 0.3s ease;
             z-index: 1000;
-            display: flex;
-            flex-direction: column;
+            padding: 20px;
         }
-
-        .navbar-menu.active {
+        
+        .navigation-menu.active {
             right: 0;
         }
-
-        /* Menu Overlay */
-        .navbar-menu-overlay {
+        
+        @media (min-width: 768px) {
+            .navigation-menu {
+                max-width: 400px;
+                padding: 30px;
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .navigation-menu {
+                max-width: 450px;
+                padding: 40px;
+            }
+        }
+        
+        .menu-overlay {
             position: fixed;
             top: 0;
             left: 0;
@@ -200,877 +306,1021 @@
             transition: all 0.3s ease;
             z-index: 999;
         }
-
-        .navbar-menu.active + .navbar-menu-overlay {
+        
+        .menu-overlay.active {
             opacity: 1;
             visibility: visible;
         }
-
-        /* Menu Content */
-        .navbar-menu-content {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            background: #ffffff !important;
-            background-color: #ffffff !important;
-            display: flex;
-            flex-direction: column;
-            z-index: 1001;
-            overflow-y: auto;
-        }
-
-        /* Close Button */
-        .navbar-menu-close {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 8px;
-            transition: all 0.3s ease;
-            z-index: 1002;
-        }
-
-        .navbar-menu-close:hover {
-            transform: rotate(90deg);
-        }
-
-        .navbar-menu-close svg {
-            width: 24px;
-            height: 24px;
-            stroke: #333333;
-        }
-
-        /* Navigation Links */
-        .navbar-menu-nav {
-            padding: 80px 30px 30px;
-            flex: 1;
-        }
-
-        .navbar-menu-nav .nav-link {
+        
+        /* Hamburger Animation */
+        .hamburger span {
             display: block;
-            padding: 18px 0;
-            color: #333333 !important;
-            text-decoration: none;
-            font-size: 18px;
-            font-weight: 500;
-            border-bottom: 1px solid #f0f0f0;
+            width: 25px;
+            height: 3px;
+            background: var(--text-gray);
+            margin: 3px 0;
+            transition: 0.3s;
+            border-radius: 2px;
+        }
+        
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+        
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+        
+        /* Form Styles */
+        .form-input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 16px;
             transition: all 0.3s ease;
-            position: relative;
-            background: transparent;
+            background: white;
         }
-
-        .navbar-menu-nav .nav-link:hover {
-            color: #0066ff;
-            padding-left: 10px;
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
         }
-
-        .navbar-menu-nav .nav-link:hover::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 3px;
-            height: 20px;
-            background: #0066ff;
+        
+        /* Trust Indicators Grid */
+        .trust-indicators-grid {
+            font-size: 0.65rem;
         }
-
-        /* CTA Section */
-        .navbar-menu-cta {
-            padding: 30px;
-            background: #f8f9fa;
-            border-top: 1px solid #e0e0e0;
+        
+        .trust-indicator-row {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 0.35rem;
+            color: #cbd5e1;
         }
-
-        .navbar-menu-cta .phone-cta {
+        
+        @media (min-width: 768px) {
+            .trust-indicators-grid {
+                display: flex;
+                justify-content: center;
+                gap: 2rem;
+                font-size: 1rem;
+            }
+            
+            .trust-indicator-row {
+                margin-bottom: 0;
+                gap: 0;
+            }
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate-fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+        
+        /* Carriers Grid */
+        .carriers-grid {
+            display: grid;
+            gap: 1.5rem;
+            justify-items: center;
+            align-items: center;
+        }
+        
+        @media (min-width: 1024px) {
+            .carriers-grid {
+                grid-template-columns: repeat(4, 1fr);
+                max-width: 100%;
+            }
+        }
+        
+        @media (min-width: 768px) and (max-width: 1023px) {
+            .carriers-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        
+        @media (max-width: 767px) {
+            .carriers-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+        }
+        
+        /* Logo Containers */
+        a.logo-container, .logo-container {
+            background: white;
+            border-radius: 8px;
+            padding: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            width: 100%;
+            max-width: 140px;
+            height: 80px;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
-            padding: 15px;
-            background: linear-gradient(135deg, #22c55e, #16a34a);
-            color: #ffffff;
             text-decoration: none;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 16px;
-            margin-bottom: 15px;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3);
         }
-
-        .navbar-menu-cta .phone-cta:hover {
+        
+        @media (max-width: 767px) {
+            a.logo-container, .logo-container {
+                max-width: 100%;
+                height: 70px;
+            }
+        }
+        
+        a.logo-container:hover, .logo-container:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(34, 197, 94, 0.4);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
         }
-
-        .navbar-menu-cta .phone-icon {
-            width: 20px;
-            height: 20px;
+        
+        .logo-container img, .logo-container span {
+            max-width: 90%;
+            max-height: 90%;
+            width: auto;
+            height: auto;
+            object-fit: contain;
         }
-
-        .navbar-menu-cta .btn--primary {
-            display: block;
-            text-align: center;
-            padding: 15px;
-            background: linear-gradient(135deg, #0066ff, #0052cc);
-            color: #ffffff;
-            text-decoration: none;
-            border-radius: 10px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0, 102, 255, 0.3);
-        }
-
-        .navbar-menu-cta .btn--primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 102, 255, 0.4);
-        }
-
-        /* Body scroll lock */
-        body.menu-open {
-            overflow: hidden;
-        }
-
-        /* Responsive adjustments */
-        @media (max-width: 900px) {
-            .mobile-menu-toggle {
-                display: flex;
+        
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .f-sidebar {
+                position: static;
             }
             
-            /* Adjust menu width on smaller screens */
-            @media (max-width: 480px) {
-                .navbar-menu {
-                    width: 100%;
-                    right: -100%;
-                }
+            .btn-primary, .btn-secondary {
+                padding: 12px 20px;
+                font-size: 15px;
             }
-        }
-
-        /* Unified menu - always available */
-        .mobile-menu-toggle {
-            display: flex !important;
         }
     </style>
 </head>
-<body class="font-inter bg-gray-50">
 
-    <!-- Header -->
-    <header id="main-header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white shadow-sm unified-header" style="background-color: rgba(255, 255, 255, 0.98) !important; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
-        <div class="container mx-auto px-4">
+<body class="bg-gray-50">
+    <!-- Menu Overlay -->
+    <div id="menu-overlay" class="menu-overlay"></div>
+    
+    <!-- Header - F-Pattern Top Bar -->
+    <header id="main-header" class="f-header">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
-                <!-- Logo (Left) -->
+                <!-- Logo -->
                 <div class="flex-shrink-0">
-                    <a href="https://billlayneinsurance.com/" class="text-2xl font-bold text-amber-800">Bill Layne Insurance</a>
+                    <a href="https://billlayneinsurance.com/" class="text-2xl font-bold text-blue-800">
+                        Bill Layne Insurance
+                    </a>
+                    <p class="text-xs text-gray-600 hidden sm:block">NC Home Insurance Experts</p>
                 </div>
-
-                <!-- Spacer for center alignment -->
-                <div class="flex-1"></div>
-
-                <!-- Desktop Only: Phone & CTA (Right) -->
-                <div class="desktop-cta hidden md:flex items-center space-x-4 flex-shrink-0">
-                    <a href="tel:3368351993" class="text-gray-700 font-semibold hover:text-blue-600 transition-colors" style="color: #374151 !important; opacity: 1 !important;">(336) 835-1993</a>
-                    <a href="https://billlayneinsurance.com/auto-quote.html" class="btn-primary-enhanced transition-all">Get a Quote</a>
+                
+                <!-- Right Side: Phone, CTA, and Menu Button -->
+                <div class="flex items-center space-x-4">
+                    <!-- Desktop CTA -->
+                    <div class="hidden md:flex items-center space-x-4">
+                        <a href="tel:3368351993" class="text-gray-700 font-semibold hover:text-blue-600 transition-colors">
+                            <i class="fas fa-phone mr-2"></i>(336) 835-1993
+                        </a>
+                        <a href="https://billlayneinsurance.com/home-quote.html" class="btn-primary">Get Free Quote</a>
+                    </div>
+                    
+                    <!-- Universal Menu Button -->
+                    <button id="menu-toggle-btn" class="hamburger p-2">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
                 </div>
-
-                <!-- Unified Menu Button (Shows on all screen sizes) -->
-                <button id="mobileMenuToggle" class="mobile-menu-toggle" aria-label="Open menu">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
             </div>
         </div>
     </header>
-
-    <!-- Mobile Menu -->
-    <div id="mobile-menu" class="navbar-menu">
-        <div class="navbar-menu-content">
-            <button class="navbar-menu-close" aria-label="Close menu">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+    
+    <!-- Universal Menu -->
+    <div id="navigation-menu" class="navigation-menu">
+        <div class="flex justify-between items-center mb-8">
+            <h3 class="text-xl lg:text-2xl font-bold text-gray-800">Navigation</h3>
+            <button id="close-menu" class="text-gray-500 hover:text-gray-700 p-2">
+                <i class="fas fa-times text-xl"></i>
             </button>
-            <nav class="navbar-menu-nav">
-                <a href="https://billlayneinsurance.com/" class="nav-link">Home</a>
-                <a href="https://billlayneinsurance.com/areas-we-serve.html" class="nav-link">Services</a>
-                <a href="https://billlayne.github.io/Auto-Insurance-Center/" class="nav-link">Auto Insurance</a>
-                <a href="https://billlayne.github.io/NC-Home-Insurance.github.io/" class="nav-link">Home Insurance</a>
-                <a href="https://billlayne.github.io/NC-Insurance-Claims-Center.github.io/" class="nav-link">Claims</a>
-                <a href="https://billlayne.github.io/Resources/" class="nav-link">Resources</a>
-                <a href="https://billlayneinsurance.com/blog.html" class="nav-link">Blog</a>
-                <a href="https://billlayneinsurance.com/contact-us.html" class="nav-link">Contact</a>
-                <a href="tel:3368351993" class="nav-link">Call 336-835-1993</a>
-            </nav>
-            <div class="navbar-menu-cta">
-                <a href="tel:3368351993" class="phone-cta">
-                    <svg class="phone-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"></path></svg>
-                    <span>Call 336-835-1993</span>
-                </a>
+        </div>
+        <nav class="space-y-4">
+            <a href="https://billlayneinsurance.com/" class="block py-3 px-2 text-gray-700 hover:text-blue-600 hover:bg-blue-50 font-medium border-b border-gray-200 rounded transition-all">
+                <i class="fas fa-home mr-3 w-5"></i>Home
+            </a>
+            <a href="https://billlayneinsurance.com/areas-we-serve.html" class="block py-3 px-2 text-gray-700 hover:text-blue-600 hover:bg-blue-50 font-medium border-b border-gray-200 rounded transition-all">
+                <i class="fas fa-th-large mr-3 w-5"></i>Services
+            </a>
+            <a href="https://billlayne.github.io/Auto-Insurance-Center/" class="block py-3 px-2 text-gray-700 hover:text-blue-600 hover:bg-blue-50 font-medium border-b border-gray-200 rounded transition-all">
+                <i class="fas fa-car mr-3 w-5"></i>Auto Insurance
+            </a>
+            <a href="https://billlayne.github.io/NC-Home-Insurance.github.io/" class="block py-3 px-2 text-gray-700 hover:text-blue-600 hover:bg-blue-50 font-medium border-b border-gray-200 rounded transition-all">
+                <i class="fas fa-home mr-3 w-5"></i>Home Insurance
+            </a>
+            <a href="https://billlayne.github.io/NC-Insurance-Claims-Center.github.io/" class="block py-3 px-2 text-gray-700 hover:text-blue-600 hover:bg-blue-50 font-medium border-b border-gray-200 rounded transition-all">
+                <i class="fas fa-file-alt mr-3 w-5"></i>Claims Center
+            </a>
+            <a href="https://billlayne.github.io/Resources/" class="block py-3 px-2 text-gray-700 hover:text-blue-600 hover:bg-blue-50 font-medium border-b border-gray-200 rounded transition-all">
+                <i class="fas fa-book mr-3 w-5"></i>Resources
+            </a>
+            <a href="https://billlayneinsurance.com/blog.html" class="block py-3 px-2 text-gray-700 hover:text-blue-600 hover:bg-blue-50 font-medium border-b border-gray-200 rounded transition-all">
+                <i class="fas fa-blog mr-3 w-5"></i>Blog
+            </a>
+            <a href="https://billlayneinsurance.com/contact-us.html" class="block py-3 px-2 text-gray-700 hover:text-blue-600 hover:bg-blue-50 font-medium border-b border-gray-200 rounded transition-all">
+                <i class="fas fa-envelope mr-3 w-5"></i>Contact Us
+            </a>
+        </nav>
+        <div class="mt-8 space-y-4">
+            <a href="tel:3368351993" class="block w-full text-center bg-green-600 hover:bg-green-700 text-white py-3 px-4 rounded-lg font-semibold transition-colors">
+                <i class="fas fa-phone mr-2"></i>Call (336) 835-1993
+            </a>
+            <a href="https://billlayneinsurance.com/home-quote.html" class="block w-full text-center btn-primary">
+                <i class="fas fa-calculator mr-2"></i>Get Free Quote
+            </a>
+        </div>
+        
+        <!-- Desktop-only additional info -->
+        <div class="hidden lg:block mt-8 pt-6 border-t border-gray-200">
+            <div class="text-center">
+                <p class="text-sm text-gray-600 mb-2">
+                    <i class="fas fa-map-marker-alt mr-2"></i>
+                    1283 N Bridge St, Elkin, NC 28621
+                </p>
+                <p class="text-sm text-gray-600">
+                    <i class="fas fa-clock mr-2"></i>
+                    Mon-Fri: 9AM-5PM
+                </p>
             </div>
         </div>
     </div>
-    <div class="navbar-menu-overlay"></div>
 
-    <!-- Hero Section -->
-    <section class="hero-bg text-white pt-32 pb-32 md:pb-40">
-        <div class="container mx-auto px-6">
-            <div class="max-w-4xl mx-auto text-center">
-                <h1 class="text-4xl md:text-6xl font-bold mb-6">NC Home Insurance Protection</h1>
-                <p class="text-xl md:text-2xl mb-8 opacity-95">Complete coverage for your home, belongings, and peace of mind. Expert protection from North Carolina's trusted insurance agency.</p>
-                <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                    <a href="#get-quote" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg shadow-lg transition-transform transform hover:scale-105">
-                        Get Your Quote
-                    </a>
-                    <a href="#coverage-calculator" class="bg-white text-blue-600 hover:bg-gray-100 font-bold py-3 px-8 rounded-lg shadow-lg transition-transform transform hover:scale-105">
-                        Coverage Calculator
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Quick Access Tools Section -->
-    <section class="py-16 -mt-8">
-        <div class="container mx-auto px-6">
-            <div class="grid md:grid-cols-4 gap-6">
-                <!-- Coverage Calculator -->
-                <div class="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow">
-                    <div class="text-4xl mb-4">🏠</div>
-                    <h3 class="text-xl font-bold mb-3">Coverage Calculator</h3>
-                    <p class="text-gray-600 mb-4">Find the right coverage amount for your home's value.</p>
-                    <a href="#coverage-calculator" class="text-blue-600 hover:text-blue-700 font-semibold">Calculate →</a>
-                </div>
-                
-                <!-- Deductible Analyzer -->
-                <div class="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow">
-                    <div class="text-4xl mb-4">💵</div>
-                    <h3 class="text-xl font-bold mb-3">Deductible Analyzer</h3>
-                    <p class="text-gray-600 mb-4">Compare deductibles to find your optimal balance.</p>
-                    <a href="#deductible-analyzer" class="text-blue-600 hover:text-blue-700 font-semibold">Analyze →</a>
-                </div>
-                
-                <!-- Discount Checker -->
-                <div class="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow">
-                    <div class="text-4xl mb-4">🎯</div>
-                    <h3 class="text-xl font-bold mb-3">Discount Checker</h3>
-                    <p class="text-gray-600 mb-4">Discover all available discounts for maximum savings.</p>
-                    <a href="#discounts" class="text-blue-600 hover:text-blue-700 font-semibold">Check Now →</a>
-                </div>
-                
-                <!-- Home Inventory -->
-                <div class="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow">
-                    <div class="text-4xl mb-4">📋</div>
-                    <h3 class="text-xl font-bold mb-3">Home Inventory</h3>
-                    <p class="text-gray-600 mb-4">Create a detailed inventory for accurate coverage.</p>
-                    <a href="#home-inventory" class="text-blue-600 hover:text-blue-700 font-semibold">Start Inventory →</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Coverage Types Section -->
-    <section id="coverage-types" class="py-20 bg-gray-50">
-        <div class="container mx-auto px-6">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Complete Home Insurance Coverage</h2>
-                <p class="text-xl text-gray-600">Understanding what's protected in your policy</p>
-            </div>
-            
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Dwelling Coverage -->
-                <div class="bg-white rounded-lg p-6 shadow-md hover:shadow-lg transition-shadow">
-                    <div class="text-3xl mb-4">🏡</div>
-                    <h3 class="text-xl font-bold mb-3">Dwelling Coverage</h3>
-                    <p class="text-gray-600 mb-4">Protects your home's structure from covered perils.</p>
-                    <ul class="text-sm text-gray-600 space-y-2">
-                        <li>✓ Foundation and walls</li>
-                        <li>✓ Roof and windows</li>
-                        <li>✓ Built-in appliances</li>
-                        <li>✓ Attached structures</li>
-                    </ul>
-                </div>
-                
-                <!-- Personal Property -->
-                <div class="bg-white rounded-lg p-6 shadow-md hover:shadow-lg transition-shadow">
-                    <div class="text-3xl mb-4">📦</div>
-                    <h3 class="text-xl font-bold mb-3">Personal Property</h3>
-                    <p class="text-gray-600 mb-4">Covers your belongings inside and outside your home.</p>
-                    <ul class="text-sm text-gray-600 space-y-2">
-                        <li>✓ Furniture and electronics</li>
-                        <li>✓ Clothing and jewelry</li>
-                        <li>✓ Appliances</li>
-                        <li>✓ Off-premises coverage</li>
-                    </ul>
-                </div>
-                
-                <!-- Liability Protection -->
-                <div class="bg-white rounded-lg p-6 shadow-md hover:shadow-lg transition-shadow">
-                    <div class="text-3xl mb-4">⚖️</div>
-                    <h3 class="text-xl font-bold mb-3">Liability Protection</h3>
-                    <p class="text-gray-600 mb-4">Financial protection from lawsuits and injuries.</p>
-                    <ul class="text-sm text-gray-600 space-y-2">
-                        <li>✓ Bodily injury to others</li>
-                        <li>✓ Property damage claims</li>
-                        <li>✓ Legal defense costs</li>
-                        <li>✓ Medical payments</li>
-                    </ul>
-                </div>
-                
-                <!-- Additional Living Expenses -->
-                <div class="bg-white rounded-lg p-6 shadow-md hover:shadow-lg transition-shadow">
-                    <div class="text-3xl mb-4">🏨</div>
-                    <h3 class="text-xl font-bold mb-3">Additional Living Expenses</h3>
-                    <p class="text-gray-600 mb-4">Covers costs if your home becomes uninhabitable.</p>
-                    <ul class="text-sm text-gray-600 space-y-2">
-                        <li>✓ Temporary housing</li>
-                        <li>✓ Restaurant meals</li>
-                        <li>✓ Storage costs</li>
-                        <li>✓ Pet boarding</li>
-                    </ul>
-                </div>
-                
-                <!-- Other Structures -->
-                <div class="bg-white rounded-lg p-6 shadow-md hover:shadow-lg transition-shadow">
-                    <div class="text-3xl mb-4">🏗️</div>
-                    <h3 class="text-xl font-bold mb-3">Other Structures</h3>
-                    <p class="text-gray-600 mb-4">Coverage for structures separate from your home.</p>
-                    <ul class="text-sm text-gray-600 space-y-2">
-                        <li>✓ Detached garage</li>
-                        <li>✓ Tool shed</li>
-                        <li>✓ Fence and gates</li>
-                        <li>✓ Guest house</li>
-                    </ul>
-                </div>
-                
-                <!-- Medical Payments -->
-                <div class="bg-white rounded-lg p-6 shadow-md hover:shadow-lg transition-shadow">
-                    <div class="text-3xl mb-4">🏥</div>
-                    <h3 class="text-xl font-bold mb-3">Medical Payments</h3>
-                    <p class="text-gray-600 mb-4">Covers medical expenses for guest injuries.</p>
-                    <ul class="text-sm text-gray-600 space-y-2">
-                        <li>✓ No-fault coverage</li>
-                        <li>✓ Guest injuries</li>
-                        <li>✓ Immediate medical care</li>
-                        <li>✓ Prevents lawsuits</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- NC Specific Risks Section -->
-    <section class="py-20">
-        <div class="container mx-auto px-6">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">North Carolina Specific Coverage</h2>
-                <p class="text-xl text-gray-600">Protection designed for NC homeowners' unique risks</p>
-            </div>
-            
-            <div class="max-w-4xl mx-auto">
-                <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-8 shadow-lg">
-                    <div class="grid md:grid-cols-2 gap-8">
-                        <div>
-                            <h3 class="font-bold text-xl mb-4 text-blue-900">Weather-Related Risks</h3>
-                            <ul class="space-y-3">
-                                <li class="flex items-start">
-                                    <span class="text-blue-600 mr-2">🌀</span>
-                                    <div>
-                                        <strong>Hurricane Coverage:</strong> Wind damage and storm surge protection
-                                    </div>
-                                </li>
-                                <li class="flex items-start">
-                                    <span class="text-blue-600 mr-2">⛈️</span>
-                                    <div>
-                                        <strong>Hail & Storm:</strong> Protection from severe weather damage
-                                    </div>
-                                </li>
-                                <li class="flex items-start">
-                                    <span class="text-blue-600 mr-2">🌊</span>
-                                    <div>
-                                        <strong>Flood Insurance:</strong> Separate coverage for flood zones
-                                    </div>
-                                </li>
-                                <li class="flex items-start">
-                                    <span class="text-blue-600 mr-2">🌪️</span>
-                                    <div>
-                                        <strong>Tornado Damage:</strong> Full coverage for wind destruction
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-xl mb-4 text-blue-900">Regional Considerations</h3>
-                            <ul class="space-y-3">
-                                <li class="flex items-start">
-                                    <span class="text-blue-600 mr-2">🏖️</span>
-                                    <div>
-                                        <strong>Coastal Properties:</strong> Special wind/hail deductibles
-                                    </div>
-                                </li>
-                                <li class="flex items-start">
-                                    <span class="text-blue-600 mr-2">🏔️</span>
-                                    <div>
-                                        <strong>Mountain Homes:</strong> Mudslide and erosion coverage
-                                    </div>
-                                </li>
-                                <li class="flex items-start">
-                                    <span class="text-blue-600 mr-2">🌲</span>
-                                    <div>
-                                        <strong>Wildfire Risk:</strong> Enhanced fire protection coverage
-                                    </div>
-                                </li>
-                                <li class="flex items-start">
-                                    <span class="text-blue-600 mr-2">❄️</span>
-                                    <div>
-                                        <strong>Ice Dams:</strong> Winter weather damage protection
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
+    <main>
+        <!-- Hero Section - F-Pattern Second Horizontal Bar -->
+        <section class="f-hero pb-8 sm:pb-20 lg:pb-32 text-white relative">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+                <div class="animate-fade-in-up">
+                    <!-- Headline -->
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black leading-[1.1] sm:leading-tight mb-2">
+                        NC Home Insurance<br>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-200 to-cyan-200">
+                            Complete Protection. Better Rates.
+                        </span>
+                    </h1>
+                    
+                    <!-- Service Icons Section -->
+                    <div class="service-icons">
+                        <a href="#coverage-types" class="service-icon">
+                            <div class="service-icon-circle">
+                                <i class="fas fa-home"></i>
+                            </div>
+                            <span>Coverage Types</span>
+                        </a>
+                        <a href="#discounts" class="service-icon">
+                            <div class="service-icon-circle">
+                                <i class="fas fa-piggy-bank"></i>
+                            </div>
+                            <span>Save 30%</span>
+                        </a>
+                        <a href="#nc-risks" class="service-icon">
+                            <div class="service-icon-circle">
+                                <i class="fas fa-cloud-showers-heavy"></i>
+                            </div>
+                            <span>NC Weather</span>
+                        </a>
                     </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Coverage Calculator Section -->
-    <section id="coverage-calculator" class="py-20 bg-gray-50">
-        <div class="container mx-auto px-6">
-            <div class="max-w-3xl mx-auto">
-                <div class="text-center mb-12">
-                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Home Coverage Calculator</h2>
-                    <p class="text-xl text-gray-600">Estimate the right amount of coverage for your home</p>
-                </div>
-                
-                <div class="bg-white rounded-lg shadow-xl p-8">
-                    <form id="coverage-calculator-form" class="space-y-6">
-                        <div>
-                            <label class="block text-gray-700 font-semibold mb-2">Home Square Footage</label>
-                            <input type="number" placeholder="e.g., 2000" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
-                        </div>
-                        
-                        <div>
-                            <label class="block text-gray-700 font-semibold mb-2">Year Built</label>
-                            <input type="number" placeholder="e.g., 2005" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
-                        </div>
-                        
-                        <div>
-                            <label class="block text-gray-700 font-semibold mb-2">Construction Type</label>
-                            <select class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
-                                <option>Frame</option>
-                                <option>Brick Veneer</option>
-                                <option>Solid Brick</option>
-                                <option>Concrete Block</option>
-                            </select>
-                        </div>
-                        
-                        <div>
-                            <label class="block text-gray-700 font-semibold mb-2">Home Features</label>
-                            <div class="space-y-2">
-                                <label class="flex items-center">
-                                    <input type="checkbox" class="mr-2"> Granite Countertops
-                                </label>
-                                <label class="flex items-center">
-                                    <input type="checkbox" class="mr-2"> Hardwood Floors
-                                </label>
-                                <label class="flex items-center">
-                                    <input type="checkbox" class="mr-2"> Custom Cabinets
-                                </label>
-                                <label class="flex items-center">
-                                    <input type="checkbox" class="mr-2"> High-End Appliances
-                                </label>
+                    
+                    <!-- Description -->
+                    <p class="text-base sm:text-xl lg:text-2xl text-blue-100 mb-3 leading-snug sm:leading-relaxed max-w-4xl mx-auto">
+                        Protect your home, belongings, and peace of mind. Compare quotes from top carriers and save an average of $600/year.
+                    </p>
+                    
+                    <!-- Primary CTAs -->
+                    <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-3 justify-center">
+                        <a href="https://billlayneinsurance.com/home-quote.html" class="btn-primary text-base sm:text-lg">
+                            <i class="fas fa-calculator mr-2"></i>Get Your Free Quote
+                        </a>
+                        <a href="tel:3368351993" class="btn-secondary text-base sm:text-lg">
+                            <i class="fas fa-phone mr-2"></i>Call (336) 835-1993
+                        </a>
+                    </div>
+                    
+                    <!-- Trust Indicators -->
+                    <div class="trust-indicators-grid text-blue-200">
+                        <div class="trust-indicator-row">
+                            <div class="flex items-center justify-center">
+                                <i class="fas fa-star text-yellow-400 mr-1 text-xs"></i>
+                                <span class="font-semibold">4.8★ Google Reviews</span>
+                            </div>
+                            <div class="flex items-center justify-center">
+                                <i class="fas fa-shield-alt text-green-400 mr-1 text-xs"></i>
+                                <span>NC Licensed #1740293</span>
                             </div>
                         </div>
-                        
-                        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg shadow-lg transition-transform transform hover:scale-105">
-                            Calculate Coverage Amount
-                        </button>
-                    </form>
-                    
-                    <div id="calculator-results" class="mt-8 p-6 bg-blue-50 rounded-lg hidden">
-                        <h3 class="font-bold text-xl mb-4">Estimated Coverage Needed:</h3>
-                        <div class="text-3xl font-bold text-blue-600" id="coverage-amount">$0</div>
-                        <p class="text-gray-600 mt-2">This is an estimate. Contact us for a personalized quote.</p>
+                        <div class="trust-indicator-row">
+                            <div class="flex items-center justify-center">
+                                <i class="fas fa-clock text-blue-300 mr-1 text-xs"></i>
+                                <span>Same-Day Quotes</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Discounts Section -->
-    <section id="discounts" class="py-20">
-        <div class="container mx-auto px-6">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Save with Home Insurance Discounts</h2>
-                <p class="text-xl text-gray-600">Most homeowners qualify for multiple discounts</p>
-            </div>
-            
-            <div class="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-                <!-- Safety Discounts -->
-                <div class="bg-white rounded-lg shadow-lg p-6">
-                    <div class="text-3xl mb-4 text-center">🔒</div>
-                    <h3 class="text-xl font-bold mb-4 text-center">Safety & Security</h3>
-                    <ul class="space-y-2 text-gray-600">
-                        <li class="flex items-center">
-                            <span class="text-green-500 mr-2">✓</span>
-                            Security System (5-20% off)
-                        </li>
-                        <li class="flex items-center">
-                            <span class="text-green-500 mr-2">✓</span>
-                            Smoke Detectors (up to 5% off)
-                        </li>
-                        <li class="flex items-center">
-                            <span class="text-green-500 mr-2">✓</span>
-                            Deadbolt Locks (2-5% off)
-                        </li>
-                        <li class="flex items-center">
-                            <span class="text-green-500 mr-2">✓</span>
-                            Fire Sprinklers (15-20% off)
-                        </li>
-                    </ul>
-                </div>
-                
-                <!-- Policy Discounts -->
-                <div class="bg-white rounded-lg shadow-lg p-6">
-                    <div class="text-3xl mb-4 text-center">📑</div>
-                    <h3 class="text-xl font-bold mb-4 text-center">Policy Savings</h3>
-                    <ul class="space-y-2 text-gray-600">
-                        <li class="flex items-center">
-                            <span class="text-green-500 mr-2">✓</span>
-                            Multi-Policy Bundle (up to 25% off)
-                        </li>
-                        <li class="flex items-center">
-                            <span class="text-green-500 mr-2">✓</span>
-                            Claims-Free (10-20% off)
-                        </li>
-                        <li class="flex items-center">
-                            <span class="text-green-500 mr-2">✓</span>
-                            New Home (5-15% off)
-                        </li>
-                        <li class="flex items-center">
-                            <span class="text-green-500 mr-2">✓</span>
-                            Loyalty Discount (5-10% off)
-                        </li>
-                    </ul>
-                </div>
-                
-                <!-- Special Discounts -->
-                <div class="bg-white rounded-lg shadow-lg p-6">
-                    <div class="text-3xl mb-4 text-center">⭐</div>
-                    <h3 class="text-xl font-bold mb-4 text-center">Special Qualifications</h3>
-                    <ul class="space-y-2 text-gray-600">
-                        <li class="flex items-center">
-                            <span class="text-green-500 mr-2">✓</span>
-                            Senior Citizen (up to 10% off)
-                        </li>
-                        <li class="flex items-center">
-                            <span class="text-green-500 mr-2">✓</span>
-                            Military/Veterans (up to 15% off)
-                        </li>
-                        <li class="flex items-center">
-                            <span class="text-green-500 mr-2">✓</span>
-                            Non-Smoker (up to 5% off)
-                        </li>
-                        <li class="flex items-center">
-                            <span class="text-green-500 mr-2">✓</span>
-                            HOA Member (2-5% off)
-                        </li>
-                    </ul>
+        <!-- Carriers Section -->
+        <section class="py-12 bg-white border-b border-gray-200">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h3 class="text-center text-gray-600 text-sm font-bold uppercase tracking-wider mb-8">
+                    We Compare Quotes From North Carolina's Top Home Insurance Carriers
+                </h3>
+                <div class="carriers-grid">
+                    <a href="https://www.nationwide.com" target="_blank" rel="noopener noreferrer" class="logo-container">
+                        <span class="text-xl font-bold text-gray-700">Nationwide</span>
+                    </a>
+                    <a href="https://www.travelers.com" target="_blank" rel="noopener noreferrer" class="logo-container">
+                        <span class="text-xl font-bold text-gray-700">Travelers</span>
+                    </a>
+                    <a href="https://www.alamancefarmers.com" target="_blank" rel="noopener noreferrer" class="logo-container">
+                        <span class="text-xl font-bold text-gray-700">Alamance</span>
+                    </a>
+                    <a href="https://www.ncgrange.com" target="_blank" rel="noopener noreferrer" class="logo-container">
+                        <span class="text-xl font-bold text-gray-700">NC Grange</span>
+                    </a>
                 </div>
             </div>
-            
-            <div class="text-center mt-8">
-                <a href="#get-quote" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg shadow-lg transition-transform transform hover:scale-105 inline-block">
-                    Check Your Discount Eligibility
-                </a>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Deductible Analyzer Section -->
-    <section id="deductible-analyzer" class="py-20 bg-gray-50">
-        <div class="container mx-auto px-6">
-            <div class="max-w-4xl mx-auto">
-                <div class="text-center mb-12">
-                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Deductible Analyzer</h2>
-                    <p class="text-xl text-gray-600">Find the right balance between premium and deductible</p>
-                </div>
-                
-                <div class="bg-white rounded-lg shadow-xl p-8">
-                    <div class="grid md:grid-cols-2 gap-8">
-                        <div>
-                            <h3 class="font-bold text-lg mb-4">Lower Deductible ($500-$1,000)</h3>
-                            <div class="bg-green-50 rounded-lg p-4 mb-4">
-                                <p class="font-semibold text-green-800">Best for:</p>
-                                <ul class="text-sm space-y-1 mt-2 text-green-700">
-                                    <li>• Limited emergency savings</li>
-                                    <li>• Older homes with more claims risk</li>
-                                    <li>• Areas prone to severe weather</li>
-                                    <li>• Peace of mind priority</li>
+        <!-- F-Pattern Content Layout -->
+        <section class="py-20 bg-gray-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid lg:grid-cols-12 gap-12">
+                    <!-- Left Sidebar - F-Pattern Vertical Emphasis -->
+                    <div class="lg:col-span-4">
+                        <div class="f-sidebar space-y-8">
+                            <!-- Coverage Calculator Widget -->
+                            <div class="trust-badge">
+                                <h4 class="font-bold text-gray-800 mb-4 text-xl">Coverage Calculator</h4>
+                                <p class="text-xs text-gray-500 mb-3 italic">*Estimate your coverage needs</p>
+                                <div class="space-y-3">
+                                    <input type="number" id="sqft-input" placeholder="Home Square Footage" class="form-input">
+                                    <select id="year-select" class="form-input">
+                                        <option value="">Year Built</option>
+                                        <option value="new">2020-2025</option>
+                                        <option value="recent">2010-2019</option>
+                                        <option value="modern">2000-2009</option>
+                                        <option value="older">1990-1999</option>
+                                        <option value="vintage">Before 1990</option>
+                                    </select>
+                                    <select id="construction-select" class="form-input">
+                                        <option value="">Construction Type</option>
+                                        <option value="frame">Frame</option>
+                                        <option value="brick-veneer">Brick Veneer</option>
+                                        <option value="solid-brick">Solid Brick</option>
+                                        <option value="concrete">Concrete Block</option>
+                                    </select>
+                                    <button onclick="calculateCoverage()" class="btn-primary w-full block text-center">
+                                        Calculate Coverage
+                                    </button>
+                                    
+                                    <!-- Coverage Display -->
+                                    <div id="coverage-result" class="hidden mt-4 p-4 bg-blue-50 rounded-lg">
+                                        <p class="text-sm font-semibold text-gray-700 mb-2">Estimated Coverage Needed:</p>
+                                        <p class="text-2xl font-bold text-blue-600">$<span id="coverage-amount">--</span></p>
+                                        <p class="text-xs text-gray-600 mt-2">Personal Property: $<span id="personal-property">--</span></p>
+                                        <hr class="my-3 border-gray-300">
+                                        <p class="text-xs text-gray-500 italic">*Based on rebuild costs. Actual coverage needs may vary.</p>
+                                        <a href="https://billlayneinsurance.com/home-quote.html" class="btn-secondary w-full block text-center mt-3 text-sm">
+                                            Get Accurate Quote
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Savings Badge -->
+                            <div class="trust-badge text-center">
+                                <div class="text-4xl font-black text-green-600 mb-2">$624</div>
+                                <p class="text-gray-700 font-semibold">Average Annual<br>Customer Savings</p>
+                            </div>
+                            
+                            <!-- Available Discounts -->
+                            <div class="trust-badge">
+                                <h4 class="font-bold text-gray-800 mb-3 flex items-center">
+                                    <i class="fas fa-tag text-blue-600 mr-2"></i>
+                                    Your Potential Discounts
+                                </h4>
+                                <ul class="text-sm text-gray-600 space-y-2">
+                                    <li>✔ Multi-Policy Bundle: up to 25%</li>
+                                    <li>✔ Security System: up to 20%</li>
+                                    <li>✔ New Home: up to 15%</li>
+                                    <li>✔ Claims-Free: up to 20%</li>
+                                    <li>✔ Fire Sprinklers: up to 15%</li>
+                                    <li>✔ Loyalty Discount: up to 10%</li>
                                 </ul>
                             </div>
-                            <p class="text-gray-600">Higher monthly premium, lower out-of-pocket costs when filing a claim.</p>
-                        </div>
-                        
-                        <div>
-                            <h3 class="font-bold text-lg mb-4">Higher Deductible ($2,500-$5,000)</h3>
-                            <div class="bg-blue-50 rounded-lg p-4 mb-4">
-                                <p class="font-semibold text-blue-800">Best for:</p>
-                                <ul class="text-sm space-y-1 mt-2 text-blue-700">
-                                    <li>• Strong emergency fund</li>
-                                    <li>• Newer homes with less risk</li>
-                                    <li>• Claims-free history</li>
-                                    <li>• Premium savings priority</li>
-                                </ul>
+                            
+                            <!-- Quick Help -->
+                            <div class="trust-badge text-center">
+                                <h4 class="font-bold text-gray-800 mb-4">Need Help Now?</h4>
+                                <a href="tel:3368351993" class="btn-primary w-full block mb-3">
+                                    <i class="fas fa-phone mr-2"></i>Call (336) 835-1993
+                                </a>
+                                <p class="text-xs text-gray-600">Instant quotes by phone<br>Mon-Fri 9AM-5PM</p>
                             </div>
-                            <p class="text-gray-600">Lower monthly premium, higher out-of-pocket costs when filing a claim.</p>
                         </div>
                     </div>
                     
-                    <div class="mt-8 p-6 bg-yellow-50 rounded-lg border border-yellow-200">
-                        <p class="text-yellow-800">
-                            <strong>💡 Pro Tip:</strong> Consider setting your deductible equal to your emergency fund comfort level. Most NC homeowners choose a $1,000-$2,500 deductible.
-                        </p>
+                    <!-- Main Content - F-Pattern Right Side -->
+                    <div class="lg:col-span-8">
+                        <!-- Coverage Types Section -->
+                        <div id="coverage-types" class="mb-16">
+                            <h2 class="text-3xl lg:text-4xl font-bold text-gray-800 mb-4">
+                                Complete Home Insurance Coverage
+                            </h2>
+                            <p class="text-xl text-gray-600 mb-8">
+                                Understanding what's protected in your policy - from your home's structure to your personal belongings.
+                            </p>
+                            
+                            <div class="grid md:grid-cols-2 gap-6">
+                                <div class="coverage-card">
+                                    <div class="flex items-start">
+                                        <div class="flex-shrink-0 w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
+                                            <i class="fas fa-home text-blue-600 text-xl"></i>
+                                        </div>
+                                        <div>
+                                            <h3 class="text-xl font-bold text-gray-800 mb-2">Dwelling Coverage</h3>
+                                            <p class="text-gray-600 mb-3">Protects your home's structure from covered perils.</p>
+                                            <ul class="text-sm text-gray-600 space-y-1">
+                                                <li>• Foundation and walls</li>
+                                                <li>• Roof and windows</li>
+                                                <li>• Built-in appliances</li>
+                                                <li>• Attached structures</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="coverage-card">
+                                    <div class="flex items-start">
+                                        <div class="flex-shrink-0 w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mr-4">
+                                            <i class="fas fa-box text-green-600 text-xl"></i>
+                                        </div>
+                                        <div>
+                                            <h3 class="text-xl font-bold text-gray-800 mb-2">Personal Property</h3>
+                                            <p class="text-gray-600 mb-3">Covers your belongings inside and outside your home.</p>
+                                            <ul class="text-sm text-gray-600 space-y-1">
+                                                <li>• Furniture and electronics</li>
+                                                <li>• Clothing and jewelry</li>
+                                                <li>• Appliances</li>
+                                                <li>• Off-premises coverage</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="coverage-card">
+                                    <div class="flex items-start">
+                                        <div class="flex-shrink-0 w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mr-4">
+                                            <i class="fas fa-balance-scale text-purple-600 text-xl"></i>
+                                        </div>
+                                        <div>
+                                            <h3 class="text-xl font-bold text-gray-800 mb-2">Liability Protection</h3>
+                                            <p class="text-gray-600 mb-3">Financial protection from lawsuits and injuries.</p>
+                                            <ul class="text-sm text-gray-600 space-y-1">
+                                                <li>• Bodily injury to others</li>
+                                                <li>• Property damage claims</li>
+                                                <li>• Legal defense costs</li>
+                                                <li>• Medical payments</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="coverage-card">
+                                    <div class="flex items-start">
+                                        <div class="flex-shrink-0 w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mr-4">
+                                            <i class="fas fa-hotel text-orange-600 text-xl"></i>
+                                        </div>
+                                        <div>
+                                            <h3 class="text-xl font-bold text-gray-800 mb-2">Additional Living Expenses</h3>
+                                            <p class="text-gray-600 mb-3">Covers costs if your home becomes uninhabitable.</p>
+                                            <ul class="text-sm text-gray-600 space-y-1">
+                                                <li>• Temporary housing</li>
+                                                <li>• Restaurant meals</li>
+                                                <li>• Storage costs</li>
+                                                <li>• Pet boarding</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- NC Specific Risks Section -->
+                        <div id="nc-risks" class="mb-16">
+                            <h2 class="text-3xl lg:text-4xl font-bold text-gray-800 mb-8">
+                                North Carolina Specific Coverage
+                            </h2>
+                            
+                            <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-8">
+                                <p class="text-xl text-gray-700 mb-6 font-semibold">
+                                    Protection designed for NC homeowners' unique weather risks
+                                </p>
+                                
+                                <div class="grid md:grid-cols-2 gap-8">
+                                    <div>
+                                        <h4 class="font-bold text-lg mb-4 text-blue-900">Weather-Related Risks</h4>
+                                        <ul class="space-y-3">
+                                            <li class="flex items-start">
+                                                <span class="text-blue-600 mr-2">🌀</span>
+                                                <div>
+                                                    <strong>Hurricane Coverage:</strong> Wind damage and storm surge protection
+                                                </div>
+                                            </li>
+                                            <li class="flex items-start">
+                                                <span class="text-blue-600 mr-2">⛈️</span>
+                                                <div>
+                                                    <strong>Hail & Storm:</strong> Protection from severe weather damage
+                                                </div>
+                                            </li>
+                                            <li class="flex items-start">
+                                                <span class="text-blue-600 mr-2">🌊</span>
+                                                <div>
+                                                    <strong>Flood Insurance:</strong> Separate coverage for flood zones
+                                                </div>
+                                            </li>
+                                            <li class="flex items-start">
+                                                <span class="text-blue-600 mr-2">🌪️</span>
+                                                <div>
+                                                    <strong>Tornado Damage:</strong> Full coverage for wind destruction
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-lg mb-4 text-blue-900">Regional Considerations</h4>
+                                        <ul class="space-y-3">
+                                            <li class="flex items-start">
+                                                <span class="text-blue-600 mr-2">🏖️</span>
+                                                <div>
+                                                    <strong>Coastal Properties:</strong> Special wind/hail deductibles
+                                                </div>
+                                            </li>
+                                            <li class="flex items-start">
+                                                <span class="text-blue-600 mr-2">🏔️</span>
+                                                <div>
+                                                    <strong>Mountain Homes:</strong> Mudslide and erosion coverage
+                                                </div>
+                                            </li>
+                                            <li class="flex items-start">
+                                                <span class="text-blue-600 mr-2">🌲</span>
+                                                <div>
+                                                    <strong>Wildfire Risk:</strong> Enhanced fire protection coverage
+                                                </div>
+                                            </li>
+                                            <li class="flex items-start">
+                                                <span class="text-blue-600 mr-2">❄️</span>
+                                                <div>
+                                                    <strong>Ice Dams:</strong> Winter weather damage protection
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                
+                                <div class="mt-6 p-4 bg-yellow-100 rounded-lg">
+                                    <p class="text-sm text-yellow-800">
+                                        <strong>Pro Tip:</strong> Most standard policies don't cover flood damage. If you're in a flood-prone area or near the coast, consider separate flood insurance through NFIP or private carriers.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Discounts Section -->
+                        <div id="discounts" class="mb-16">
+                            <h2 class="text-3xl lg:text-4xl font-bold text-gray-800 mb-8">
+                                Save with Home Insurance Discounts
+                            </h2>
+                            
+                            <div class="bg-gradient-to-r from-green-50 to-blue-50 rounded-xl p-8">
+                                <p class="text-xl text-gray-700 mb-6 font-semibold">
+                                    Most homeowners qualify for multiple discounts - average total savings of 20-30%
+                                </p>
+                                
+                                <div class="grid md:grid-cols-2 gap-8">
+                                    <div>
+                                        <h4 class="font-bold text-lg mb-4 text-blue-900">Safety & Security</h4>
+                                        <ul class="space-y-3">
+                                            <li class="flex items-start">
+                                                <span class="text-green-500 mr-2">✔</span>
+                                                <div>
+                                                    <strong>Security System:</strong> 5-20% off
+                                                </div>
+                                            </li>
+                                            <li class="flex items-start">
+                                                <span class="text-green-500 mr-2">✔</span>
+                                                <div>
+                                                    <strong>Smoke Detectors:</strong> up to 5% off
+                                                </div>
+                                            </li>
+                                            <li class="flex items-start">
+                                                <span class="text-green-500 mr-2">✔</span>
+                                                <div>
+                                                    <strong>Deadbolt Locks:</strong> 2-5% off
+                                                </div>
+                                            </li>
+                                            <li class="flex items-start">
+                                                <span class="text-green-500 mr-2">✔</span>
+                                                <div>
+                                                    <strong>Fire Sprinklers:</strong> 15-20% off
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-lg mb-4 text-blue-900">Policy Savings</h4>
+                                        <ul class="space-y-3">
+                                            <li class="flex items-start">
+                                                <span class="text-green-500 mr-2">✔</span>
+                                                <div>
+                                                    <strong>Multi-Policy Bundle:</strong> up to 25% off
+                                                </div>
+                                            </li>
+                                            <li class="flex items-start">
+                                                <span class="text-green-500 mr-2">✔</span>
+                                                <div>
+                                                    <strong>Claims-Free:</strong> 10-20% off
+                                                </div>
+                                            </li>
+                                            <li class="flex items-start">
+                                                <span class="text-green-500 mr-2">✔</span>
+                                                <div>
+                                                    <strong>New Home:</strong> 5-15% off
+                                                </div>
+                                            </li>
+                                            <li class="flex items-start">
+                                                <span class="text-green-500 mr-2">✔</span>
+                                                <div>
+                                                    <strong>Loyalty Discount:</strong> 5-10% off
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                
+                                <div class="mt-8 text-center">
+                                    <a href="https://billlayneinsurance.com/home-quote.html" class="btn-primary">
+                                        Check Your Discount Eligibility
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- FAQ Section -->
+                        <div id="faq" class="mb-16">
+                            <h2 class="text-3xl lg:text-4xl font-bold text-gray-800 mb-8">
+                                Frequently Asked Questions
+                            </h2>
+                            
+                            <div class="space-y-6">
+                                <div class="bg-white rounded-lg p-6 shadow-md">
+                                    <h3 class="font-bold text-lg mb-3">What does standard home insurance NOT cover?</h3>
+                                    <p class="text-gray-600">Standard policies typically exclude floods, earthquakes, maintenance issues, pest infestations, and intentional damage. Flood insurance requires a separate policy through NFIP or private insurers.</p>
+                                </div>
+                                
+                                <div class="bg-white rounded-lg p-6 shadow-md">
+                                    <h3 class="font-bold text-lg mb-3">How much dwelling coverage do I need?</h3>
+                                    <p class="text-gray-600">You need enough to rebuild your home at current construction costs, not market value. This includes materials, labor, and compliance with current building codes. Most experts recommend coverage of at least 100% of rebuild cost.</p>
+                                </div>
+                                
+                                <div class="bg-white rounded-lg p-6 shadow-md">
+                                    <h3 class="font-bold text-lg mb-3">What's the difference between replacement cost and actual cash value?</h3>
+                                    <p class="text-gray-600">Replacement cost pays to replace damaged items with new ones, while actual cash value deducts depreciation. For a 5-year-old TV, replacement cost covers a new TV, while ACV pays the depreciated value.</p>
+                                </div>
+                                
+                                <div class="bg-white rounded-lg p-6 shadow-md">
+                                    <h3 class="font-bold text-lg mb-3">Do I need flood insurance in North Carolina?</h3>
+                                    <p class="text-gray-600">If you're in a high-risk flood zone with a mortgage, flood insurance is required. Even outside flood zones, 25% of flood claims come from low-risk areas. NC's hurricane risk makes flood coverage worth considering.</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- FAQ Section -->
-    <section id="faq" class="py-20">
-        <div class="container mx-auto px-6">
-            <div class="max-w-3xl mx-auto">
+        <!-- Resources Section -->
+        <section class="py-20 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-12">
-                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Frequently Asked Questions</h2>
-                    <p class="text-xl text-gray-600">Common home insurance questions answered</p>
+                    <h2 class="text-3xl lg:text-4xl font-bold text-gray-800 mb-4">
+                        Helpful Resources & Tools
+                    </h2>
+                    <p class="text-xl text-gray-600">Everything you need to protect your home and save money</p>
                 </div>
                 
-                <div class="space-y-6">
-                    <div class="bg-white rounded-lg shadow-md p-6">
-                        <h3 class="font-bold text-lg mb-3">What does standard home insurance NOT cover?</h3>
-                        <p class="text-gray-600">Standard policies typically exclude floods, earthquakes, maintenance issues, pest infestations, and intentional damage. Flood insurance requires a separate policy through NFIP or private insurers.</p>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="service-card text-center">
+                        <div class="text-4xl mb-4">📋</div>
+                        <h3 class="text-xl font-bold mb-3">Quick Tools</h3>
+                        <ul class="space-y-2 text-gray-600">
+                            <li><a href="#coverage-calculator" class="hover:text-blue-600">Coverage Calculator</a></li>
+                            <li><a href="home-inventory-sheet.html" onclick="return openInventorySheet();" class="hover:text-blue-600">Home Inventory Sheet</a></li>
+                            <li><a href="#deductible-analyzer" class="hover:text-blue-600">Deductible Analyzer</a></li>
+                            <li><a href="#discounts" class="hover:text-blue-600">Discount Checker</a></li>
+                        </ul>
                     </div>
                     
-                    <div class="bg-white rounded-lg shadow-md p-6">
-                        <h3 class="font-bold text-lg mb-3">How much dwelling coverage do I need?</h3>
-                        <p class="text-gray-600">You need enough to rebuild your home at current construction costs, not market value. This includes materials, labor, and compliance with current building codes. Most experts recommend coverage of at least 100% of rebuild cost.</p>
+                    <div class="service-card text-center">
+                        <div class="text-4xl mb-4">📚</div>
+                        <h3 class="text-xl font-bold mb-3">Insurance Guides</h3>
+                        <ul class="space-y-2 text-gray-600">
+                            <li><a href="#coverage-types" class="hover:text-blue-600">Coverage Types Explained</a></li>
+                            <li><a href="#nc-risks" class="hover:text-blue-600">NC Weather Risks</a></li>
+                            <li><a href="#faq" class="hover:text-blue-600">Common Questions</a></li>
+                            <li><a href="https://billlayne.github.io/NC-Insurance-Claims-Center.github.io/" class="hover:text-blue-600">Claims Process</a></li>
+                        </ul>
                     </div>
                     
-                    <div class="bg-white rounded-lg shadow-md p-6">
-                        <h3 class="font-bold text-lg mb-3">What's the difference between replacement cost and actual cash value?</h3>
-                        <p class="text-gray-600">Replacement cost pays to replace damaged items with new ones, while actual cash value deducts depreciation. For a 5-year-old TV, replacement cost covers a new TV, while ACV pays the depreciated value.</p>
-                    </div>
-                    
-                    <div class="bg-white rounded-lg shadow-md p-6">
-                        <h3 class="font-bold text-lg mb-3">Do I need flood insurance in North Carolina?</h3>
-                        <p class="text-gray-600">If you're in a high-risk flood zone with a mortgage, flood insurance is required. Even outside flood zones, 25% of flood claims come from low-risk areas. NC's hurricane risk makes flood coverage worth considering.</p>
-                    </div>
-                    
-                    <div class="bg-white rounded-lg shadow-md p-6">
-                        <h3 class="font-bold text-lg mb-3">How can I lower my home insurance premium?</h3>
-                        <p class="text-gray-600">Bundle with auto insurance, increase your deductible, improve home security, maintain good credit, shop annually, and ask about all available discounts. Regular home maintenance also prevents claims.</p>
+                    <div class="service-card text-center">
+                        <div class="text-4xl mb-4">📞</div>
+                        <h3 class="text-xl font-bold mb-3">Quick Links</h3>
+                        <ul class="space-y-2 text-gray-600">
+                            <li><a href="https://www.ncdoi.gov/" target="_blank" rel="noopener noreferrer" class="hover:text-blue-600">NC Dept of Insurance</a></li>
+                            <li><a href="https://billlayne.github.io/Insurance-Contact-Information/" class="hover:text-blue-600">File a Claim</a></li>
+                            <li><a href="https://billlayne.github.io/Resources/" class="hover:text-blue-600">Resources Center</a></li>
+                            <li><a href="tel:3368351993" class="hover:text-blue-600">Contact Us</a></li>
+                        </ul>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Get Quote CTA Section -->
-    <section id="get-quote" class="py-20 bg-gradient-to-r from-blue-600 to-blue-700 text-white">
-        <div class="container mx-auto px-6">
-            <div class="max-w-3xl mx-auto text-center">
-                <h2 class="text-3xl md:text-4xl font-bold mb-6">Protect Your Home Today</h2>
-                <p class="text-xl mb-8 opacity-95">Get comprehensive coverage from North Carolina's trusted insurance experts. Quick quotes, local service, better protection.</p>
-                <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                    <a href="https://billlayneinsurance.com/home-quote.html" class="bg-white text-blue-600 hover:bg-gray-100 font-bold py-3 px-8 rounded-lg shadow-lg transition-transform transform hover:scale-105">
-                        Get Your Quote Online
+        <!-- Contact CTA Section -->
+        <section class="py-20 bg-blue-600 text-white">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="text-3xl lg:text-4xl font-bold mb-4">
+                    Protect Your Home Today
+                </h2>
+                <p class="text-xl text-blue-100 mb-8">
+                    Get comprehensive coverage from North Carolina's trusted insurance experts
+                </p>
+                
+                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                    <a href="tel:3368351993" class="btn-secondary text-lg">
+                        <i class="fas fa-phone mr-2"></i>Call (336) 835-1993
                     </a>
-                    <a href="tel:3368351993" class="bg-transparent border-2 border-white text-white hover:bg-white hover:text-blue-600 font-bold py-3 px-8 rounded-lg transition-all">
-                        Call (336) 835-1993
+                    <span class="text-blue-200">or</span>
+                    <a href="https://billlayneinsurance.com/home-quote.html" class="bg-white text-blue-600 px-8 py-4 rounded-full font-bold text-lg hover:bg-gray-100 transition-colors">
+                        <i class="fas fa-calculator mr-2"></i>Get Free Quote Online
                     </a>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Trusted Carriers Section -->
-    <section class="py-20 bg-gray-50">
-        <div class="container mx-auto px-6">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Trusted Insurance Partners</h2>
-                <p class="text-xl text-gray-600">We work with NC's most reliable home insurance carriers</p>
-            </div>
-            
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
-                <div class="bg-white rounded-lg p-6 shadow-md hover:shadow-lg transition-shadow text-center">
-                    <div class="h-20 flex items-center justify-center mb-4">
-                        <span class="text-2xl font-bold text-gray-700">Nationwide</span>
-                    </div>
-                    <p class="text-sm text-gray-600">On Your Side®</p>
-                </div>
-                <div class="bg-white rounded-lg p-6 shadow-md hover:shadow-lg transition-shadow text-center">
-                    <div class="h-20 flex items-center justify-center mb-4">
-                        <span class="text-2xl font-bold text-gray-700">Travelers</span>
-                    </div>
-                    <p class="text-sm text-gray-600">Better protected</p>
-                </div>
-                <div class="bg-white rounded-lg p-6 shadow-md hover:shadow-lg transition-shadow text-center">
-                    <div class="h-20 flex items-center justify-center mb-4">
-                        <span class="text-2xl font-bold text-gray-700">Alamance</span>
-                    </div>
-                    <p class="text-sm text-gray-600">Local NC carrier</p>
-                </div>
-                <div class="bg-white rounded-lg p-6 shadow-md hover:shadow-lg transition-shadow text-center">
-                    <div class="h-20 flex items-center justify-center mb-4">
-                        <span class="text-2xl font-bold text-gray-700">NC Grange</span>
-                    </div>
-                    <p class="text-sm text-gray-600">Mutual protection</p>
+                
+                <div class="mt-8 text-blue-200">
+                    <p class="mb-2">
+                        <i class="fas fa-map-marker-alt mr-2"></i>
+                        1283 N Bridge St, Elkin, NC 28621
+                    </p>
+                    <p>
+                        <i class="fas fa-envelope mr-2"></i>
+                        Save@BillLayneInsurance.com
+                    </p>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </main>
 
     <!-- Footer -->
     <footer class="bg-gray-800 text-white py-12">
-        <div class="container mx-auto px-6">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid md:grid-cols-4 gap-8">
                 <div>
                     <h3 class="text-xl font-bold mb-4">Bill Layne Insurance</h3>
-                    <p class="text-gray-400">Your trusted North Carolina insurance partner since 2004.</p>
+                    <p class="text-gray-400 mb-4">Your local independent insurance agency specializing in home insurance for North Carolina residents.</p>
+                    <div class="flex space-x-4">
+                        <a href="https://www.facebook.com/dollarbillagency/" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.google.com/maps/place/Bill+Layne+Insurance+Agency" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white"><i class="fab fa-google"></i></a>
+                        <a href="https://www.yelp.com/biz/bill-layne-insurance-agency-elkin" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white"><i class="fab fa-yelp"></i></a>
+                    </div>
                 </div>
+                
                 <div>
-                    <h4 class="font-semibold mb-4">Quick Links</h4>
+                    <h4 class="font-semibold mb-4">Coverage Types</h4>
                     <ul class="space-y-2 text-gray-400">
-                        <li><a href="https://billlayneinsurance.com/" class="hover:text-white">Home</a></li>
-                        <li><a href="#coverage-types" class="hover:text-white">Coverage Types</a></li>
-                        <li><a href="#discounts" class="hover:text-white">Discounts</a></li>
-                        <li><a href="#get-quote" class="hover:text-white">Get Quote</a></li>
+                        <li><a href="#coverage-types" class="hover:text-white">Dwelling Coverage</a></li>
+                        <li><a href="#coverage-types" class="hover:text-white">Personal Property</a></li>
+                        <li><a href="#coverage-types" class="hover:text-white">Liability Protection</a></li>
+                        <li><a href="#coverage-types" class="hover:text-white">Additional Living Expenses</a></li>
                     </ul>
                 </div>
+                
                 <div>
                     <h4 class="font-semibold mb-4">Resources</h4>
                     <ul class="space-y-2 text-gray-400">
-                        <li><a href="https://billlayne.github.io/NC-Insurance-Claims-Center.github.io/" class="hover:text-white">Claims Center</a></li>
-                        <li><a href="#coverage-calculator" class="hover:text-white">Coverage Calculator</a></li>
-                        <li><a href="#deductible-analyzer" class="hover:text-white">Deductible Analyzer</a></li>
+                        <li><a href="#discounts" class="hover:text-white">Available Discounts</a></li>
+                        <li><a href="#nc-risks" class="hover:text-white">NC Weather Risks</a></li>
                         <li><a href="#faq" class="hover:text-white">FAQ</a></li>
+                        <li><a href="https://billlayne.github.io/NC-Insurance-Claims-Center.github.io/" class="hover:text-white">Claims Center</a></li>
                     </ul>
                 </div>
+                
                 <div>
                     <h4 class="font-semibold mb-4">Contact Info</h4>
                     <ul class="space-y-2 text-gray-400">
-                        <li>📞 <a href="tel:3368351993" class="hover:text-white">(336) 835-1993</a></li>
-                        <li>📧 <a href="mailto:Save@BillLayneInsurance.com" class="hover:text-white">Save@BillLayneInsurance.com</a></li>
-                        <li>📍 PO Box 827, Elkin, NC 28621</li>
-                        <li>⏰ Mon-Fri: 9:00 AM - 5:00 PM</li>
+                        <li><i class="fas fa-phone mr-2"></i>(336) 835-1993</li>
+                        <li><i class="fas fa-envelope mr-2"></i>Save@BillLayneInsurance.com</li>
+                        <li><i class="fas fa-map-marker-alt mr-2"></i>1283 N Bridge St<br>Elkin, NC 28621</li>
+                        <li><i class="fas fa-clock mr-2"></i>Mon-Fri: 9AM-5PM</li>
                     </ul>
                 </div>
             </div>
+            
             <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
-                <p>&copy; 2025 Bill Layne Insurance Agency. All rights reserved. | Licensed in North Carolina</p>
+                <p>&copy; 2025 Bill Layne Insurance Agency. All rights reserved. | NC License #1740293</p>
             </div>
         </div>
     </footer>
 
-    <!-- Mobile Sticky Call Button -->
-    <div class="mobile-call-button">
-        <a href="tel:3368351993" class="flex items-center gap-2 text-white">
-            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"></path>
-            </svg>
-            Call Now
-        </a>
-    </div>
-
     <!-- JavaScript -->
     <script>
-        // Simple Mobile Menu JavaScript (matches your working home insurance page)
-        document.addEventListener('DOMContentLoaded', function() {
-            const mobileMenuButton = document.getElementById('mobileMenuToggle');
-            const mobileMenu = document.getElementById('mobile-menu');
-            const mobileMenuClose = document.querySelector('.navbar-menu-close');
-            const mobileMenuOverlay = document.querySelector('.navbar-menu-overlay');
-
-            if (mobileMenuButton && mobileMenu && mobileMenuClose && mobileMenuOverlay) {
-                mobileMenuButton.addEventListener('click', () => {
-                    mobileMenu.classList.add('active');
-                    mobileMenuOverlay.classList.add('active');
-                    document.body.classList.add('menu-open');
-                    mobileMenuButton.classList.add('active');
-                });
-
-                mobileMenuClose.addEventListener('click', () => {
-                    mobileMenu.classList.remove('active');
-                    mobileMenuOverlay.classList.remove('active');
-                    document.body.classList.remove('menu-open');
-                    mobileMenuButton.classList.remove('active');
-                });
-
-                mobileMenuOverlay.addEventListener('click', () => {
-                    mobileMenu.classList.remove('active');
-                    mobileMenuOverlay.classList.remove('active');
-                    document.body.classList.remove('menu-open');
-                    mobileMenuButton.classList.remove('active');
-                });
-
-                // Close menu when clicking on a link
-                const menuLinks = mobileMenu.querySelectorAll('.nav-link');
-                menuLinks.forEach(link => {
-                    link.addEventListener('click', () => {
-                        mobileMenu.classList.remove('active');
-                        mobileMenuOverlay.classList.remove('active');
-                        document.body.classList.remove('menu-open');
-                        mobileMenuButton.classList.remove('active');
-                    });
-                });
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('main-header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
             }
         });
 
-        // Coverage Calculator
-        const calculatorForm = document.getElementById('coverage-calculator-form');
-        const resultsDiv = document.getElementById('calculator-results');
-        const coverageAmount = document.getElementById('coverage-amount');
+        // Universal menu functionality
+        const menuToggleBtn = document.getElementById('menu-toggle-btn');
+        const navigationMenu = document.getElementById('navigation-menu');
+        const menuOverlay = document.getElementById('menu-overlay');
+        const closeMenuBtn = document.getElementById('close-menu');
 
-        calculatorForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            
-            // Get form values
-            const sqft = parseInt(calculatorForm.querySelector('input[type="number"]').value) || 0;
-            const features = calculatorForm.querySelectorAll('input[type="checkbox"]:checked').length;
-            
-            // Simple calculation (you can make this more sophisticated)
-            const baseRate = 150; // $150 per sq ft base
-            const featureAdd = features * 15; // $15 per sq ft for each premium feature
-            const totalRate = baseRate + featureAdd;
-            const total = sqft * totalRate;
-            
-            // Show results
-            resultsDiv.classList.remove('hidden');
-            coverageAmount.textContent = '$' + total.toLocaleString();
-            
-            // Smooth scroll to results
-            resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        function toggleMenu() {
+            menuToggleBtn.classList.toggle('active');
+            navigationMenu.classList.toggle('active');
+            menuOverlay.classList.toggle('active');
+            document.body.style.overflow = navigationMenu.classList.contains('active') ? 'hidden' : '';
+        }
+
+        function closeMenu() {
+            menuToggleBtn.classList.remove('active');
+            navigationMenu.classList.remove('active');
+            menuOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        menuToggleBtn.addEventListener('click', toggleMenu);
+        closeMenuBtn.addEventListener('click', closeMenu);
+        menuOverlay.addEventListener('click', closeMenu);
+
+        // Close menu when clicking on internal navigation links
+        const menuNavLinks = navigationMenu.querySelectorAll('a[href^="#"], a[href*="NC-Home-Insurance"]');
+        menuNavLinks.forEach(link => {
+            link.addEventListener('click', closeMenu);
         });
 
-        // Smooth scroll for anchor links
+        // Smooth scrolling for internal anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
                 if (target) {
-                    const headerOffset = 80;
-                    const elementPosition = target.getBoundingClientRect().top;
-                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
+                    const headerHeight = document.getElementById('main-header').offsetHeight;
+                    const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - headerHeight;
                     window.scrollTo({
-                        top: offsetPosition,
+                        top: targetPosition,
                         behavior: 'smooth'
                     });
                 }
             });
         });
+
+        // Animate elements on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-fade-in-up');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all service cards and trust badges
+        document.querySelectorAll('.service-card, .trust-badge, .coverage-card').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Coverage Calculator
+        function calculateCoverage() {
+            const sqft = parseInt(document.getElementById('sqft-input').value) || 0;
+            const year = document.getElementById('year-select').value;
+            const construction = document.getElementById('construction-select').value;
+            
+            if (!sqft || !year || !construction) {
+                alert('Please fill in all fields to calculate coverage.');
+                return;
+            }
+            
+            // Base cost per square foot based on construction type
+            const constructionRates = {
+                'frame': 150,
+                'brick-veneer': 165,
+                'solid-brick': 180,
+                'concrete': 175
+            };
+            
+            // Age multipliers
+            const ageMultipliers = {
+                'new': 1.2,
+                'recent': 1.1,
+                'modern': 1.0,
+                'older': 0.95,
+                'vintage': 0.9
+            };
+            
+            // Calculate coverage
+            let baseRate = constructionRates[construction] || 150;
+            let ageMultiplier = ageMultipliers[year] || 1.0;
+            let coverageAmount = Math.round(sqft * baseRate * ageMultiplier);
+            let personalProperty = Math.round(coverageAmount * 0.5); // 50% of dwelling coverage
+            
+            // Display results
+            document.getElementById('coverage-amount').textContent = coverageAmount.toLocaleString();
+            document.getElementById('personal-property').textContent = personalProperty.toLocaleString();
+            document.getElementById('coverage-result').classList.remove('hidden');
+            
+            // Smooth scroll to show results
+            document.getElementById('coverage-result').scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'nearest' 
+            });
+        }
+
+        // Function to open Home Inventory Sheet
+        function openInventorySheet() {
+            // Open the inventory sheet in a new window with specific dimensions
+            const inventoryWindow = window.open(
+                'home-inventory-sheet.html', 
+                'HomeInventory', 
+                'width=850,height=900,scrollbars=yes,resizable=yes'
+            );
+            
+            // Focus on the new window if it opened successfully
+            if (inventoryWindow) {
+                inventoryWindow.focus();
+            }
+            
+            return false; // Prevent default link behavior
+        }
+    </script>
+
+    <!-- Schema Markup -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "InsuranceAgency",
+      "name": "Bill Layne Insurance Agency - Home Insurance Center",
+      "url": "https://billlayne.github.io/NC-Home-Insurance.github.io/",
+      "telephone": "+13368351993",
+      "email": "Save@BillLayneInsurance.com",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "1283 N Bridge St",
+        "addressLocality": "Elkin",
+        "addressRegion": "NC",
+        "postalCode": "28621",
+        "addressCountry": "US"
+      },
+      "areaServed": ["Elkin", "Mount Airy", "Jonesville", "Surry County", "Yadkin County", "Wilkes County"],
+      "serviceType": ["Home Insurance", "Homeowners Insurance", "Property Insurance"],
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.8",
+        "bestRating": "5",
+        "ratingCount": "127"
+      }
+    }
     </script>
 </body>
 </html>
