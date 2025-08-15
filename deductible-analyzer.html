@@ -3,988 +3,1135 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deductible Analyzer - Bill Layne Insurance Agency</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Home Insurance Deductible Analyzer - Bill Layne Insurance Agency</title>
+    <meta name="description" content="Find your optimal home insurance deductible. Compare savings, analyze risk, and calculate break-even points. Save money with the right deductible choice.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            important: true,
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
     <style>
+        /* F-Pattern Optimized Styles */
         :root {
-            --color-background: rgba(252, 252, 249, 1);
-            --color-surface: rgba(255, 255, 253, 1);
-            --color-text: rgba(19, 52, 59, 1);
-            --color-text-secondary: rgba(98, 108, 113, 1);
-            --color-primary: rgba(33, 128, 141, 1);
-            --color-primary-hover: rgba(29, 116, 128, 1);
-            --color-primary-active: rgba(26, 104, 115, 1);
-            --color-secondary: rgba(94, 82, 64, 0.12);
-            --color-secondary-hover: rgba(94, 82, 64, 0.2);
-            --color-border: rgba(94, 82, 64, 0.2);
-            --color-btn-primary-text: rgba(252, 252, 249, 1);
-            --color-success: rgba(33, 128, 141, 1);
-            --color-warning: rgba(168, 75, 47, 1);
-            --color-error: rgba(192, 21, 47, 1);
-            --color-info: rgba(98, 108, 113, 1);
-            --color-focus-ring: rgba(33, 128, 141, 0.4);
-            
-            --font-family-base: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            --font-size-xs: 11px;
-            --font-size-sm: 12px;
-            --font-size-base: 14px;
-            --font-size-lg: 16px;
-            --font-size-xl: 18px;
-            --font-size-2xl: 20px;
-            --font-size-3xl: 24px;
-            --font-size-4xl: 30px;
-            --font-weight-normal: 400;
-            --font-weight-medium: 500;
-            --font-weight-semibold: 550;
-            --font-weight-bold: 600;
-            
-            --space-4: 4px;
-            --space-8: 8px;
-            --space-12: 12px;
-            --space-16: 16px;
-            --space-20: 20px;
-            --space-24: 24px;
-            --space-32: 32px;
-            
-            --radius-sm: 6px;
-            --radius-base: 8px;
-            --radius-lg: 12px;
-            --radius-full: 9999px;
-            
-            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
-            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.04), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
-            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.04), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
-            
-            --duration-fast: 150ms;
-            --duration-normal: 250ms;
-            --ease-standard: cubic-bezier(0.16, 1, 0.3, 1);
+            --primary-blue: #2563eb;
+            --primary-blue-dark: #1d4ed8;
+            --accent-green: #10b981;
+            --text-gray: #374151;
+            --text-light: #6b7280;
+            --bg-light: #f8fafc;
         }
-
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --color-background: rgba(31, 33, 33, 1);
-                --color-surface: rgba(38, 40, 40, 1);
-                --color-text: rgba(245, 245, 245, 1);
-                --color-text-secondary: rgba(167, 169, 169, 0.7);
-                --color-primary: rgba(50, 184, 198, 1);
-                --color-primary-hover: rgba(45, 166, 178, 1);
-                --color-primary-active: rgba(41, 150, 161, 1);
-                --color-secondary: rgba(119, 124, 124, 0.15);
-                --color-secondary-hover: rgba(119, 124, 124, 0.25);
-                --color-border: rgba(119, 124, 124, 0.3);
-                --color-success: rgba(50, 184, 198, 1);
-                --color-warning: rgba(230, 129, 97, 1);
-                --color-error: rgba(255, 84, 89, 1);
-                --color-focus-ring: rgba(50, 184, 198, 0.4);
-                --color-btn-primary-text: rgba(19, 52, 59, 1);
-            }
-        }
-
-        * {
-            box-sizing: border-box;
-        }
-
+        
         body {
-            margin: 0;
-            padding: 0;
-            font-family: var(--font-family-base);
-            font-size: var(--font-size-base);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             line-height: 1.6;
-            color: var(--color-text);
-            background-color: var(--color-background);
-            -webkit-font-smoothing: antialiased;
+            color: var(--text-gray);
         }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: var(--space-32) var(--space-16);
+        
+        /* F-Pattern Header */
+        .f-header {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 50;
+            transition: all 0.3s ease;
         }
-
-        .header {
-            text-align: center;
-            margin-bottom: var(--space-32);
-            padding: var(--space-32) 0;
-            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-hover) 100%);
+        
+        .f-header.scrolled {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* F-Pattern Hero */
+        .f-hero {
+            background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 50%, #3b82f6 100%);
+            position: relative;
+            overflow: hidden;
+            padding-top: 140px;
+            padding-bottom: 40px;
+        }
+        
+        .f-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23ffffff" fill-opacity="0.03"%3E%3Cpath d="M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4z"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');
+        }
+        
+        /* F-Pattern Sidebar */
+        .f-sidebar {
+            position: sticky;
+            top: 100px;
+            height: fit-content;
+        }
+        
+        /* Modern Buttons */
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-blue-dark) 100%);
             color: white;
-        }
-
-        .header h1 {
-            color: white;
-            margin: 0 0 var(--space-12) 0;
-            font-size: var(--font-size-4xl);
-            font-weight: var(--font-weight-bold);
-        }
-
-        .header p {
-            font-size: var(--font-size-lg);
-            opacity: 0.9;
-            margin: 0;
-        }
-
-        .logo {
-            width: 150px;
-            height: auto;
-            margin-bottom: var(--space-16);
-        }
-
-        .analyzer-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: var(--space-32);
-        }
-
-        @media (max-width: 968px) {
-            .analyzer-grid {
-                grid-template-columns: 1fr;
-                gap: var(--space-24);
-            }
-        }
-
-        .input-section {
-            background: var(--color-surface);
-            padding: var(--space-24);
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-md);
-        }
-
-        .section-title {
-            font-size: var(--font-size-xl);
-            font-weight: var(--font-weight-bold);
-            color: var(--color-primary);
-            margin: 0 0 var(--space-20) 0;
-        }
-
-        .form-group {
-            margin-bottom: var(--space-16);
-        }
-
-        .form-label {
-            display: block;
-            margin-bottom: var(--space-8);
-            font-weight: var(--font-weight-medium);
-            font-size: var(--font-size-sm);
-            color: var(--color-text);
-        }
-
-        .form-control {
-            display: block;
-            width: 100%;
-            padding: var(--space-12);
-            font-size: var(--font-size-base);
-            line-height: 1.5;
-            color: var(--color-text);
-            background-color: var(--color-surface);
-            border: 1px solid var(--color-border);
-            border-radius: var(--radius-base);
-            transition: border-color var(--duration-fast) var(--ease-standard);
-        }
-
-        .form-control:focus {
-            border-color: var(--color-primary);
-            outline: 2px solid var(--color-primary);
-            outline-offset: 2px;
-        }
-
-        select.form-control {
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23134252' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right var(--space-12) center;
-            background-size: 16px;
-            padding-right: var(--space-32);
-        }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: var(--space-12) var(--space-24);
-            border-radius: var(--radius-base);
-            font-size: var(--font-size-base);
-            font-weight: var(--font-weight-medium);
-            line-height: 1.5;
-            cursor: pointer;
-            transition: all var(--duration-normal) var(--ease-standard);
-            border: none;
+            padding: 16px 32px;
+            border-radius: 50px;
+            font-weight: 600;
             text-decoration: none;
-            min-height: 44px;
-        }
-
-        .btn--primary {
-            background: var(--color-primary);
-            color: var(--color-btn-primary-text);
-        }
-
-        .btn--primary:hover {
-            background: var(--color-primary-hover);
-        }
-
-        .btn--full-width {
-            width: 100%;
-        }
-
-        .deductible-slider {
-            margin: var(--space-20) 0;
-        }
-
-        .slider {
-            width: 100%;
-            height: 8px;
-            border-radius: var(--radius-full);
-            background: var(--color-secondary);
-            outline: none;
-            -webkit-appearance: none;
-            appearance: none;
-            margin: var(--space-16) 0;
-        }
-
-        .slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            background: var(--color-primary);
-            cursor: pointer;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-        }
-
-        .slider::-moz-range-thumb {
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            background: var(--color-primary);
-            cursor: pointer;
+            display: inline-block;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
             border: none;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
         }
-
-        .slider-display {
-            text-align: center;
-            font-size: var(--font-size-2xl);
-            font-weight: var(--font-weight-bold);
-            margin-top: var(--space-8);
-            color: var(--color-primary);
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.4);
+            background: linear-gradient(135deg, var(--primary-blue-dark) 0%, #1e40af 100%);
         }
-
-        .results-section {
-            grid-column: 1 / -1;
-            background: var(--color-surface);
-            padding: var(--space-32);
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-lg);
-            border: 2px solid var(--color-primary);
-            margin-top: var(--space-24);
+        
+        .btn-secondary {
+            background: white;
+            color: var(--primary-blue);
+            border: 2px solid var(--primary-blue);
+            padding: 14px 28px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
         }
-
-        .comparison-table {
+        
+        .btn-secondary:hover {
+            background: var(--primary-blue);
+            color: white;
+            transform: translateY(-1px);
+        }
+        
+        /* Navigation Menu */
+        .navigation-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
             width: 100%;
-            border-collapse: collapse;
-            margin: var(--space-20) 0;
-            font-size: var(--font-size-sm);
+            max-width: 350px;
+            height: 100vh;
+            background: white;
+            box-shadow: -4px 0 20px rgba(0, 0, 0, 0.1);
+            transition: right 0.3s ease;
+            z-index: 1000;
+            padding: 20px;
         }
-
-        .comparison-table th {
-            background: var(--color-primary);
+        
+        .navigation-menu.active {
+            right: 0;
+        }
+        
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 999;
+        }
+        
+        .menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        /* Hamburger Animation */
+        .hamburger span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background: var(--text-gray);
+            margin: 3px 0;
+            transition: 0.3s;
+            border-radius: 2px;
+        }
+        
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+        
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+        
+        /* Trust Badge */
+        .trust-badge {
+            background: white;
+            border-radius: 12px;
+            padding: 16px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .trust-badge:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        /* Form Card Styles */
+        .form-card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            margin-bottom: 24px;
+        }
+        
+        .form-card:hover {
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            background: white;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+        
+        .category-header {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-blue-dark) 100%);
             color: white;
-            padding: var(--space-12);
-            text-align: left;
-            font-weight: var(--font-weight-medium);
+            padding: 16px 24px;
+            border-radius: 12px 12px 0 0;
+            font-weight: 700;
+            font-size: 18px;
+            margin: -24px -24px 20px -24px;
         }
-
-        .comparison-table td {
-            padding: var(--space-12);
-            border-bottom: 1px solid var(--color-border);
+        
+        /* Deductible Option Cards */
+        .deductible-card {
+            background: white;
+            border: 3px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
         }
-
-        .comparison-table tr:nth-child(even) {
-            background: rgba(var(--color-primary), 0.05);
+        
+        .deductible-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
         }
-
-        .recommended {
-            background: rgba(var(--color-success), 0.1) !important;
-            border-left: 4px solid var(--color-success);
+        
+        .deductible-card.selected {
+            border-color: var(--primary-blue);
+            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
         }
-
-        .scenario-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: var(--space-20);
-            margin: var(--space-24) 0;
+        
+        .deductible-card.recommended {
+            border-color: var(--accent-green);
+            position: relative;
         }
-
-        .scenario-card {
-            background: var(--color-background);
-            padding: var(--space-20);
-            border-radius: var(--radius-lg);
-            border: 1px solid var(--color-border);
+        
+        .deductible-card.recommended::before {
+            content: "RECOMMENDED";
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--accent-green);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
         }
-
-        .scenario-title {
-            font-weight: var(--font-weight-bold);
-            color: var(--color-primary);
-            margin-bottom: var(--space-12);
+        
+        /* Savings Meter */
+        .savings-meter {
+            height: 20px;
+            background: #e5e7eb;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
         }
-
-        .cost-comparison {
+        
+        .savings-meter-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-green) 0%, #059669 100%);
+            transition: width 0.5s ease;
+            border-radius: 10px;
+        }
+        
+        /* Risk Indicator */
+        .risk-indicator {
             display: flex;
-            justify-content: space-between;
-            margin-bottom: var(--space-8);
-            font-size: var(--font-size-sm);
+            gap: 4px;
+            margin-top: 8px;
         }
-
-        .total-cost {
-            font-weight: var(--font-weight-bold);
-            padding-top: var(--space-8);
-            border-top: 1px solid var(--color-border);
+        
+        .risk-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #e5e7eb;
+            transition: all 0.3s ease;
         }
-
-        .recommendation-box {
-            background: linear-gradient(135deg, var(--color-success), var(--color-primary));
-            color: white;
-            padding: var(--space-24);
-            border-radius: var(--radius-lg);
-            text-align: center;
-            margin: var(--space-24) 0;
+        
+        .risk-dot.active-low {
+            background: var(--accent-green);
         }
-
-        .recommendation-box h3 {
-            color: white;
-            margin: 0 0 var(--space-12) 0;
+        
+        .risk-dot.active-medium {
+            background: #fbbf24;
         }
-
-        .recommendation-amount {
-            font-size: var(--font-size-3xl);
-            font-weight: var(--font-weight-bold);
-            margin: var(--space-12) 0;
+        
+        .risk-dot.active-high {
+            background: #ef4444;
         }
-
-        .break-even-analysis {
-            background: rgba(var(--color-info), 0.1);
-            padding: var(--space-20);
-            border-radius: var(--radius-base);
-            margin: var(--space-20) 0;
+        
+        /* Comparison Chart */
+        .comparison-bar {
+            background: #f3f4f6;
+            height: 150px;
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
         }
-
-        .break-even-analysis h4 {
-            color: var(--color-info);
-            margin: 0 0 var(--space-12) 0;
+        
+        .comparison-bar-fill {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background: linear-gradient(180deg, var(--primary-blue) 0%, var(--primary-blue-dark) 100%);
+            transition: height 0.5s ease;
+            border-radius: 8px 8px 0 0;
         }
-
-        .warning-box {
-            background: rgba(var(--color-warning), 0.1);
-            border: 1px solid var(--color-warning);
-            padding: var(--space-16);
-            border-radius: var(--radius-base);
-            margin-top: var(--space-16);
-        }
-
-        .warning-box h4 {
-            color: var(--color-warning);
-            margin: 0 0 var(--space-8) 0;
-            font-size: var(--font-size-base);
-        }
-
-        .info-box {
-            background: rgba(var(--color-info), 0.1);
-            border: 1px solid var(--color-info);
-            padding: var(--space-16);
-            border-radius: var(--radius-base);
-            margin-bottom: var(--space-20);
-        }
-
-        .info-box h4 {
-            color: var(--color-info);
-            margin: 0 0 var(--space-8) 0;
-            font-size: var(--font-size-base);
-        }
-
-        .footer-cta {
-            text-align: center;
-            margin-top: var(--space-32);
-            padding: var(--space-32);
-            background: linear-gradient(135deg, var(--color-primary), var(--color-primary-hover));
-            color: white;
-            border-radius: var(--radius-lg);
-        }
-
-        .footer-cta h3 {
-            color: white;
-            margin: 0 0 var(--space-16) 0;
-        }
-
-        .footer-cta p {
-            margin: 0 0 var(--space-20) 0;
-            opacity: 0.9;
-        }
-
-        .contact-info {
-            font-size: var(--font-size-sm);
-            margin-top: var(--space-16);
-            opacity: 0.8;
-        }
-
-        .hidden {
-            display: none;
-        }
-
-        .small-text {
-            font-size: var(--font-size-xs);
-            color: var(--color-text-secondary);
-        }
-
-        @media (max-width: 480px) {
-            .container {
-                padding: var(--space-16) var(--space-8);
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
             }
-
-            .input-section {
-                padding: var(--space-16);
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
-
-            .results-section {
-                padding: var(--space-20);
+        }
+        
+        .animate-fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .f-sidebar {
+                position: static;
             }
-
-            .comparison-table {
-                font-size: var(--font-size-xs);
-            }
-
-            .comparison-table th,
-            .comparison-table td {
-                padding: var(--space-8);
-            }
-
-            .scenario-grid {
-                grid-template-columns: 1fr;
+            
+            .btn-primary, .btn-secondary {
+                padding: 12px 20px;
+                font-size: 15px;
             }
         }
     </style>
 </head>
-<body>
-    <!-- Navigation Header -->
-    <header class="navbar">
-        <div class="container">
-            <div class="navbar-content flex items-center justify-between">
-                <div class="navbar-brand">
-                    <a href="https://billlayneinsurance.com" style="text-decoration: none;">
-                        <div style="display: flex; flex-direction: column;">
-                            <h2 style="font-size: var(--font-size-2xl); font-weight: var(--font-weight-bold); color: var(--color-primary); margin: 0;">Bill Layne Insurance</h2>
-                            <span style="font-size: var(--font-size-sm); color: var(--color-text-secondary); font-weight: var(--font-weight-medium);">Home<br>Insurance Guide</span>
-                        </div>
+
+<body class="bg-gray-50">
+    <!-- Menu Overlay -->
+    <div id="menu-overlay" class="menu-overlay"></div>
+    
+    <!-- Header - F-Pattern Top Bar -->
+    <header id="main-header" class="f-header">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <div class="flex-shrink-0">
+                    <a href="https://billlayneinsurance.com/" class="text-2xl font-bold text-blue-800">
+                        Bill Layne Insurance
                     </a>
+                    <p class="text-xs text-gray-600 hidden sm:block">Deductible Analyzer</p>
                 </div>
-                <nav class="navbar-menu">
-                    <a href="https://billlayneinsurance.com" class="nav-link">Home</a>
-                    <a href="index.html" class="nav-link">Home<br><span style="font-size: 0.9em;">Insurance</span></a>
-                    <a href="https://BillLayne.github.io/Auto-Insurance-Center/" class="nav-link">Auto<br><span style="font-size: 0.9em;">Insurance</span></a>
-                    <a href="https://BillLayne.github.io/NC-Insurance-Claims-Center.github.io/" class="nav-link">Claims<br><span style="font-size: 0.9em;">Center</span></a>
-                    <a href="https://billlayneinsurance.com/blog" class="nav-link">Blog</a>
-                </nav>
-                <div class="navbar-cta" style="display: flex; align-items: center; gap: var(--space-16);">
-                    <a href="tel:3368351993" class="phone-number" style="font-weight: var(--font-weight-bold); font-size: var(--font-size-lg); color: var(--color-primary); text-decoration: none;">(336) 835-1993</a>
-                    <a href="https://billlayneinsurance.com#contact" class="btn btn--primary">Get Quote</a>
-                </div>
-                <button class="mobile-menu-toggle" aria-label="Toggle mobile menu">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-            </div>
-        </div>
-    </header>
-    <div class="header">
-        <img src="https://i.imgur.com/cBAgeX8.png" alt="Bill Layne Insurance Agency" class="logo">
-        <h1>Deductible Analyzer</h1>
-        <p>Find your optimal deductible balance between premium savings and out-of-pocket costs</p>
-    </div>
-
-    <div class="container">
-        <div class="info-box">
-            <h4>💡 How This Tool Works</h4>
-            <p>Your deductible is the amount you pay out-of-pocket before insurance kicks in. Higher deductibles mean lower premiums but more risk if you need to file a claim. This analyzer helps you find the sweet spot for your financial situation.</p>
-        </div>
-
-        <form id="deductibleForm">
-            <div class="analyzer-grid">
-                <!-- Current Policy Section -->
-                <div class="input-section">
-                    <h2 class="section-title">📋 Current Policy Information</h2>
+                
+                <!-- Right Side: Phone, CTA, and Menu Button -->
+                <div class="flex items-center space-x-4">
+                    <!-- Desktop CTA -->
+                    <div class="hidden md:flex items-center space-x-4">
+                        <a href="tel:3368351993" class="text-gray-700 font-semibold hover:text-blue-600 transition-colors">
+                            <i class="fas fa-phone mr-2"></i>(336) 835-1993
+                        </a>
+                        <a href="https://billlayneinsurance.com/home-quote.html" class="btn-primary">Get Free Quote</a>
+                    </div>
                     
-                    <div class="form-group">
-                        <label class="form-label" for="currentPremium">Current Annual Premium</label>
-                        <input type="number" id="currentPremium" class="form-control" placeholder="e.g., 1200" required>
-                        <small class="small-text">Your current homeowners insurance premium</small>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label" for="currentDeductible">Current Deductible</label>
-                        <select id="currentDeductible" class="form-control" required>
-                            <option value="">Select Current Deductible</option>
-                            <option value="250">$250</option>
-                            <option value="500">$500</option>
-                            <option value="1000">$1,000</option>
-                            <option value="2500">$2,500</option>
-                            <option value="5000">$5,000</option>
-                            <option value="10000">$10,000</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label" for="homeValue">Home Value</label>
-                        <input type="number" id="homeValue" class="form-control" placeholder="e.g., 350000" required>
-                        <small class="small-text">Current market value of your home</small>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label" for="homeAge">Home Age</label>
-                        <select id="homeAge" class="form-control" required>
-                            <option value="">Select Home Age</option>
-                            <option value="new">Less than 5 years</option>
-                            <option value="recent">5-15 years</option>
-                            <option value="established">15-30 years</option>
-                            <option value="mature">30-50 years</option>
-                            <option value="older">Over 50 years</option>
-                        </select>
-                    </div>
-                </div>
-
-                <!-- Financial Profile Section -->
-                <div class="input-section">
-                    <h2 class="section-title">💰 Financial Profile</h2>
-                    
-                    <div class="form-group">
-                        <label class="form-label" for="emergencyFund">Emergency Fund</label>
-                        <select id="emergencyFund" class="form-control" required>
-                            <option value="">Select Emergency Fund Size</option>
-                            <option value="1000">Less than $1,000</option>
-                            <option value="2500">$1,000 - $2,500</option>
-                            <option value="5000">$2,500 - $5,000</option>
-                            <option value="10000">$5,000 - $10,000</option>
-                            <option value="15000">$10,000 - $15,000</option>
-                            <option value="25000">$15,000 - $25,000</option>
-                            <option value="50000">Over $25,000</option>
-                        </select>
-                        <small class="small-text">Money readily available for unexpected expenses</small>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label" for="monthlyIncome">Monthly Household Income</label>
-                        <select id="monthlyIncome" class="form-control" required>
-                            <option value="">Select Income Range</option>
-                            <option value="3000">Under $3,000</option>
-                            <option value="5000">$3,000 - $5,000</option>
-                            <option value="7500">$5,000 - $7,500</option>
-                            <option value="10000">$7,500 - $10,000</option>
-                            <option value="15000">$10,000 - $15,000</option>
-                            <option value="20000">Over $15,000</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label" for="riskTolerance">Risk Tolerance</label>
-                        <select id="riskTolerance" class="form-control" required>
-                            <option value="">Select Risk Tolerance</option>
-                            <option value="conservative">Conservative - Prefer predictable costs</option>
-                            <option value="moderate">Moderate - Balance savings and risk</option>
-                            <option value="aggressive">Aggressive - Maximize premium savings</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label" for="claimHistory">Claim History (Last 5 Years)</label>
-                        <select id="claimHistory" class="form-control" required>
-                            <option value="">Select Claim History</option>
-                            <option value="0">No claims</option>
-                            <option value="1">1 claim</option>
-                            <option value="2">2 claims</option>
-                            <option value="3">3+ claims</option>
-                        </select>
-                    </div>
-
-                    <button type="submit" class="btn btn--primary btn--full-width">
-                        Analyze Deductible Options
+                    <!-- Universal Menu Button -->
+                    <button id="menu-toggle-btn" class="hamburger p-2">
+                        <span></span>
+                        <span></span>
+                        <span></span>
                     </button>
                 </div>
             </div>
+        </div>
+    </header>
+    
+    <!-- Universal Menu -->
+    <div id="navigation-menu" class="navigation-menu">
+        <div class="flex justify-between items-center mb-8">
+            <h3 class="text-xl lg:text-2xl font-bold text-gray-800">Navigation</h3>
+            <button id="close-menu" class="text-gray-500 hover:text-gray-700 p-2">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+        </div>
+        <nav class="space-y-4">
+            <a href="https://billlayneinsurance.com/" class="block py-3 px-2 text-gray-700 hover:text-blue-600 hover:bg-blue-50 font-medium border-b border-gray-200 rounded transition-all">
+                <i class="fas fa-home mr-3 w-5"></i>Home
+            </a>
+            <a href="https://billlayneinsurance.com/areas-we-serve.html" class="block py-3 px-2 text-gray-700 hover:text-blue-600 hover:bg-blue-50 font-medium border-b border-gray-200 rounded transition-all">
+                <i class="fas fa-th-large mr-3 w-5"></i>Services
+            </a>
+            <a href="https://billlayne.github.io/Auto-Insurance-Center/" class="block py-3 px-2 text-gray-700 hover:text-blue-600 hover:bg-blue-50 font-medium border-b border-gray-200 rounded transition-all">
+                <i class="fas fa-car mr-3 w-5"></i>Auto Insurance
+            </a>
+            <a href="https://billlayne.github.io/NC-Home-Insurance.github.io/" class="block py-3 px-2 text-gray-700 hover:text-blue-600 hover:bg-blue-50 font-medium border-b border-gray-200 rounded transition-all">
+                <i class="fas fa-home mr-3 w-5"></i>Home Insurance
+            </a>
+            <a href="https://billlayne.github.io/NC-Insurance-Claims-Center.github.io/" class="block py-3 px-2 text-gray-700 hover:text-blue-600 hover:bg-blue-50 font-medium border-b border-gray-200 rounded transition-all">
+                <i class="fas fa-file-alt mr-3 w-5"></i>Claims Center
+            </a>
+            <a href="https://billlayne.github.io/Resources/" class="block py-3 px-2 text-gray-700 hover:text-blue-600 hover:bg-blue-50 font-medium border-b border-gray-200 rounded transition-all">
+                <i class="fas fa-book mr-3 w-5"></i>Resources
+            </a>
+            <a href="https://billlayneinsurance.com/blog.html" class="block py-3 px-2 text-gray-700 hover:text-blue-600 hover:bg-blue-50 font-medium border-b border-gray-200 rounded transition-all">
+                <i class="fas fa-blog mr-3 w-5"></i>Blog
+            </a>
+            <a href="https://billlayneinsurance.com/contact-us.html" class="block py-3 px-2 text-gray-700 hover:text-blue-600 hover:bg-blue-50 font-medium border-b border-gray-200 rounded transition-all">
+                <i class="fas fa-envelope mr-3 w-5"></i>Contact Us
+            </a>
+        </nav>
+        <div class="mt-8 space-y-4">
+            <a href="tel:3368351993" class="block w-full text-center bg-green-600 hover:bg-green-700 text-white py-3 px-4 rounded-lg font-semibold transition-colors">
+                <i class="fas fa-phone mr-2"></i>Call (336) 835-1993
+            </a>
+            <a href="https://billlayneinsurance.com/home-quote.html" class="block w-full text-center btn-primary">
+                <i class="fas fa-calculator mr-2"></i>Get Free Quote
+            </a>
+        </div>
+    </div>
 
-            <!-- Results Section -->
-            <div id="resultsSection" class="results-section hidden">
-                <h2 style="text-align: center; color: var(--color-primary); margin: 0 0 var(--space-24) 0;">
-                    📊 Your Deductible Analysis
-                </h2>
-
-                <!-- Recommendation Box -->
-                <div class="recommendation-box">
-                    <h3>💡 Recommended Deductible</h3>
-                    <div class="recommendation-amount" id="recommendedDeductible">$0</div>
-                    <p id="recommendationReason">Based on your financial profile and risk tolerance</p>
-                </div>
-
-                <!-- Deductible Comparison Table -->
-                <h3>💵 Deductible Options Comparison</h3>
-                <table class="comparison-table">
-                    <thead>
-                        <tr>
-                            <th>Deductible</th>
-                            <th>Annual Premium</th>
-                            <th>Annual Savings</th>
-                            <th>Break-Even Point</th>
-                            <th>Recommendation</th>
-                        </tr>
-                    </thead>
-                    <tbody id="comparisonTableBody">
-                        <!-- Populated by JavaScript -->
-                    </tbody>
-                </table>
-
-                <!-- Break-Even Analysis -->
-                <div class="break-even-analysis">
-                    <h4>⏱️ Break-Even Analysis</h4>
-                    <p id="breakEvenText">Analysis will appear here...</p>
-                </div>
-
-                <!-- Claim Scenarios -->
-                <h3>🏠 Common Claim Scenarios</h3>
-                <p style="margin-bottom: var(--space-16); font-size: var(--font-size-sm); color: var(--color-text-secondary);">
-                    See how different deductibles affect your out-of-pocket costs for typical homeowner claims:
-                </p>
-                
-                <div class="scenario-grid" id="scenarioGrid">
-                    <!-- Populated by JavaScript -->
-                </div>
-
-                <!-- Emergency Fund Assessment -->
-                <div id="emergencyFundAssessment">
-                    <!-- Populated by JavaScript -->
-                </div>
-
-                <!-- Tips and Considerations -->
-                <div style="margin-top: var(--space-32);">
-                    <h3>💭 Important Considerations</h3>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--space-16);">
-                        <div style="background: rgba(var(--color-info), 0.1); padding: var(--space-16); border-radius: var(--radius-base);">
-                            <h4 style="color: var(--color-info); margin: 0 0 var(--space-8) 0;">✅ Benefits of Higher Deductibles</h4>
-                            <ul style="margin: 0; font-size: var(--font-size-sm);">
-                                <li>Lower monthly/annual premiums</li>
-                                <li>Encourages preventive maintenance</li>
-                                <li>Reduces small nuisance claims</li>
-                                <li>May improve claims experience</li>
-                            </ul>
+    <main>
+        <!-- Hero Section - F-Pattern Second Horizontal Bar -->
+        <section class="f-hero">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+                <div class="animate-fade-in-up">
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-white mb-4">
+                        Deductible Analyzer
+                        <span class="block text-transparent bg-clip-text bg-gradient-to-r from-blue-200 to-cyan-200">
+                            Find Your Perfect Balance
+                        </span>
+                    </h1>
+                    <p class="text-xl text-blue-100 mb-8 max-w-3xl mx-auto">
+                        Compare deductibles, calculate savings, and find the sweet spot between premium savings and out-of-pocket risk
+                    </p>
+                    
+                    <!-- Stats Bar -->
+                    <div class="flex flex-wrap justify-center gap-8 text-white">
+                        <div class="text-center">
+                            <div class="text-3xl font-bold">$250-$5000</div>
+                            <div class="text-sm text-blue-200">Deductible Range</div>
                         </div>
-                        <div style="background: rgba(var(--color-warning), 0.1); padding: var(--space-16); border-radius: var(--radius-base);">
-                            <h4 style="color: var(--color-warning); margin: 0 0 var(--space-8) 0;">⚠️ Risks of Higher Deductibles</h4>
-                            <ul style="margin: 0; font-size: var(--font-size-sm);">
-                                <li>Higher out-of-pocket costs per claim</li>
-                                <li>May delay necessary repairs</li>
-                                <li>Requires larger emergency fund</li>
-                                <li>Financial strain during multiple claims</li>
-                            </ul>
+                        <div class="text-center">
+                            <div class="text-3xl font-bold">20-40%</div>
+                            <div class="text-sm text-blue-200">Premium Savings</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-3xl font-bold">3-5 Years</div>
+                            <div class="text-sm text-blue-200">Break-Even Period</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- F-Pattern Content Layout -->
+        <section class="py-20 bg-gray-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <!-- Info Box -->
+                <div class="bg-blue-50 border-l-4 border-blue-500 p-6 rounded-lg mb-8">
+                    <div class="flex items-start">
+                        <i class="fas fa-info-circle text-blue-600 text-xl mr-3 mt-1"></i>
+                        <div>
+                            <h3 class="text-lg font-bold text-gray-800 mb-2">How Deductibles Work</h3>
+                            <p class="text-gray-700">
+                                Your deductible is what you pay out-of-pocket before insurance kicks in. Higher deductibles mean lower premiums 
+                                but more financial risk. Use this tool to find the right balance for your situation.
+                            </p>
                         </div>
                     </div>
                 </div>
 
-                <div class="warning-box">
-                    <h4>📋 Important Disclaimer</h4>
-                    <p style="margin: 0; font-size: var(--font-size-sm);">This analysis is for educational purposes only. Actual premium savings may vary based on your insurance company, location, and specific policy details. Consult with Bill Layne Insurance Agency for personalized recommendations and accurate quotes.</p>
+                <form id="deductibleForm">
+                    <div class="grid lg:grid-cols-12 gap-12">
+                        <!-- Left Sidebar - F-Pattern Vertical Emphasis -->
+                        <div class="lg:col-span-4">
+                            <div class="f-sidebar space-y-6">
+                                <!-- Analysis Summary -->
+                                <div class="trust-badge bg-gradient-to-br from-blue-500 to-blue-600 text-white" id="analysisSummary" style="display: none;">
+                                    <div class="text-center">
+                                        <div class="text-3xl font-black mb-2" id="optimalDeductible">$1,000</div>
+                                        <p class="font-semibold">Recommended Deductible</p>
+                                    </div>
+                                    <hr class="my-4 border-blue-400">
+                                    <div class="space-y-2 text-sm">
+                                        <div class="flex justify-between">
+                                            <span>Annual Savings:</span>
+                                            <span class="font-bold" id="sideAnnualSavings">$0</span>
+                                        </div>
+                                        <div class="flex justify-between">
+                                            <span>Break-Even:</span>
+                                            <span class="font-bold" id="sideBreakEven">0 years</span>
+                                        </div>
+                                        <div class="flex justify-between">
+                                            <span>Risk Level:</span>
+                                            <span class="font-bold" id="sideRiskLevel">Moderate</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Quick Facts -->
+                                <div class="trust-badge">
+                                    <h4 class="font-bold text-gray-800 mb-4 flex items-center">
+                                        <i class="fas fa-chart-line text-blue-600 mr-2"></i>
+                                        Deductible Facts
+                                    </h4>
+                                    <div class="space-y-2 text-sm">
+                                        <div class="flex justify-between">
+                                            <span class="text-gray-600">Most Common:</span>
+                                            <span class="font-semibold">$1,000</span>
+                                        </div>
+                                        <div class="flex justify-between">
+                                            <span class="text-gray-600">Average Savings:</span>
+                                            <span class="font-semibold">$200-400/year</span>
+                                        </div>
+                                        <div class="flex justify-between">
+                                            <span class="text-gray-600">Avg Claims/Year:</span>
+                                            <span class="font-semibold">1 in 20 homes</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Risk Assessment -->
+                                <div class="trust-badge">
+                                    <h4 class="font-bold text-gray-800 mb-4">
+                                        <i class="fas fa-shield-alt text-green-600 mr-2"></i>
+                                        Risk Factors
+                                    </h4>
+                                    <ul class="text-sm text-gray-600 space-y-2">
+                                        <li><strong>Low Risk:</strong> Emergency fund > $5000</li>
+                                        <li><strong>Medium Risk:</strong> $2500-5000 savings</li>
+                                        <li><strong>High Risk:</strong> < $2500 emergency fund</li>
+                                    </ul>
+                                </div>
+                                
+                                <!-- Deductible Types -->
+                                <div class="trust-badge bg-gradient-to-br from-yellow-50 to-orange-50">
+                                    <h4 class="font-bold text-gray-800 mb-4">
+                                        <i class="fas fa-lightbulb text-yellow-600 mr-2"></i>
+                                        Types of Deductibles
+                                    </h4>
+                                    <ul class="text-sm text-gray-700 space-y-2">
+                                        <li>• <strong>All Perils:</strong> Standard deductible</li>
+                                        <li>• <strong>Wind/Hail:</strong> Often separate & higher</li>
+                                        <li>• <strong>Hurricane:</strong> % of dwelling coverage</li>
+                                        <li>• <strong>Earthquake:</strong> Typically 10-20%</li>
+                                    </ul>
+                                </div>
+                                
+                                <!-- Need Help CTA -->
+                                <div class="text-center">
+                                    <a href="tel:3368351993" class="btn-primary w-full block">
+                                        <i class="fas fa-phone mr-2"></i>Get Expert Advice
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Main Content - F-Pattern Right Side -->
+                        <div class="lg:col-span-8">
+                            <!-- Your Information Section -->
+                            <div class="form-card">
+                                <div class="category-header">
+                                    <i class="fas fa-user mr-2"></i>Your Information
+                                </div>
+                                <div class="grid md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                                            Current Annual Premium
+                                        </label>
+                                        <input type="number" id="currentPremium" class="form-input" placeholder="e.g., 1200" required>
+                                    </div>
+                                    
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                                            Current Deductible
+                                        </label>
+                                        <select id="currentDeductible" class="form-input" required>
+                                            <option value="">Select Current</option>
+                                            <option value="250">$250</option>
+                                            <option value="500">$500</option>
+                                            <option value="1000" selected>$1,000</option>
+                                            <option value="1500">$1,500</option>
+                                            <option value="2500">$2,500</option>
+                                            <option value="5000">$5,000</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                                            Emergency Fund Available
+                                        </label>
+                                        <select id="emergencyFund" class="form-input" required>
+                                            <option value="">Select Amount</option>
+                                            <option value="1000">Less than $1,000</option>
+                                            <option value="2500">$1,000 - $2,500</option>
+                                            <option value="5000">$2,500 - $5,000</option>
+                                            <option value="10000">$5,000 - $10,000</option>
+                                            <option value="20000">Over $10,000</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                                            Risk Tolerance
+                                        </label>
+                                        <select id="riskTolerance" class="form-input" required>
+                                            <option value="">Select Level</option>
+                                            <option value="conservative">Conservative (Low Risk)</option>
+                                            <option value="moderate">Moderate (Balanced)</option>
+                                            <option value="aggressive">Aggressive (High Risk)</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Claims History Section -->
+                            <div class="form-card">
+                                <div class="category-header">
+                                    <i class="fas fa-history mr-2"></i>Claims History
+                                </div>
+                                <div class="grid md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                                            Claims in Last 5 Years
+                                        </label>
+                                        <select id="claimsHistory" class="form-input" required>
+                                            <option value="">Select Number</option>
+                                            <option value="0">No claims</option>
+                                            <option value="1">1 claim</option>
+                                            <option value="2">2 claims</option>
+                                            <option value="3">3+ claims</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                                            Average Claim Amount
+                                        </label>
+                                        <select id="avgClaimAmount" class="form-input" required>
+                                            <option value="">Select Amount</option>
+                                            <option value="0">No claims</option>
+                                            <option value="2000">Under $2,000</option>
+                                            <option value="5000">$2,000 - $5,000</option>
+                                            <option value="10000">$5,000 - $10,000</option>
+                                            <option value="20000">Over $10,000</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                                            Home Age
+                                        </label>
+                                        <select id="homeAge" class="form-input" required>
+                                            <option value="">Select Age</option>
+                                            <option value="new">0-5 years</option>
+                                            <option value="moderate">6-15 years</option>
+                                            <option value="older">16-30 years</option>
+                                            <option value="old">Over 30 years</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                                            Area Risk Level
+                                        </label>
+                                        <select id="areaRisk" class="form-input" required>
+                                            <option value="">Select Risk</option>
+                                            <option value="low">Low (Minimal weather events)</option>
+                                            <option value="moderate">Moderate (Occasional storms)</option>
+                                            <option value="high">High (Frequent severe weather)</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div class="mt-6">
+                                    <button type="submit" class="btn-primary w-full">
+                                        <i class="fas fa-chart-bar mr-2"></i>Analyze Deductible Options
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Results Section -->
+                            <div id="resultsSection" class="hidden">
+                                <div class="bg-gradient-to-r from-green-50 to-blue-50 rounded-xl p-8 mb-8">
+                                    <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">
+                                        <i class="fas fa-chart-line text-blue-600 mr-2"></i>
+                                        Your Deductible Analysis
+                                    </h2>
+                                    
+                                    <!-- Deductible Options Grid -->
+                                    <div class="grid md:grid-cols-3 gap-4 mb-8">
+                                        <div class="deductible-card" data-deductible="500">
+                                            <div class="text-center">
+                                                <div class="text-2xl font-bold text-gray-800">$500</div>
+                                                <div class="text-sm text-gray-600 mb-3">Deductible</div>
+                                                <div class="text-xl font-semibold text-blue-600" id="premium500">$1,380</div>
+                                                <div class="text-xs text-gray-500 mb-3">Annual Premium</div>
+                                                <div class="savings-meter">
+                                                    <div class="savings-meter-fill" id="savings500" style="width: 0%"></div>
+                                                </div>
+                                                <div class="text-sm text-gray-600 mt-2">
+                                                    Savings: <span class="font-bold text-red-500" id="savingsAmount500">-$180</span>
+                                                </div>
+                                                <div class="risk-indicator">
+                                                    <span class="text-xs text-gray-500">Risk:</span>
+                                                    <div class="risk-dot active-low"></div>
+                                                    <div class="risk-dot active-low"></div>
+                                                    <div class="risk-dot"></div>
+                                                    <div class="risk-dot"></div>
+                                                    <div class="risk-dot"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="deductible-card recommended" data-deductible="1000">
+                                            <div class="text-center">
+                                                <div class="text-2xl font-bold text-gray-800">$1,000</div>
+                                                <div class="text-sm text-gray-600 mb-3">Deductible</div>
+                                                <div class="text-xl font-semibold text-blue-600" id="premium1000">$1,200</div>
+                                                <div class="text-xs text-gray-500 mb-3">Annual Premium</div>
+                                                <div class="savings-meter">
+                                                    <div class="savings-meter-fill" id="savings1000" style="width: 50%"></div>
+                                                </div>
+                                                <div class="text-sm text-gray-600 mt-2">
+                                                    Savings: <span class="font-bold text-gray-600" id="savingsAmount1000">$0</span>
+                                                </div>
+                                                <div class="risk-indicator">
+                                                    <span class="text-xs text-gray-500">Risk:</span>
+                                                    <div class="risk-dot active-medium"></div>
+                                                    <div class="risk-dot active-medium"></div>
+                                                    <div class="risk-dot active-medium"></div>
+                                                    <div class="risk-dot"></div>
+                                                    <div class="risk-dot"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="deductible-card" data-deductible="2500">
+                                            <div class="text-center">
+                                                <div class="text-2xl font-bold text-gray-800">$2,500</div>
+                                                <div class="text-sm text-gray-600 mb-3">Deductible</div>
+                                                <div class="text-xl font-semibold text-blue-600" id="premium2500">$960</div>
+                                                <div class="text-xs text-gray-500 mb-3">Annual Premium</div>
+                                                <div class="savings-meter">
+                                                    <div class="savings-meter-fill" id="savings2500" style="width: 100%"></div>
+                                                </div>
+                                                <div class="text-sm text-gray-600 mt-2">
+                                                    Savings: <span class="font-bold text-green-600" id="savingsAmount2500">$240</span>
+                                                </div>
+                                                <div class="risk-indicator">
+                                                    <span class="text-xs text-gray-500">Risk:</span>
+                                                    <div class="risk-dot active-high"></div>
+                                                    <div class="risk-dot active-high"></div>
+                                                    <div class="risk-dot active-high"></div>
+                                                    <div class="risk-dot active-high"></div>
+                                                    <div class="risk-dot"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Comparison Chart -->
+                                    <div class="bg-white rounded-lg p-6 shadow-md mb-6">
+                                        <h3 class="font-bold text-gray-800 mb-4 flex items-center">
+                                            <i class="fas fa-chart-bar text-blue-600 mr-2"></i>
+                                            10-Year Cost Comparison
+                                        </h3>
+                                        <div class="grid grid-cols-3 gap-4 mb-4">
+                                            <div class="text-center">
+                                                <div class="comparison-bar">
+                                                    <div class="comparison-bar-fill" id="cost500" style="height: 90%"></div>
+                                                </div>
+                                                <div class="text-sm mt-2">$500</div>
+                                                <div class="text-xs text-gray-600" id="totalCost500">$13,800</div>
+                                            </div>
+                                            <div class="text-center">
+                                                <div class="comparison-bar">
+                                                    <div class="comparison-bar-fill" id="cost1000" style="height: 75%"></div>
+                                                </div>
+                                                <div class="text-sm mt-2">$1,000</div>
+                                                <div class="text-xs text-gray-600" id="totalCost1000">$12,000</div>
+                                            </div>
+                                            <div class="text-center">
+                                                <div class="comparison-bar">
+                                                    <div class="comparison-bar-fill" id="cost2500" style="height: 60%"></div>
+                                                </div>
+                                                <div class="text-sm mt-2">$2,500</div>
+                                                <div class="text-xs text-gray-600" id="totalCost2500">$9,600</div>
+                                            </div>
+                                        </div>
+                                        <p class="text-xs text-gray-500 text-center">*Assuming average claims frequency</p>
+                                    </div>
+                                    
+                                    <!-- Break-Even Analysis -->
+                                    <div class="bg-white rounded-lg p-6 shadow-md mb-6">
+                                        <h3 class="font-bold text-gray-800 mb-4 flex items-center">
+                                            <i class="fas fa-balance-scale text-green-600 mr-2"></i>
+                                            Break-Even Analysis
+                                        </h3>
+                                        <div class="space-y-3" id="breakEvenList">
+                                            <!-- Populated by JavaScript -->
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Personalized Recommendation -->
+                                    <div class="bg-blue-50 rounded-lg p-6">
+                                        <h3 class="font-bold text-gray-800 mb-4 flex items-center">
+                                            <i class="fas fa-star text-yellow-500 mr-2"></i>
+                                            Your Personalized Recommendation
+                                        </h3>
+                                        <div id="personalRecommendation" class="text-gray-700">
+                                            <!-- Populated by JavaScript -->
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Warning -->
+                                    <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 mt-6">
+                                        <div class="flex">
+                                            <i class="fas fa-exclamation-triangle text-yellow-400 mr-3"></i>
+                                            <div>
+                                                <h4 class="font-bold text-gray-800">Important Considerations</h4>
+                                                <p class="text-sm text-gray-700 mt-1">
+                                                    These calculations are estimates. Consider your financial situation, claims likelihood, 
+                                                    and risk tolerance. Contact Bill Layne Insurance for personalized advice.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="py-20 bg-blue-600 text-white">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="text-3xl lg:text-4xl font-bold mb-4">
+                    Ready to Optimize Your Deductible?
+                </h2>
+                <p class="text-xl text-blue-100 mb-8">
+                    Let our experts help you find the perfect balance between savings and protection
+                </p>
+                
+                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                    <a href="tel:3368351993" class="btn-secondary text-lg">
+                        <i class="fas fa-phone mr-2"></i>Call (336) 835-1993
+                    </a>
+                    <span class="text-blue-200">or</span>
+                    <a href="https://billlayneinsurance.com/home-quote.html" class="bg-white text-blue-600 px-8 py-4 rounded-full font-bold text-lg hover:bg-gray-100 transition-colors">
+                        <i class="fas fa-calculator mr-2"></i>Get Free Quote Online
+                    </a>
+                </div>
+                
+                <div class="mt-8 text-blue-200">
+                    <p class="mb-2">
+                        <i class="fas fa-map-marker-alt mr-2"></i>
+                        1283 N Bridge St, Elkin, NC 28621
+                    </p>
+                    <p>
+                        <i class="fas fa-envelope mr-2"></i>
+                        Save@BillLayneInsurance.com
+                    </p>
                 </div>
             </div>
-        </form>
+        </section>
+    </main>
 
-        <div class="footer-cta">
-            <h3>Ready to Optimize Your Deductible?</h3>
-            <p>Contact Bill Layne Insurance Agency to review your policy and potentially save money with the right deductible choice.</p>
-            <a href="tel:336-835-1993" class="btn" style="background: rgba(255,255,255,0.2); color: white; border: 2px solid rgba(255,255,255,0.3);">
-                Call (336) 835-1993
-            </a>
-            <div class="contact-info">
-                1283 N Bridge St, Elkin NC 28621 | Save@BillLayneInsurance.com
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <p>&copy; 2025 Bill Layne Insurance Agency. All rights reserved. | NC License #1740293</p>
             </div>
         </div>
-    </div>
+    </footer>
 
+    <!-- JavaScript -->
     <script>
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('main-header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Universal menu functionality
+        const menuToggleBtn = document.getElementById('menu-toggle-btn');
+        const navigationMenu = document.getElementById('navigation-menu');
+        const menuOverlay = document.getElementById('menu-overlay');
+        const closeMenuBtn = document.getElementById('close-menu');
+
+        function toggleMenu() {
+            menuToggleBtn.classList.toggle('active');
+            navigationMenu.classList.toggle('active');
+            menuOverlay.classList.toggle('active');
+            document.body.style.overflow = navigationMenu.classList.contains('active') ? 'hidden' : '';
+        }
+
+        function closeMenu() {
+            menuToggleBtn.classList.remove('active');
+            navigationMenu.classList.remove('active');
+            menuOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        menuToggleBtn.addEventListener('click', toggleMenu);
+        closeMenuBtn.addEventListener('click', closeMenu);
+        menuOverlay.addEventListener('click', closeMenu);
+
+        // Deductible Analyzer Logic
         document.getElementById('deductibleForm').addEventListener('submit', function(e) {
             e.preventDefault();
             analyzeDeductibles();
         });
 
+        // Deductible card selection
+        document.addEventListener('click', function(e) {
+            if (e.target.closest('.deductible-card')) {
+                document.querySelectorAll('.deductible-card').forEach(card => {
+                    card.classList.remove('selected');
+                });
+                e.target.closest('.deductible-card').classList.add('selected');
+            }
+        });
+
         function analyzeDeductibles() {
             // Get form values
-            const currentPremium = parseInt(document.getElementById('currentPremium').value) || 0;
+            const currentPremium = parseFloat(document.getElementById('currentPremium').value) || 1200;
             const currentDeductible = parseInt(document.getElementById('currentDeductible').value) || 1000;
-            const homeValue = parseInt(document.getElementById('homeValue').value) || 0;
-            const homeAge = document.getElementById('homeAge').value;
-            const emergencyFund = parseInt(document.getElementById('emergencyFund').value) || 1000;
-            const monthlyIncome = parseInt(document.getElementById('monthlyIncome').value) || 5000;
+            const emergencyFund = parseInt(document.getElementById('emergencyFund').value) || 5000;
             const riskTolerance = document.getElementById('riskTolerance').value;
-            const claimHistory = parseInt(document.getElementById('claimHistory').value) || 0;
+            const claimsHistory = parseInt(document.getElementById('claimsHistory').value) || 0;
+            const avgClaimAmount = parseInt(document.getElementById('avgClaimAmount').value) || 0;
+            const homeAge = document.getElementById('homeAge').value;
+            const areaRisk = document.getElementById('areaRisk').value;
 
-            // Calculate deductible options and premiums
-            const deductibleOptions = [250, 500, 1000, 2500, 5000, 10000];
-            const basePremium = calculateBasePremium(currentPremium, currentDeductible);
+            // Calculate premiums for different deductibles
+            const deductibleOptions = [500, 1000, 2500];
+            const premiums = {};
+            const savings = {};
             
-            const deductibleData = deductibleOptions.map(deductible => {
-                const premium = calculatePremiumForDeductible(basePremium, deductible);
-                const savings = currentPremium - premium;
-                const breakEven = deductible > currentDeductible ? 
-                    Math.ceil((deductible - currentDeductible) / Math.max(savings, 1)) : 0;
+            // Premium calculation factors
+            const baseRate = currentPremium / currentDeductible * 1000; // Normalize to per $1000 deductible
+            
+            deductibleOptions.forEach(deductible => {
+                // Higher deductibles reduce premium
+                let multiplier = 1;
+                if (deductible === 250) multiplier = 1.25;
+                else if (deductible === 500) multiplier = 1.15;
+                else if (deductible === 1000) multiplier = 1.0;
+                else if (deductible === 1500) multiplier = 0.92;
+                else if (deductible === 2500) multiplier = 0.80;
+                else if (deductible === 5000) multiplier = 0.65;
                 
-                return {
-                    deductible,
-                    premium,
-                    savings,
-                    breakEven
-                };
+                premiums[deductible] = Math.round(currentPremium * multiplier);
+                savings[deductible] = currentPremium - premiums[deductible];
             });
 
-            // Determine recommended deductible
-            const recommendation = getRecommendation(emergencyFund, monthlyIncome, riskTolerance, claimHistory, deductibleData);
+            // Update display
+            deductibleOptions.forEach(deductible => {
+                const premiumEl = document.getElementById(`premium${deductible}`);
+                const savingsEl = document.getElementById(`savingsAmount${deductible}`);
+                const savingsMeterEl = document.getElementById(`savings${deductible}`);
+                
+                if (premiumEl) {
+                    premiumEl.textContent = `$${premiums[deductible].toLocaleString()}`;
+                }
+                
+                if (savingsEl) {
+                    const savingsAmount = savings[deductible];
+                    savingsEl.textContent = savingsAmount >= 0 ? `$${savingsAmount}` : `-$${Math.abs(savingsAmount)}`;
+                    savingsEl.className = savingsAmount > 0 ? 'font-bold text-green-600' : 
+                                         savingsAmount < 0 ? 'font-bold text-red-500' : 
+                                         'font-bold text-gray-600';
+                }
+                
+                if (savingsMeterEl) {
+                    const maxSavings = Math.max(...Object.values(savings));
+                    const savingsPercent = maxSavings > 0 ? (savings[deductible] / maxSavings * 100) : 0;
+                    savingsMeterEl.style.width = Math.max(0, savingsPercent) + '%';
+                }
+            });
+
+            // Calculate 10-year costs (including estimated claims)
+            const claimFrequency = 0.05; // 5% chance per year
+            const expectedClaimsIn10Years = claimsHistory > 0 ? 2 : 1; // Historical claims indicate higher future risk
             
-            // Update displays
-            updateRecommendation(recommendation);
-            updateComparisonTable(deductibleData, recommendation.deductible);
-            updateBreakEvenAnalysis(recommendation, currentDeductible);
-            updateScenarios(deductibleOptions);
-            updateEmergencyFundAssessment(emergencyFund, recommendation.deductible);
+            deductibleOptions.forEach(deductible => {
+                const totalPremiums = premiums[deductible] * 10;
+                const totalDeductibles = deductible * expectedClaimsIn10Years;
+                const totalCost = totalPremiums + totalDeductibles;
+                
+                const costEl = document.getElementById(`totalCost${deductible}`);
+                const barEl = document.getElementById(`cost${deductible}`);
+                
+                if (costEl) {
+                    costEl.textContent = `$${totalCost.toLocaleString()}`;
+                }
+                
+                if (barEl) {
+                    const maxCost = 15000; // Reasonable max for scaling
+                    const costPercent = (totalCost / maxCost * 100);
+                    barEl.style.height = Math.min(100, costPercent) + '%';
+                }
+            });
+
+            // Break-even analysis
+            const breakEvenList = document.getElementById('breakEvenList');
+            breakEvenList.innerHTML = '';
+            
+            deductibleOptions.forEach((deductible, index) => {
+                if (index === 0) return; // Skip first option
+                
+                const prevDeductible = deductibleOptions[index - 1];
+                const annualSavings = premiums[prevDeductible] - premiums[deductible];
+                const deductibleDiff = deductible - prevDeductible;
+                const breakEvenYears = deductibleDiff / annualSavings;
+                
+                const item = document.createElement('div');
+                item.className = 'flex justify-between items-center p-3 bg-gray-50 rounded-lg';
+                item.innerHTML = `
+                    <span class="text-sm">
+                        <strong>$${prevDeductible} → $${deductible}:</strong>
+                        Save $${annualSavings}/year
+                    </span>
+                    <span class="text-sm font-semibold text-blue-600">
+                        Break-even: ${breakEvenYears.toFixed(1)} years
+                    </span>
+                `;
+                breakEvenList.appendChild(item);
+            });
+
+            // Determine optimal deductible
+            let optimalDeductible = 1000; // Default
+            let recommendation = '';
+            
+            // Risk-based recommendation logic
+            if (riskTolerance === 'conservative' || emergencyFund < 2500) {
+                optimalDeductible = 500;
+                recommendation = `Based on your conservative risk profile and emergency fund level, we recommend a <strong>$500 deductible</strong>. 
+                                 This provides maximum protection with minimal out-of-pocket risk. While your premiums will be higher, 
+                                 you'll have peace of mind knowing you can handle any claim comfortably.`;
+            } else if (riskTolerance === 'aggressive' && emergencyFund >= 10000 && claimsHistory === 0) {
+                optimalDeductible = 2500;
+                recommendation = `With your strong emergency fund, aggressive risk tolerance, and clean claims history, 
+                                 a <strong>$2,500 deductible</strong> makes sense. You'll save approximately $${savings[2500]}/year 
+                                 and can easily handle the higher deductible if needed.`;
+            } else {
+                optimalDeductible = 1000;
+                recommendation = `A <strong>$1,000 deductible</strong> offers the best balance for your situation. 
+                                 This is the most common choice and provides reasonable premium savings while keeping 
+                                 your out-of-pocket risk manageable.`;
+            }
+            
+            // Add specific factors
+            if (homeAge === 'old' || homeAge === 'older') {
+                recommendation += ` <strong>Note:</strong> Given your home's age, consider the increased likelihood of claims when choosing your deductible.`;
+            }
+            
+            if (areaRisk === 'high') {
+                recommendation += ` <strong>Weather Risk:</strong> Your area's severe weather exposure suggests maintaining adequate emergency funds regardless of deductible choice.`;
+            }
+
+            // Update recommendation display
+            document.getElementById('personalRecommendation').innerHTML = recommendation;
+            
+            // Update sidebar summary
+            document.getElementById('optimalDeductible').textContent = `$${optimalDeductible.toLocaleString()}`;
+            document.getElementById('sideAnnualSavings').textContent = `$${Math.abs(savings[optimalDeductible])}`;
+            
+            const breakEven = optimalDeductible > currentDeductible ? 
+                             ((optimalDeductible - currentDeductible) / savings[optimalDeductible]).toFixed(1) : 
+                             'N/A';
+            document.getElementById('sideBreakEven').textContent = breakEven !== 'N/A' ? `${breakEven} years` : breakEven;
+            
+            const riskLevel = optimalDeductible <= 500 ? 'Low' : 
+                             optimalDeductible <= 1000 ? 'Moderate' : 'Higher';
+            document.getElementById('sideRiskLevel').textContent = riskLevel;
+            
+            document.getElementById('analysisSummary').style.display = 'block';
+
+            // Highlight recommended card
+            document.querySelectorAll('.deductible-card').forEach(card => {
+                card.classList.remove('recommended');
+                if (parseInt(card.dataset.deductible) === optimalDeductible) {
+                    card.classList.add('recommended');
+                }
+            });
 
             // Show results
             document.getElementById('resultsSection').classList.remove('hidden');
             document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth' });
         }
-
-        function calculateBasePremium(currentPremium, currentDeductible) {
-            // Calculate what the premium would be at $1000 deductible (baseline)
-            const deductibleFactors = {
-                250: 1.25,
-                500: 1.15,
-                1000: 1.0,
-                2500: 0.85,
-                5000: 0.75,
-                10000: 0.65
-            };
-            
-            const currentFactor = deductibleFactors[currentDeductible] || 1.0;
-            return currentPremium / currentFactor;
-        }
-
-        function calculatePremiumForDeductible(basePremium, deductible) {
-            const deductibleFactors = {
-                250: 1.25,
-                500: 1.15,
-                1000: 1.0,
-                2500: 0.85,
-                5000: 0.75,
-                10000: 0.65
-            };
-            
-            return Math.round(basePremium * (deductibleFactors[deductible] || 1.0));
-        }
-
-        function getRecommendation(emergencyFund, monthlyIncome, riskTolerance, claimHistory, deductibleData) {
-            let recommendedDeductible = 1000;
-            let reason = "Standard recommendation";
-
-            // Factor in emergency fund
-            if (emergencyFund >= 10000) {
-                recommendedDeductible = Math.max(recommendedDeductible, 2500);
-                reason = "You have a strong emergency fund";
-            } else if (emergencyFund >= 5000) {
-                recommendedDeductible = Math.max(recommendedDeductible, 1000);
-                reason = "You have a moderate emergency fund";
-            } else {
-                recommendedDeductible = Math.min(recommendedDeductible, 500);
-                reason = "Consider building your emergency fund first";
-            }
-
-            // Factor in risk tolerance
-            if (riskTolerance === 'aggressive' && emergencyFund >= 5000) {
-                recommendedDeductible = Math.max(recommendedDeductible, 5000);
-                reason = "Maximizing premium savings with your risk tolerance";
-            } else if (riskTolerance === 'conservative') {
-                recommendedDeductible = Math.min(recommendedDeductible, 1000);
-                reason = "Conservative approach for predictable costs";
-            }
-
-            // Factor in claim history
-            if (claimHistory >= 2) {
-                recommendedDeductible = Math.min(recommendedDeductible, 1000);
-                reason = "Lower deductible recommended due to claim history";
-            }
-
-            // Factor in income
-            const maxRecommended = Math.floor(monthlyIncome * 0.5); // Max 50% of monthly income
-            recommendedDeductible = Math.min(recommendedDeductible, maxRecommended);
-
-            return {
-                deductible: recommendedDeductible,
-                reason: reason,
-                data: deductibleData.find(d => d.deductible === recommendedDeductible)
-            };
-        }
-
-        function updateRecommendation(recommendation) {
-            document.getElementById('recommendedDeductible').textContent = formatCurrency(recommendation.deductible);
-            document.getElementById('recommendationReason').textContent = recommendation.reason;
-        }
-
-        function updateComparisonTable(deductibleData, recommendedDeductible) {
-            const tbody = document.getElementById('comparisonTableBody');
-            tbody.innerHTML = '';
-
-            deductibleData.forEach(data => {
-                const row = tbody.insertRow();
-                const isRecommended = data.deductible === recommendedDeductible;
-                
-                if (isRecommended) {
-                    row.classList.add('recommended');
-                }
-
-                row.innerHTML = `
-                    <td><strong>${formatCurrency(data.deductible)}</strong></td>
-                    <td>${formatCurrency(data.premium)}</td>
-                    <td>${data.savings >= 0 ? '+' : ''}${formatCurrency(data.savings)}</td>
-                    <td>${data.breakEven > 0 ? data.breakEven + ' years' : 'N/A'}</td>
-                    <td>${isRecommended ? '<strong style="color: var(--color-success);">RECOMMENDED</strong>' : 
-                        data.deductible < recommendedDeductible ? 'More expensive' : 'Higher risk'}</td>
-                `;
-            });
-        }
-
-        function updateBreakEvenAnalysis(recommendation, currentDeductible) {
-            const breakEvenElement = document.getElementById('breakEvenText');
-            
-            if (recommendation.deductible > currentDeductible) {
-                const timePeriod = recommendation.data.breakEven;
-                const additionalRisk = recommendation.deductible - currentDeductible;
-                
-                breakEvenElement.innerHTML = `
-                    If you increase your deductible to <strong>${formatCurrency(recommendation.deductible)}</strong>, 
-                    you'll save <strong>${formatCurrency(recommendation.data.savings)}</strong> annually. 
-                    You'll break even after <strong>${timePeriod} ${timePeriod === 1 ? 'year' : 'years'}</strong> 
-                    if you don't file any claims. However, you'll pay an additional 
-                    <strong>${formatCurrency(additionalRisk)}</strong> out-of-pocket for each claim.
-                `;
-            } else if (recommendation.deductible < currentDeductible) {
-                const additionalCost = recommendation.data.premium - deductibleData.find(d => d.deductible === currentDeductible).premium;
-                breakEvenElement.innerHTML = `
-                    Lowering your deductible to <strong>${formatCurrency(recommendation.deductible)}</strong> 
-                    will cost an additional <strong>${formatCurrency(Math.abs(additionalCost))}</strong> annually, 
-                    but you'll save <strong>${formatCurrency(currentDeductible - recommendation.deductible)}</strong> 
-                    on each claim you file.
-                `;
-            } else {
-                breakEvenElement.innerHTML = `
-                    Your current deductible of <strong>${formatCurrency(currentDeductible)}</strong> 
-                    appears to be optimal for your situation.
-                `;
-            }
-        }
-
-        function updateScenarios(deductibleOptions) {
-            const scenarios = [
-                { name: "Roof Damage (Storm)", cost: 8500, frequency: "Common in NC" },
-                { name: "Water Damage (Pipe)", cost: 4200, frequency: "Moderate risk" },
-                { name: "Theft/Burglary", cost: 2800, frequency: "Location dependent" },
-                { name: "Fire Damage (Kitchen)", cost: 12000, frequency: "Low risk" }
-            ];
-
-            const scenarioGrid = document.getElementById('scenarioGrid');
-            scenarioGrid.innerHTML = '';
-
-            scenarios.forEach(scenario => {
-                const card = document.createElement('div');
-                card.className = 'scenario-card';
-                
-                let comparisons = '';
-                deductibleOptions.slice(0, 4).forEach(deductible => {
-                    const outOfPocket = Math.min(deductible, scenario.cost);
-                    const insurancePays = scenario.cost - outOfPocket;
-                    
-                    comparisons += `
-                        <div class="cost-comparison">
-                            <span>$${deductible.toLocaleString()} deductible:</span>
-                            <span>You pay ${formatCurrency(outOfPocket)}</span>
-                        </div>
-                    `;
-                });
-
-                card.innerHTML = `
-                    <div class="scenario-title">${scenario.name}</div>
-                    <div style="margin-bottom: var(--space-12); font-size: var(--font-size-sm); color: var(--color-text-secondary);">
-                        Total damage: ${formatCurrency(scenario.cost)} • ${scenario.frequency}
-                    </div>
-                    ${comparisons}
-                `;
-                
-                scenarioGrid.appendChild(card);
-            });
-        }
-
-        function updateEmergencyFundAssessment(emergencyFund, recommendedDeductible) {
-            const assessmentDiv = document.getElementById('emergencyFundAssessment');
-            
-            let assessmentContent = '';
-            let assessmentClass = '';
-            
-            if (emergencyFund >= recommendedDeductible * 2) {
-                assessmentContent = `
-                    <h4 style="color: var(--color-success);">✅ Emergency Fund Assessment: Excellent</h4>
-                    <p>Your emergency fund of ${formatCurrency(emergencyFund)} easily covers your recommended deductible of ${formatCurrency(recommendedDeductible)} with room to spare. You're well-positioned for a higher deductible to maximize savings.</p>
-                `;
-                assessmentClass = 'success';
-            } else if (emergencyFund >= recommendedDeductible) {
-                assessmentContent = `
-                    <h4 style="color: var(--color-info);">✅ Emergency Fund Assessment: Adequate</h4>
-                    <p>Your emergency fund of ${formatCurrency(emergencyFund)} covers your recommended deductible of ${formatCurrency(recommendedDeductible)}. Consider building additional savings before increasing your deductible further.</p>
-                `;
-                assessmentClass = 'info';
-            } else {
-                assessmentContent = `
-                    <h4 style="color: var(--color-warning);">⚠️ Emergency Fund Assessment: Needs Attention</h4>
-                    <p>Your emergency fund of ${formatCurrency(emergencyFund)} is less than your recommended deductible of ${formatCurrency(recommendedDeductible)}. Consider building your emergency fund before choosing a higher deductible. A lower deductible might be more appropriate for now.</p>
-                `;
-                assessmentClass = 'warning';
-            }
-
-            assessmentDiv.innerHTML = `
-                <div style="background: rgba(var(--color-${assessmentClass}), 0.1); border: 1px solid var(--color-${assessmentClass}); padding: var(--space-16); border-radius: var(--radius-base); margin: var(--space-20) 0;">
-                    ${assessmentContent}
-                </div>
-            `;
-        }
-
-        function formatCurrency(amount) {
-            return new Intl.NumberFormat('en-US', {
-                style: 'currency',
-                currency: 'USD',
-                minimumFractionDigits: 0,
-                maximumFractionDigits: 0
-            }).format(amount);
-        }
-
-        // Form validation
-        const form = document.getElementById('deductibleForm');
-        const inputs = form.querySelectorAll('input[required], select[required]');
-        
-        inputs.forEach(input => {
-            input.addEventListener('blur', function() {
-                if (this.value.trim() === '') {
-                    this.style.borderColor = 'var(--color-error)';
-                } else {
-                    this.style.borderColor = 'var(--color-border)';
-                }
-            });
-
-            input.addEventListener('input', function() {
-                if (this.style.borderColor === 'rgb(192, 21, 47)') {
-                    this.style.borderColor = 'var(--color-border)';
-                }
-            });
-        });
     </script>
 </body>
 </html>
