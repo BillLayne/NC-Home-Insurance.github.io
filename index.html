@@ -100,7 +100,7 @@
             display: flex;
             justify-content: center;
             gap: 1.25rem;
-            margin: 0.75rem 0 0.5rem 0;
+            margin: 1.5rem 0 2rem 0;
             padding: 0;
         }
         
@@ -125,23 +125,23 @@
         
         .service-icon-circle {
             font-size: 1.75rem;
-            color: #60a5fa;
-            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            background: rgba(255, 255, 255, 0.15);
             width: 60px;
             height: 60px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            border: 2px solid rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
             transition: all 0.3s ease;
         }
         
         .service-icon:hover .service-icon-circle {
             transform: scale(1.15);
-            background: rgba(255, 255, 255, 0.25);
-            border-color: rgba(255, 255, 255, 0.4);
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
+            box-shadow: 0 0 25px rgba(255, 255, 255, 0.4);
         }
         
         .service-icon span {
@@ -156,7 +156,7 @@
         @media (min-width: 768px) {
             .service-icons {
                 gap: 3.75rem;
-                margin: 1.5rem 0 1.25rem 0;
+                margin: 2rem 0 2.5rem 0;
             }
             
             .service-icon-circle {
@@ -354,14 +354,14 @@
         
         /* Trust Indicators Grid */
         .trust-indicators-grid {
-            font-size: 0.65rem;
+            font-size: 0.75rem;
         }
         
         .trust-indicator-row {
             display: flex;
             justify-content: center;
             gap: 1rem;
-            margin-bottom: 0.35rem;
+            margin-bottom: 0.5rem;
             color: #cbd5e1;
         }
         
@@ -426,9 +426,9 @@
         /* Logo Containers */
         a.logo-container, .logo-container {
             background: white;
-            border-radius: 8px;
+            border-radius: 12px;
             padding: 12px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.12);
             transition: all 0.3s ease;
             width: 100%;
             max-width: 140px;
@@ -437,6 +437,7 @@
             align-items: center;
             justify-content: center;
             text-decoration: none;
+            border: 2px solid transparent;
         }
         
         @media (max-width: 767px) {
@@ -447,16 +448,22 @@
         }
         
         a.logo-container:hover, .logo-container:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.25);
+            border-color: #3b82f6;
         }
         
-        .logo-container img, .logo-container span {
-            max-width: 90%;
-            max-height: 90%;
+        .carrier-logo {
+            max-width: 100%;
+            max-height: 100%;
             width: auto;
             height: auto;
             object-fit: contain;
+        }
+        
+        /* Background pattern for carriers section */
+        .bg-pattern {
+            background-image: url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%232563eb" fill-opacity="1"%3E%3Cpath d="M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4z"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');
         }
         
         /* Responsive Adjustments */
@@ -574,7 +581,7 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
                 <div class="animate-fade-in-up">
                     <!-- Headline -->
-                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black leading-[1.1] sm:leading-tight mb-2">
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black leading-[1.1] sm:leading-tight mb-4">
                         NC Home Insurance<br>
                         <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-200 to-cyan-200">
                             Complete Protection. Better Rates.
@@ -604,12 +611,12 @@
                     </div>
                     
                     <!-- Description -->
-                    <p class="text-base sm:text-xl lg:text-2xl text-blue-100 mb-3 leading-snug sm:leading-relaxed max-w-4xl mx-auto">
+                    <p class="text-base sm:text-xl lg:text-2xl text-blue-100 mb-6 leading-snug sm:leading-relaxed max-w-4xl mx-auto">
                         Protect your home, belongings, and peace of mind. Compare quotes from top carriers and save an average of $600/year.
                     </p>
                     
                     <!-- Primary CTAs -->
-                    <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-3 justify-center">
+                    <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-6 justify-center">
                         <a href="https://billlayneinsurance.com/home-quote.html" class="btn-primary text-base sm:text-lg">
                             <i class="fas fa-calculator mr-2"></i>Get Your Free Quote
                         </a>
@@ -622,17 +629,17 @@
                     <div class="trust-indicators-grid text-blue-200">
                         <div class="trust-indicator-row">
                             <div class="flex items-center justify-center">
-                                <i class="fas fa-star text-yellow-400 mr-1 text-xs"></i>
+                                <i class="fas fa-star text-yellow-400 mr-1 text-sm"></i>
                                 <span class="font-semibold">4.8★ Google Reviews</span>
                             </div>
                             <div class="flex items-center justify-center">
-                                <i class="fas fa-shield-alt text-green-400 mr-1 text-xs"></i>
+                                <i class="fas fa-shield-alt text-green-400 mr-1 text-sm"></i>
                                 <span>NC Licensed #1740293</span>
                             </div>
                         </div>
                         <div class="trust-indicator-row">
                             <div class="flex items-center justify-center">
-                                <i class="fas fa-clock text-blue-300 mr-1 text-xs"></i>
+                                <i class="fas fa-clock text-blue-300 mr-1 text-sm"></i>
                                 <span>Same-Day Quotes</span>
                             </div>
                         </div>
@@ -642,29 +649,35 @@
         </section>
 
         <!-- Carriers Section -->
-        <section class="py-12 bg-white border-b border-gray-200">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h3 class="text-center text-gray-600 text-sm font-bold uppercase tracking-wider mb-8">
-                    We Compare Quotes From North Carolina's Top Home Insurance Carriers
-                </h3>
+        <section class="py-16 bg-gradient-to-r from-blue-50 via-white to-blue-50 border-y-2 border-blue-200 relative overflow-hidden">
+            <div class="absolute inset-0 bg-pattern opacity-5"></div>
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div class="text-center mb-10">
+                    <h2 class="text-2xl lg:text-3xl font-black text-gray-800 mb-3">
+                        We Compare Quotes From <span class="text-blue-600">Top-Rated Carriers</span>
+                    </h2>
+                    <p class="text-gray-600 text-lg">
+                        Access exclusive rates from 10+ trusted insurance companies. One quote, multiple options, guaranteed savings.
+                    </p>
+                </div>
                 <div class="carriers-grid">
-                    <a href="https://www.nationwide.com" target="_blank" rel="noopener noreferrer" class="logo-container">
-                        <img src="https://raw.githubusercontent.com/BillLayne/bill-layne-images/refs/heads/main/logos/Nationwide%20Logo%20(1).webp" alt="Nationwide Insurance" class="h-12 w-auto object-contain">
+                    <a href="https://billlayneinsurance.com/carriers/nationwide-north-carolina.html" target="_blank" rel="noopener noreferrer" class="logo-container">
+                        <img src="https://raw.githubusercontent.com/BillLayne/bill-layne-images/refs/heads/main/logos/Nationwide%20Logo%20(1).webp" alt="Nationwide Insurance" class="carrier-logo">
                     </a>
-                    <a href="https://www.travelers.com" target="_blank" rel="noopener noreferrer" class="logo-container">
-                        <img src="https://raw.githubusercontent.com/BillLayne/bill-layne-images/refs/heads/main/logos/Travelers%20Logo.webp" alt="Travelers Insurance" class="h-12 w-auto object-contain">
+                    <a href="https://billlayneinsurance.com/carriers/travelers-north-carolina.html" target="_blank" rel="noopener noreferrer" class="logo-container">
+                        <img src="https://raw.githubusercontent.com/BillLayne/bill-layne-images/refs/heads/main/logos/Travelers%20Logo.webp" alt="Travelers Insurance" class="carrier-logo">
                     </a>
-                    <a href="https://www.alamancefarmers.com" target="_blank" rel="noopener noreferrer" class="logo-container">
-                        <img src="https://raw.githubusercontent.com/BillLayne/bill-layne-images/refs/heads/main/logos/Alamance%20Logo.webp" alt="Alamance Insurance" class="h-12 w-auto object-contain">
+                    <a href="https://billlayneinsurance.com/carriers/alamance-north-carolina.html" target="_blank" rel="noopener noreferrer" class="logo-container">
+                        <img src="https://raw.githubusercontent.com/BillLayne/bill-layne-images/refs/heads/main/logos/Alamance%20Logo.webp" alt="Alamance Insurance" class="carrier-logo">
                     </a>
-                    <a href="https://www.ncgrange.com" target="_blank" rel="noopener noreferrer" class="logo-container">
-                        <img src="https://raw.githubusercontent.com/BillLayne/bill-layne-images/refs/heads/main/logos/NC%20Grange%20Logo.webp" alt="NC Grange Insurance" class="h-12 w-auto object-contain">
+                    <a href="https://billlayneinsurance.com/carriers/nc-grange-north-carolina.html" target="_blank" rel="noopener noreferrer" class="logo-container">
+                        <img src="https://raw.githubusercontent.com/BillLayne/bill-layne-images/refs/heads/main/logos/NC%20Grange%20Logo.webp" alt="NC Grange Insurance" class="carrier-logo">
                     </a>
-                    <a href="https://www.progressive.com" target="_blank" rel="noopener noreferrer" class="logo-container">
-                        <img src="https://raw.githubusercontent.com/BillLayne/bill-layne-images/refs/heads/main/logos/Progressive%20Logo.webp" alt="Progressive Insurance" class="h-12 w-auto object-contain">
+                    <a href="https://billlayneinsurance.com/carriers/progressive-north-carolina.html" target="_blank" rel="noopener noreferrer" class="logo-container">
+                        <img src="https://raw.githubusercontent.com/BillLayne/bill-layne-images/refs/heads/main/logos/Progressive%20Logo.webp" alt="Progressive Insurance" class="carrier-logo">
                     </a>
-                    <a href="https://www.universalproperty.com" target="_blank" rel="noopener noreferrer" class="logo-container">
-                        <img src="https://github.com/BillLayne/bill-layne-images/blob/main/logos/Universal%20Insurance.png?raw=true" alt="Universal Insurance" class="h-12 w-auto object-contain">
+                    <a href="https://universalproperty.com/" target="_blank" rel="noopener noreferrer" class="logo-container">
+                        <img src="https://github.com/BillLayne/bill-layne-images/blob/main/logos/Universal%20Insurance.png?raw=true" alt="Universal Insurance" class="carrier-logo">
                     </a>
                 </div>
             </div>
@@ -729,12 +742,12 @@
                                     Your Potential Discounts
                                 </h4>
                                 <ul class="text-sm text-gray-600 space-y-2">
-                                    <li>✔ Multi-Policy Bundle: up to 25%</li>
-                                    <li>✔ Security System: up to 20%</li>
-                                    <li>✔ New Home: up to 15%</li>
-                                    <li>✔ Claims-Free: up to 20%</li>
-                                    <li>✔ Fire Sprinklers: up to 15%</li>
-                                    <li>✔ Loyalty Discount: up to 10%</li>
+                                    <li>✓ Multi-Policy Bundle: up to 25%</li>
+                                    <li>✓ Security System: up to 20%</li>
+                                    <li>✓ New Home: up to 15%</li>
+                                    <li>✓ Claims-Free: up to 20%</li>
+                                    <li>✓ Fire Sprinklers: up to 15%</li>
+                                    <li>✓ Loyalty Discount: up to 10%</li>
                                 </ul>
                             </div>
                             
@@ -931,25 +944,25 @@
                                         <h4 class="font-bold text-lg mb-4 text-blue-900">Safety & Security</h4>
                                         <ul class="space-y-3">
                                             <li class="flex items-start">
-                                                <span class="text-green-500 mr-2">✔</span>
+                                                <span class="text-green-500 mr-2">✓</span>
                                                 <div>
                                                     <strong>Security System:</strong> 5-20% off
                                                 </div>
                                             </li>
                                             <li class="flex items-start">
-                                                <span class="text-green-500 mr-2">✔</span>
+                                                <span class="text-green-500 mr-2">✓</span>
                                                 <div>
                                                     <strong>Smoke Detectors:</strong> up to 5% off
                                                 </div>
                                             </li>
                                             <li class="flex items-start">
-                                                <span class="text-green-500 mr-2">✔</span>
+                                                <span class="text-green-500 mr-2">✓</span>
                                                 <div>
                                                     <strong>Deadbolt Locks:</strong> 2-5% off
                                                 </div>
                                             </li>
                                             <li class="flex items-start">
-                                                <span class="text-green-500 mr-2">✔</span>
+                                                <span class="text-green-500 mr-2">✓</span>
                                                 <div>
                                                     <strong>Fire Sprinklers:</strong> 15-20% off
                                                 </div>
@@ -960,25 +973,25 @@
                                         <h4 class="font-bold text-lg mb-4 text-blue-900">Policy Savings</h4>
                                         <ul class="space-y-3">
                                             <li class="flex items-start">
-                                                <span class="text-green-500 mr-2">✔</span>
+                                                <span class="text-green-500 mr-2">✓</span>
                                                 <div>
                                                     <strong>Multi-Policy Bundle:</strong> up to 25% off
                                                 </div>
                                             </li>
                                             <li class="flex items-start">
-                                                <span class="text-green-500 mr-2">✔</span>
+                                                <span class="text-green-500 mr-2">✓</span>
                                                 <div>
                                                     <strong>Claims-Free:</strong> 10-20% off
                                                 </div>
                                             </li>
                                             <li class="flex items-start">
-                                                <span class="text-green-500 mr-2">✔</span>
+                                                <span class="text-green-500 mr-2">✓</span>
                                                 <div>
                                                     <strong>New Home:</strong> 5-15% off
                                                 </div>
                                             </li>
                                             <li class="flex items-start">
-                                                <span class="text-green-500 mr-2">✔</span>
+                                                <span class="text-green-500 mr-2">✓</span>
                                                 <div>
                                                     <strong>Loyalty Discount:</strong> 5-10% off
                                                 </div>
